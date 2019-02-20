@@ -18,3 +18,4 @@ Modules Odoo 12 pour OVE pour la gestion des EIG et des EI
     'installable': True,
     'application': True,
 }
+
