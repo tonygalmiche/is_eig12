@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Département-->
+        <record model="ir.ui.view" id="is_departement_tree_view">
+            <field name="name">is.departement.tree</field>
+            <field name="model">is.departement</field>
+            <field name="arch" type="xml">
+                <tree string="Département">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="mail_ars"/>
+                    <field name="mail_cg"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_departement_form_view">
+            <field name="name">is.departement.form</field>
+            <field name="model">is.departement</field>
+            <field name="arch" type="xml">
+            <form string="Département">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="mail_ars"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                            <field name="mail_cg"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_departement_search_view" >
+            <field name="name">is.departement.search</field>
+            <field name="model">is.departement</field>
+            <field name="arch" type="xml">
+                <search string="Département">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="mail_ars"/>
+                    <field name="mail_cg"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="is_departement_action">
+            <field name="name">Département</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.departement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--ETABLISSEMENT-->
+        <record model="ir.ui.view" id="is_etablissement_tree_view">
+            <field name="name">is.etablissement.tree</field>
+            <field name="model">is.etablissement</field>
+            <field name="arch" type="xml">
+            <tree string="Etablissement">
+                <field name="name"/>
+                <field name="identifiant"/>
+                <field name="departement_id"/>
+                <field name="director_id"/>
+                <field name="responsible_id"/>
+                <field name="responsable_ids"/>
+                <field name="autorite_controle"/>
+                <field name="adresse1"/>
+                <field name="adresse2"/>
+                <field name="cp"/>
+                <field name="ville"/>
+                <field name="finess"/>
+                <field name="telephone"/>
+                <field name="fax"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_etablissement_form_view">
+            <field name="name">is.etablissement.form</field>
+            <field name="model">is.etablissement</field>
+            <field name="arch" type="xml">
+            <form string="Etablissement">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="departement_id"/>
+                            <field name="director_id"/>
+                            <field name="identifiant"/>
+                        </group>
+                        <group>
+                            <field name="responsible_id"/>
+                            <field name="responsable_ids" widget="many2many_tags" />
+                            <field name="membre_ids"      widget="many2many_tags" />
+                            <field name="autorite_controle"/>
+                        </group>
+                    </group>
+                    <group string="Coordonnées" col="2" colspan="4">
+                        <group>
+                            <field name="adresse1"/>
+                            <field name="adresse2"/>
+                            <field name="cp"/>
+                            <field name="ville"/>
+                        </group>
+                        <group>
+                            <field name="finess"/>
+                            <field name="telephone"/>
+                            <field name="fax"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_etablissement_search_view" >
+            <field name="name">is.etablissement.search</field>
+            <field name="model">is.etablissement</field>
+            <field name="arch" type="xml">
+                <search string="Etablissement">
+                    <field name="name"/>
+                    <field name="departement_id"/>
+                    <field name="identifiant"/>
+                    <field name="membre_ids" widget="many2many_tags" />
+                    <field name="autorite_controle"/>
+                    <field name="director_id" string="Responsable ou directeur" filter_domain="['|','|',('director_id', 'ilike', self),('responsible_id', 'ilike', self),('responsable_ids', 'ilike', self)]"/>
+                    <field name="cp"/>
+                    <field name="ville"/>
+                    <field name="finess"/>
+                </search>
+            </field>
+        </record>
+        <record id="is_etablissement_action" model="ir.actions.act_window">
+            <field name="name">Etablissement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.etablissement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

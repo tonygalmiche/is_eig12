@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record model="ir.module.category" id="module_is_ove_eig">
+            <field name="name">Gestion des EIG</field>
+            <field name="description">Gestion des EIG</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="group_is_gestionnaire" model="res.groups">
+            <field name="name">Gestionnaire des EIG</field>
+            <field name="comment">Gestionnaire des EIG.</field>
+            <field name="category_id" ref="module_is_ove_eig"/>
+        </record>
+
+        <record id="group_is_traiteur" model="res.groups">
+            <field name="name">Traiteur des EIG</field>
+            <field name="comment">Traiteur des EIG</field>
+            <field name="category_id" ref="module_is_ove_eig"/>
+        </record>
+
+    </data>
+</odoo>

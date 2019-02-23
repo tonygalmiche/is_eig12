@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_is_departementgestionnaire,is.departement.gestionnaire,model_is_departement,group_is_gestionnaire,1,1,1,1
+access_is_departement_user,is.departement.user,model_is_departement,base.group_user,1,0,0,0
+access_is_etablissement_gestionnaire,is.etablissement.gestionnaire,model_is_etablissement,group_is_gestionnaire,1,1,1,1
+access_is_etablissement_user,is.etablissement.user,model_is_etablissement,base.group_user,1,0,0,0

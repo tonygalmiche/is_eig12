@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem name="Paramétrage"     id="menu_parametrage"             sequence="50" groups="group_is_gestionnaire" />
+        <menuitem name="Paramétrage EIG" id="menu_parametrage_eig"         sequence="10" groups="group_is_gestionnaire"         parent="menu_parametrage" />
+        <menuitem name="Fondation OVE"   id="menu_fondation_ove"           sequence="1"  action="base.action_res_company_form"  parent="menu_parametrage_eig" />
+        <menuitem name="Département"     id="menu_is_departement_action"   sequence="2"  action="is_departement_action"         parent="menu_parametrage_eig" />
+        <menuitem name="Etablissement"   id="menu_is_etablissement_action" sequence="3"  action="is_etablissement_action"       parent="menu_parametrage_eig" />
+
+    </data>
+</odoo>
