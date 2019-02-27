@@ -8,6 +8,5 @@ access_is_type_evenement_ei_user,is.type.evenement.ei.user,model_is_type_eveneme
 access_is_nature_evenement_ei_user,is.nature.evenement.ei.user,model_is_nature_evenement_ei,base.group_user,1,1,1,1
 access_is_victime_ei_user,is.victime.ei.user,model_is_victime_ei,base.group_user,1,1,1,1
 access_is_motif_retour_ei_user,is.motif.retour.ei.user,model_is_motif_retour_ei,base.group_user,1,1,1,1
-access_is_destinataire_user,is.destinataire.user,model_is_destinataire,base.group_user,1,1,1,1
 access_is_sexe_user,is.sexe.user,model_is_sexe,base.group_user,1,1,1,1
 access_is_qualite_user,is.qualite.user,model_is_qualite,base.group_user,1,1,1,1
