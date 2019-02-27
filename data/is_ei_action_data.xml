@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail au valideur de EI lors de passage de status rédaction au status rédigé -->
+    <data noupdate="0">
+    <record id="email_template_ei_vers_redige" model="mail.template">
+        <field name="name">EI - Rédaction vers Rédigé</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}] EI à valider</field>
+        <field name="email_to">${object.valideur_id.email}</field>
+        <field name="model_id" ref="is_eig12.model_is_ei"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Vous avez reçu une déclaration d'EI à valider :
+<ul>
+    <li>N° : <a href="${object.get_signup_url()}">${object.name}</a></li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Vous pouvez valider cette déclaration en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+    </data>
+
+
+    <!-- Mail au rédacteur et valideur de EI lors de passage de status rédigé au status validé -->
+    <data noupdate="0">
+    <record id="email_template_ei_vers_valide" model="mail.template">
+        <field name="name">EI - Rédigé vers Validé</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}] EI validé</field>
+        <field name="email_to">${object.redacteur_id.email},${object.valideur_id.email}</field>
+        <field name="model_id" ref="is_eig12.model_is_ei"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>La déclaration d'EI suivante vient d'être validée :
+<ul>
+    <li>N° : <a href="${object.get_signup_url()}">${object.name}</a></li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Merci d'en prendre connaissance en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+    </data>
+
+
+<!-- Mail au rédacteur de EI lors de passage de status rédigé au status rédaction -->
+    <data noupdate="0">
+    <record id="email_template_ei_vers_redaction" model="mail.template">
+        <field name="name">EI - Rédigé vers Rédaction</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}] retour Rédaction</field>
+        <field name="email_to">${object.redacteur_id.email}</field>
+        <field name="model_id" ref="is_eig12.model_is_ei"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Votre déclaration d'EI est repassée à l'état 'Rédaction' :
+<ul>
+    <li>N° : <a href="${object.get_signup_url()}">${object.name}</a></li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+    <li>Motif : <b>${object.motif_ids[-1].description}</b></li>
+</ul>
+<p>Merci d'en prendre connaissance en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+    </data>
+
+</odoo>

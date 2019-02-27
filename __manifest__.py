@@ -11,12 +11,16 @@ Modules Odoo 12 pour OVE pour la gestion des EIG et des EI
     'maintainer' : 'InfoSaône',
     'website'    : 'http://www.infosaone.com',
     'depends'    : [
-        'base',
+        'base', 'mail'
     ],
     'data' : [
+        'data/sequence.xml',
+        'data/is_ei_action_data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
+        'wizard/is_motif_retour_view.xml',
         'views/is_eig_view.xml',
+        'views/is_ei_view.xml',
         'views/menu.xml',
     ],
     'installable': True,

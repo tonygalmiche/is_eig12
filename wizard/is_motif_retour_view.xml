@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+	<record id="is_ei_motif_retour_view" model="ir.ui.view">
+		<field name="name">is.ei.motif.retour.view</field>
+		<field name="model">is.motif.retour</field>
+		<field name="arch" type="xml">
+			<form string="Motif de retour au status Rédaction">
+			    <sheet>
+				<p>
+					Pourquoi Voulez-vous retourner à l'étape précédente?
+				</p>
+				<p>
+					Merci de mettre votre réponse dans le champ "Motif de retour"
+				</p>
+				<group>
+					<field name="user_id" />
+					<field name="date" />
+					<field name="motif" />
+				</group>
+				<footer>
+					<button name="valider_reponse" string="Valider" type="object" class="oe_highlight"/>
+					or 
+					<button string="Annuler" class="oe_link" special="cancel" />
+				</footer>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_is_ei_motif_retour" model="ir.actions.act_window">
+		<field name="name">Motif de retour au status Rédaction</field>
+		<field name="res_model">is.motif.retour</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="is_ei_motif_retour_view"/>
+		<field name="target">new</field>
+	</record>
+
+	</data>
+</odoo>

@@ -8,5 +8,19 @@
         <menuitem name="Département"     id="menu_is_departement_action"   sequence="2"  action="is_departement_action"         parent="menu_parametrage_eig" />
         <menuitem name="Etablissement"   id="menu_is_etablissement_action" sequence="3"  action="is_etablissement_action"       parent="menu_parametrage_eig" />
 
+        <!-- Incident -->
+        <menuitem name="Incident"           id="menu_ei_root"         sequence="20" />
+        <menuitem name="Incident"           id="menu_ei"              sequence="10" parent="menu_ei_root" />
+        <menuitem name="Tous les Incidents" id="menu_is_ei_tous"      sequence="10" parent="menu_ei"      action="is_ei_tous_action"  />
+        <menuitem name="Rédaction"          id="menu_is_ei_redaction" sequence="11" parent="menu_ei"      action="is_ei_redaction_action"/>
+        <menuitem name="Rédigé"             id="menu_is_ei_redige"    sequence="12" parent="menu_ei"      action="is_ei_redige_action"/>
+        <menuitem name="Validé"             id="menu_is_ei_valide"    sequence="13" parent="menu_ei"      action="is_ei_valide_action" />
+
+        <!-- Paramétrage Incident -->
+        <menuitem name="Paramétrage Incident" id="menu_parametrage_ei"                sequence="910" parent="menu_ei_root"        groups="group_is_gestionnaire_ei" />
+        <menuitem name="Type Evènement"       id="menu_is_type_evenement_ei_action"   sequence="5"   parent="menu_parametrage_ei" action="is_type_evenement_ei_action" />
+        <menuitem name="Nature Evènement"     id="menu_is_nature_evenement_ei_action" sequence="10"  parent="menu_parametrage_ei" action="is_nature_evenement_ei_action" />
+        <menuitem name="Modèles de courriels" id="menu_is_ei_email_templates"         sequence="20"  parent="menu_parametrage_ei" action="is_ei_action_email_template_tree_all" />
+
     </data>
 </odoo>

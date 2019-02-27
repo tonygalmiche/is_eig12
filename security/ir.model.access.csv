@@ -3,3 +3,11 @@ access_is_departementgestionnaire,is.departement.gestionnaire,model_is_departeme
 access_is_departement_user,is.departement.user,model_is_departement,base.group_user,1,0,0,0
 access_is_etablissement_gestionnaire,is.etablissement.gestionnaire,model_is_etablissement,group_is_gestionnaire,1,1,1,1
 access_is_etablissement_user,is.etablissement.user,model_is_etablissement,base.group_user,1,0,0,0
+access_is_ei_user,is.ei.user,model_is_ei,base.group_user,1,1,1,1
+access_is_type_evenement_ei_user,is.type.evenement.ei.user,model_is_type_evenement_ei,base.group_user,1,1,1,1
+access_is_nature_evenement_ei_user,is.nature.evenement.ei.user,model_is_nature_evenement_ei,base.group_user,1,1,1,1
+access_is_victime_ei_user,is.victime.ei.user,model_is_victime_ei,base.group_user,1,1,1,1
+access_is_motif_retour_ei_user,is.motif.retour.ei.user,model_is_motif_retour_ei,base.group_user,1,1,1,1
+access_is_destinataire_user,is.destinataire.user,model_is_destinataire,base.group_user,1,1,1,1
+access_is_sexe_user,is.sexe.user,model_is_sexe,base.group_user,1,1,1,1
+access_is_qualite_user,is.qualite.user,model_is_qualite,base.group_user,1,1,1,1

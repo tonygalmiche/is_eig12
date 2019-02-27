@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- EI -->
+        <record model="ir.ui.view" id="is_ove_ei_form_view">
+            <field name="name">is.ove.ei.form</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <form string="Evénements Indésirables">
+                    <header>
+                        <button name="action_rediger_ei"             states="draft"   type="object" string="Rédiger"   class="oe_highlight" />
+                        <button name="%(action_is_ei_motif_retour)d" states="redige"  type="action" string="Rédaction" groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur"/>
+                        <button name="action_valider_eig"            states="redige"  type="object" string="Valider"   groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur" class="oe_highlight" />
+                        <button name="action_rediger_eig"            states="valide"  type="object" string="Rédiger"   groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur"/>
+                        <!-- <button name="imprimer_rapport"              states="draft,redige,valide" type="object" string="Imprimer" /> -->
+                        <button name="action_send_manual_ei"         states="draft" type="object"   string="Envoyer un email" groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done"                       />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="etablissement_id" />
+                            </group>
+                            <group>
+                                <field name="redacteur_id" />
+                                <field name="valideur_id" />
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Evènement">
+                                <field name="type_event_id"  />
+                                <field name="nature_event_id" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Faits" >
+                                <group col="2" colspan="4">
+                                    <field name="date_faits"/>
+                                    <field name="date_constatation_faits"/>
+                                    <field name="consequence_faits"/>
+                                    <field name="lieu_faits" />
+                                    <field name="description_faits"/>
+                                    <field name="evenement_survenu"/>
+                                    <field name="consequences"/>
+                                </group>
+                            </page>
+                            <page string="Personnes concernées">
+                                <field name="victime_ids">
+                                    <form string="Victime">
+                                        <group>
+                                            <group>
+                                                <field name="name" />
+                                                <field name="date_naissance" />
+                                                <field name="sexe_id" />
+                                            </group>
+                                            <group>
+                                                <field name="prenom" />
+                                                <field name="qualite_id" />
+                                                <field name="ei_id" invisible="1" />
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Victime">
+                                        <field name="name"/>
+                                        <field name="prenom"/>
+                                        <field name="date_naissance"/>
+                                        <field name="qualite_id"/>
+                                        <field name="sexe_id"/>
+                                        <field name="ei_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Mesures d'accompagnement" >
+                                <group col="2" colspan="4">
+                                    <field name="mesure_immediat" />
+                                    <field name="mesure_autre" />
+                                    <field name="mesure_amelioration" />
+                                </group>
+                            </page>
+                            <!-- <page string="Information communication">
+                                <group col="2" colspan="4">
+                                    <field name="info_date" />
+                                    <field name="destinataire_id" />
+                                    <field name="auteur_id" />
+                                </group>
+                            </page> -->
+                            <page string="Eléments complémentaire">
+                                <group string="Motifs de retour">
+                                    <field name="motif_ids" nolabel="1">
+                                        <tree string="Motifs">
+                                            <field name="date" />
+                                            <field name="user_id" />
+                                            <field name="description" />
+                                            <field name="ei_id1" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                 <group string="Pièces jointes">
+                                    <field name="attachment_ids" widget="many2many_binary" />
+                                </group>
+                            </page>
+                            <page string="Analyse - Mesures prises et envisagées" >
+                                <group col="2" colspan="4" string="Action(s) immédiate(s) entreprise(s)">
+                                    <field name="pour_proteger" placeholder="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" />
+                                    <field name="pour_assurer" placeholder="Pour assurer la continuité de la prise en charge, le cas échéant" />
+                                    <field name="legard" placeholder="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" />
+                                    <field name="autre_preciser" placeholder="Autre (à préciser)" />
+                                </group>
+                                <group col="2" colspan="4" string="Proposition d’actions d’amélioration">
+                                    <field name="proposition" placeholder="Proposition d’actions d’amélioration" />
+                                    <field name="une_recherche" />
+                                    <field name="cause_identifiee" placeholder="Cause(s) identifiée(s)" />
+                                </group>
+                                <group col="2" colspan="4" string="Action(s) d’amélioration planifiée(s)">
+                                    <field name="concernant_les" placeholder="Concernant les usagers ou les résidents " />
+                                    <field name="concernant_personnel" placeholder="Concernant le personnel" />
+                                    <field name="concernant_travail" placeholder="Concernant l’organisation du travail" />
+                                    <field name="concernant_structure" placeholder="Concernant la structure" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_ove_ei_search_view">
+            <field name="name">is.ove.ei.search</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="description_faits"/>
+                    <field name="consequence_faits"/>
+                    <field name="lieu_faits"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Tous les EI -->
+        <record model="ir.ui.view" id="is_ei_tous_tree_view">
+            <field name="name">is_ei_tous_tree_view</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="date_faits"/>
+                    <field name="consequence_faits"/>
+                    <field name="lieu_faits"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="is_ei_tous_action" model="ir.actions.act_window">
+            <field name="name">Tous les Incidents</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.ei</field>
+            <field name="view_id" ref="is_ei_tous_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- EI état Rédaction -->
+        <record model="ir.ui.view" id="is_ei_redaction_tree_view">
+            <field name="name">is.ove.ei.tree</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <tree string="Evénements Indésirables">
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="date_faits"/>
+                    <field name="consequence_faits"/>
+                    <field name="lieu_faits"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="is_ei_redaction_action" model="ir.actions.act_window">
+            <field name="name">Rédaction</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.ei</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="view_id" ref="is_ei_redaction_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- EI état Rédigé -->
+        <record model="ir.ui.view" id="is_ei_redige_tree_view">
+            <field name="name">is.ove.ei.tree</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <tree string="Evénements Indésirables">
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="date_faits"/>
+                    <field name="consequence_faits"/>
+                    <field name="lieu_faits"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="is_ei_redige_action" model="ir.actions.act_window">
+            <field name="name">Rédigé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.ei</field>
+            <field name="domain">[('state', '=', 'redige')]</field>
+            <field name="view_id" ref="is_ei_redige_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- EI état Validé -->
+        <record model="ir.ui.view" id="is_ei_valide_tree_view">
+            <field name="name">is.ove.ei.tree</field>
+            <field name="model">is.ei</field>
+            <field name="arch" type="xml">
+                <tree string="Evénements Indésirables">
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="date_faits"/>
+                    <field name="consequence_faits"/>
+                    <field name="lieu_faits"/>
+                </tree>
+            </field>
+        </record>
+        <record id="is_ei_valide_action" model="ir.actions.act_window">
+            <field name="name">Validé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.ei</field>
+            <field name="domain">[('state', '=', 'valide')]</field>
+            <field name="view_id" ref="is_ei_valide_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--  TYPE EVENEMENT -->
+        <record model="ir.ui.view" id="is_type_evenemen_ei_tree_view">
+            <field name="name">is.type.evenemen.ei.tree</field>
+            <field name="model">is.type.evenement.ei</field>
+            <field name="arch" type="xml">
+                <tree string="Type Evènement">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_type_evenement_form_ei_view">
+            <field name="name">is.type.evenement.ei.form</field>
+            <field name="model">is.type.evenement.ei</field>
+            <field name="arch" type="xml">
+                <form string="Type Evènement">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="is_type_evenement_ei_action" model="ir.actions.act_window">
+            <field name="name">Type Evènement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.type.evenement.ei</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--  Nature Evenement  -->
+        <record model="ir.ui.view" id="is_nature_evenement_ei_tree_view">
+            <field name="name">is.nature.evenement.ei.tree</field>
+            <field name="model">is.nature.evenement.ei</field>
+            <field name="arch" type="xml">
+                <tree string="Nature Evènement">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_nature_evenement_ei_form_view">
+            <field name="name">is.nature.evenement.ei.form</field>
+            <field name="model">is.nature.evenement.ei</field>
+            <field name="arch" type="xml">
+                <form string="Nature Evènement">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="is_nature_evenement_ei_action" model="ir.actions.act_window">
+            <field name="name">Nature Evènement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.nature.evenement.ei</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Modèles de courriels -->
+        <record model="ir.actions.act_window" id="is_ei_action_email_template_tree_all">
+            <field name="name">Modèles de courriels</field>
+            <field name="res_model">mail.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="mail.email_template_tree" />
+            <field name="search_view_id" ref="mail.view_email_template_search"/>
+            <field name="context" eval="{'search_default_model_id': ref('is_eig12.model_is_ei')}" />
+        </record>
+
+    </data>
+</odoo>
