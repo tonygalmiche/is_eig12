@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="is_eig_motif_retour_redaction_view" model="ir.ui.view">
+        <field name="name">is.ei.motif.retour.redaction.view</field>
+        <field name="model">is.motif.retour.redaction.eig</field>
+        <field name="arch" type="xml">
+            <form string="Motif du retour">
+                <group>
+                    <field name="user_id"      invisible="1" />
+                    <field name="date"         invisible="1" />
+                    <field name="operation_id" invisible="1" />
+                    <field name="operation" />
+                    <field name="motif" />
+                </group>
+                <footer>
+                    <button name="valider_reponse" string="Valider" type="object" class="oe_highlight"/>
+                    or 
+                    <button string="Annuler" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_is_eig_motif_retour_redaction" model="ir.actions.act_window">
+        <field name="name">Motif du retour à l'état 'Rédaction'</field>
+        <field name="res_model">is.motif.retour.redaction.eig</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="is_eig_motif_retour_redaction_view"/>
+        <field name="context">{'operation_id': 'retour_redaction'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_is_eig_motif_retour_completer" model="ir.actions.act_window">
+        <field name="name">Motif du retour à l'état 'Compléter'</field>
+        <field name="res_model">is.motif.retour.redaction.eig</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="is_eig_motif_retour_redaction_view"/>
+        <field name="context">{'operation_id': 'retour_completer'}</field>
+        <field name="target">new</field>
+    </record>
+
+    </data>
+</odoo>

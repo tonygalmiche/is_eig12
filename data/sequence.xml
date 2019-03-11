@@ -9,5 +9,12 @@
             <field name="padding">4</field>
         </record>
 
+        <record id="seq_eig" model="ir.sequence">
+            <field name="name">EIG Sequence</field>
+            <field name="code">eig.number</field>
+            <field name="prefix">EIG-</field>
+            <field name="padding">4</field>
+        </record>
+
     </data>
 </odoo>

@@ -103,25 +103,41 @@
                             </page>
                             <page string="Analyse - Mesures prises et envisagées" >
                                 <group col="2" colspan="4" string="Action(s) immédiate(s) entreprise(s)">
-                                    <field name="pour_proteger" placeholder="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" />
-                                    <field name="pour_assurer" placeholder="Pour assurer la continuité de la prise en charge, le cas échéant" />
-                                    <field name="legard" placeholder="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" />
-                                    <field name="autre_preciser" placeholder="Autre (à préciser)" />
+                                    <label string="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" for="pour_proteger" colspan="4" />
+                                    <field name="pour_proteger" placeholder="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" colspan="4" nolabel="1" />
+                                    <label string="Pour assurer la continuité de la prise en charge, le cas échéant" for="pour_assurer" colspan="4" />
+                                    <field name="pour_assurer" placeholder="Pour assurer la continuité de la prise en charge, le cas échéant" colspan="4" nolabel="1" />
+                                    <label string="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" for="legard" colspan="4" />
+                                    <field name="legard" placeholder="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" colspan="4" nolabel="1" />
+                                    <label string="Autre (à préciser)" for="autre_preciser" colspan="4" />
+                                    <field name="autre_preciser" placeholder="Autre (à préciser)" colspan="4" nolabel="1" />
                                 </group>
                                 <group col="2" colspan="4" string="Proposition d’actions d’amélioration">
-                                    <field name="proposition" placeholder="Proposition d’actions d’amélioration" />
-                                    <field name="une_recherche" />
-                                    <field name="cause_identifiee" placeholder="Cause(s) identifiée(s)" />
+                                    <label string="Proposition d’actions d’amélioration" for="proposition" colspan="4" />
+                                    <field name="proposition" placeholder="Proposition d’actions d’amélioration" colspan="4" nolabel="1" />
+                                    <label string="Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue ?" for="une_recherche" colspan="4" />
+                                    <field name="une_recherche" colspan="4" nolabel="1" />
+                                    <label string="Cause(s) identifiée(s)" for="cause_identifiee" colspan="4" />
+                                    <field name="cause_identifiee" placeholder="Cause(s) identifiée(s)" colspan="4" nolabel="1" />
                                 </group>
                                 <group col="2" colspan="4" string="Action(s) d’amélioration planifiée(s)">
-                                    <field name="concernant_les" placeholder="Concernant les usagers ou les résidents " />
-                                    <field name="concernant_personnel" placeholder="Concernant le personnel" />
-                                    <field name="concernant_travail" placeholder="Concernant l’organisation du travail" />
-                                    <field name="concernant_structure" placeholder="Concernant la structure" />
+                                    <label string="Concernant les usagers ou les résidents" for="concernant_les" colspan="4" />
+                                    <field name="concernant_les" placeholder="Concernant les usagers ou les résidents " colspan="4" nolabel="1" />
+                                    <label string="Concernant le personnel" for="concernant_personnel" colspan="4" />
+                                    <field name="concernant_personnel" placeholder="Concernant le personnel" colspan="4" nolabel="1" />
+                                    <label string="Concernant l’organisation du travail" for="concernant_travail" colspan="4" />
+                                    <field name="concernant_travail" placeholder="Concernant l’organisation du travail" colspan="4" nolabel="1" />
+                                    <label string="Concernant la structure" for="concernant_structure" colspan="4" />
+                                    <field name="concernant_structure" placeholder="Concernant la structure" colspan="4" nolabel="1" />
                                 </group>
                             </page>
                         </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -323,6 +339,92 @@
             <field name="view_id" ref="mail.email_template_tree" />
             <field name="search_view_id" ref="mail.view_email_template_search"/>
             <field name="context" eval="{'search_default_model_id': ref('is_eig12.model_is_ei')}" />
+        </record>
+
+        <!--Sexe-->
+        <record model="ir.ui.view" id="is_sexe_tree_view">
+            <field name="name">is.sexe.tree</field>
+            <field name="model">is.sexe</field>
+            <field name="arch" type="xml">
+            <tree string="Sexe">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_sexe_form_view">
+            <field name="name">is.sexe.form</field>
+            <field name="model">is.sexe</field>
+            <field name="arch" type="xml">
+            <form string="Sexe">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_sexe_search_view" >
+            <field name="name">is.sexe.search</field>
+            <field name="model">is.sexe</field>
+            <field name="arch" type="xml">
+                <search string="Sexe">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <record id="is_sexe_action" model="ir.actions.act_window">
+            <field name="name">Sexe</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.sexe</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--Qualité-->
+        <record model="ir.ui.view" id="is_qualite_tree_view">
+            <field name="name">is.qualite.tree</field>
+            <field name="model">is.qualite</field>
+            <field name="arch" type="xml">
+            <tree string="Qualité">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_qualite_form_view">
+            <field name="name">is.qualite.form</field>
+            <field name="model">is.qualite</field>
+            <field name="arch" type="xml">
+            <form string="Qualité">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_qualite_search_view" >
+            <field name="name">is.qualite.search</field>
+            <field name="model">is.qualite</field>
+            <field name="arch" type="xml">
+                <search string="Qualité">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <record id="is_qualite_action" model="ir.actions.act_window">
+            <field name="name">Qualité</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.qualite</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
     </data>

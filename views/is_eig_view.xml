@@ -138,5 +138,1006 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!--  TYPE EVENEMENT -->
+        <record model="ir.ui.view" id="is_type_evenemen_tree_view">
+            <field name="name">is.type.evenemen.tree</field>
+            <field name="model">is.type.evenement</field>
+            <field name="arch" type="xml">
+            <tree string="Type Evènement">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_type_evenement_form_view">
+            <field name="name">is.type.evenement.form</field>
+            <field name="model">is.type.evenement</field>
+            <field name="arch" type="xml">
+            <form string="Type Evènement">
+                <sheet>
+                <group>
+                    <field name="code" invisible="1"/>
+                    <field name="name" />
+                    <field name="mail_destination_ids" >
+                        <tree editable="bottom">
+                            <field name="autorite_controle"/>
+                            <field name="mail_destination"/>
+                            <field name="type_evenement_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </group>
+                <group string="Visibilité des onglets et caractéristiques des champs" />
+                <notebook>
+                  <page string="Visibilité des onglets">
+                        <group>
+                            <field name="onglet_faits"    />
+                            <field name="onglet_auteurs"  />
+                            <field name="onglet_temoins"  />
+                            <field name="onglet_victimes" />
+                            <field name="onglet_mesures"  />
+                            <field name="onglet_infos"    />
+                            <field name="onglet_element_complementaire" />
+                        </group>
+                  </page>
+                  <page string="EIG">
+                         <field name="fields_eig_id" nolabel="1" context="{'default_is_eig': True}">
+                             <tree string="Caractéristiques des champs de EIG" editable="bottom">
+                                 <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
+                                 <field name="field_visible"/>
+                                 <field name="field_required"/>
+                                 <field name="is_eig" invisible="1"/>
+                                 <field name="is_eig_auteur" invisible="1"/>
+                                 <field name="is_eig_temoin" invisible="1"/>
+                                 <field name="is_eig_victim" invisible="1"/>
+                                 <field name="is_eig_infos" invisible="1"/>
+                                 <field name="type_event_id" invisible="1" />
+                             </tree>
+                         </field>
+                      </page>
+                      <page string="Auteur">
+                         <field name="fields_auteur_id" nolabel="1" context="{'default_is_eig_auteur': True}">
+                             <tree string="Caractéristiques des champs de Auteur" editable="bottom">
+                                 <field name="fields_id" domain="[('model', '=', 'is.eig.auteur')]"/>
+                                 <field name="field_visible"/>
+                                 <field name="field_required"/>
+                                 <field name="is_eig" invisible="1"/>
+                                 <field name="is_eig_auteur" invisible="1"/>
+                                 <field name="is_eig_temoin" invisible="1"/>
+                                 <field name="is_eig_victim" invisible="1"/>
+                                 <field name="is_eig_infos"  invisible="1"/>
+                                 <field name="type_event_id" invisible="1" />
+                             </tree>
+                         </field>
+                      </page>
+                      <page string="Victime">
+                         <field name="fields_victim_id" nolabel="1"  context="{'default_is_eig_victim': True}">
+                             <tree string="Caractéristiques des champs de Victime" editable="bottom">
+                                 <field name="fields_id" domain="[('model', '=', 'is.eig.victime')]"/>
+                                 <field name="field_visible"/>
+                                 <field name="field_required"/>
+                                 <field name="is_eig" invisible="1"/>
+                                 <field name="is_eig_auteur" invisible="1"/>
+                                 <field name="is_eig_temoin" invisible="1"/>
+                                 <field name="is_eig_victim" invisible="1"/>
+                                 <field name="is_eig_infos" invisible="1"/>
+                                 <field name="type_event_id" invisible="1" />
+                             </tree>
+                         </field>
+                      </page>
+                      <page string="Témoins">
+                         <field name="fields_temoin_id" nolabel="1" context="{'default_is_eig_temoin': True}">
+                             <tree string="Caractéristiques des champs de Témoins" editable="bottom">
+                                 <field name="fields_id" domain="[('model', '=', 'is.eig.temoin')]"/>
+                                 <field name="field_visible"/>
+                                 <field name="field_required"/>
+                                 <field name="is_eig" invisible="1"/>
+                                 <field name="is_eig_auteur" invisible="1"/>
+                                 <field name="is_eig_temoin" invisible="1"/>
+                                 <field name="is_eig_victim" invisible="1"/>
+                                 <field name="is_eig_infos" invisible="1"/>
+                                 <field name="type_event_id" invisible="1" />
+                             </tree>
+                         </field>
+                      </page>
+                      <page string="Infos de communication">
+                         <field name="fields_info_id" nolabel="1" context="{'default_is_eig_infos': True}">
+                             <tree string="Caractéristiques des champs de Communication" editable="bottom">
+                                 <field name="fields_id" domain="[('model', '=', 'is.infos.communication')]"/>
+                                 <field name="field_visible"/>
+                                 <field name="field_required"/>
+                                 <field name="is_eig" invisible="1"/>
+                                 <field name="is_eig_auteur" invisible="1"/>
+                                 <field name="is_eig_temoin" invisible="1"/>
+                                 <field name="is_eig_victim" invisible="1"/>
+                                 <field name="is_eig_infos" invisible="1"/>
+                                 <field name="type_event_id" invisible="1" />
+                             </tree>
+                         </field>
+                      </page>
+                </notebook>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_type_evenement_action" model="ir.actions.act_window">
+            <field name="name">Type Evènement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.type.evenement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- EIG -->    
+        <record model="ir.ui.view" id="is_ove_eig_tree_view">
+            <field name="name">is.ove.eig.tree</field>
+            <field name="model">is.eig</field>
+            <field name="arch" type="xml">
+            <tree string="Evénements Indésirables Graves">
+                <field name="name"/>
+                <field name="etablissement_id"/>
+                <field name="type_event_id"/>
+                <field name="nature_event_id"/>
+                <field name="redacteur_id"/>
+                <field name="valideur_id"/>
+                <field name="type_risq_id"/>
+                <field name="nature_risq_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state"/>
+            </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="is_ove_eig_form_view">
+            <field name="name">is.ove.eig.form</field>
+            <field name="model">is.eig</field>
+            <field name="arch" type="xml">
+            <form string="Evénements Indésirables Graves">
+                <header>
+                    <!-- Etat Rédaction-->
+                    <field name="btn_rediger_eig" invisible="1" />
+                    <button name="action_rediger_eig" type="object" string="Rédiger" attrs="{'invisible':[('btn_rediger_eig','!=',True)]}" class="oe_highlight" />
+                    <!-- Etat Rédigé-->
+                    <field name="btn_valider_eig" invisible="1" />
+                    <button name="action_valider_eig" type="object" string="Valider" attrs="{'invisible':[('btn_valider_eig','!=',True)]}" class="oe_highlight" />
+                    <field name="btn_retour_redaction" invisible="1" />
+                    <button name="%(action_is_eig_motif_retour_redaction)d" type="action" string="Rédaction" attrs="{'invisible':[('btn_retour_redaction','!=',True)]}"/>
+                    <button name="action_non_declarable" type="object" string="Non déclarable" states="redige" confirm="Voulez-vous vraiment solder cet EIG et le convertir en Incident ?" />
+                    <!-- Etat Validé-->
+                    <field name="btn_completer_eig" invisible="1" />
+                    <button name="%(action_is_eig_motif_retour_completer)d" type="action" string="Compléter" attrs="{'invisible':[('btn_completer_eig','!=',True)]}" class="oe_highlight"/>
+                    <button name="action_terminer_eig" states="valide" type="object" string="Traiter" class="oe_highlight" groups="is_eig12.group_is_traiteur" />
+                    <!-- Etat à Completer-->
+                    <field name="btn_completer_vers_valider_eig" invisible="1" />
+                    <button name="action_completer_vers_valider_eig" type="object" string="Valider" attrs="{'invisible':[('btn_completer_vers_valider_eig','!=',True)]}" class="oe_highlight" />
+                    <!-- Etat Traité (fin)-->
+                    <button name="action_completer_vers_valider_eig" states="done" type="object" string="Valider" groups="is_eig.group_is_gestionnaire" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done" />
+                </header>
+                <sheet>
+                    <!-- <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                        <button class="oe_inline oe_stat_button" string="Génération ODT " name= "generation_odt" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="base.group_system"/>
+                        <button class="oe_inline oe_stat_button" string="Génération PDF " name= "generation_pdf" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig.group_is_gestionnaire"/>
+                    </div> -->
+                    <group>
+                        <group>
+                              <field name="name" readonly="1"/>
+                              <field name="etablissement_id" />
+                        </group>
+                        <group>
+                              <field name="redacteur_id" attrs="{'invisible': [('etablissement_id','=',False)]}"/>
+                              <field name="valideur_id" attrs="{'invisible': [('etablissement_id','=',False)]}"/>
+                              <field name="date_validation" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Evènement" attrs="{'invisible': [('etablissement_id','=',False)]}">
+                            <field name="type_event_id" />
+                            <field name="nature_event_id"  attrs="{'invisible': [('type_event_id','=',False)]}"/>
+                            <field name="related_vsb_nature_precision" invisible="1"  />
+                            <field name="related_rqr_nature_precision" invisible="1"  />
+                            <field name="nature_precision" attrs="{'invisible': [('related_vsb_nature_precision', '=', False)], 'required':[('related_rqr_nature_precision','=', True)]}"/>
+                        </group>
+                        <group string="Risque"     attrs="{'invisible': [('type_event_id','=',False)]}">
+                            <field name="type_risq_id" attrs="{'invisible': [('state','=','draft')]}  " />
+                            <field name="nature_risq_id" />
+                            <field name="signalement_autorites" />
+                            <field name="related_vsb_auteur_ids" invisible="1" />
+                            <field name="related_rqr_auteur_ids" invisible="1" />
+                            <field name="related_vsb_temoin_ids" invisible="1" />
+                            <field name="related_rqr_temoin_ids" invisible="1" />
+                            <field name="related_vsb_victim_ids" invisible="1" />
+                            <field name="related_rqr_victim_ids" invisible="1" />
+                            <field name="related_vsb_infos_ids" invisible="1" />
+                            <field name="related_rqr_infos_ids" invisible="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <div style="background:orange" attrs="{'invisible':[('signalement_autorites','=',False)]}">
+                            <b>Attention</b> : l'applicatif n'envoie pas automatiquement un courrier aux autorités judiciaires. 
+                            En cas de signalement aux autorités judiciaires, il est nécessaire d'imprimer le document pdf intitulé 
+                            "signalement" généré dans les "pièces-jointes" de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante".
+                        </div>
+                    </group>
+                    <group invisible="1">
+                        <field name="related_onglet_faits"                  invisible="1"/>
+                        <field name="related_onglet_auteurs"                invisible="1"/>
+                        <field name="related_onglet_temoins"                invisible="1"/>
+                        <field name="related_onglet_victimes"               invisible="1"/>
+                        <field name="related_onglet_mesures"                invisible="1"/>
+                        <field name="related_onglet_infos"                  invisible="1"/>
+                        <field name="related_onglet_element_complementaire" invisible="1"/>
+                        <field name="related_group_motif_retour"            invisible="1"/> <!-- Afficher uniquement si données dans tableau -->
+                    </group>
+                    <notebook  attrs="{'invisible': [('type_event_id','=',False)]}" >
+                    <page string="Faits" attrs="{'invisible': [('related_onglet_faits','=',False)]}">
+                        <group>
+                            <group>
+                                <field name="related_vsb_start_date" invisible="1"  />
+                                <field name="related_rqr_start_date" invisible="1"  />
+                                <field name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
+                                <field name="related_vsb_lieu_faits" invisible="1"  />
+                                <field name="related_rqr_lieu_faits" invisible="1"  />
+                                <field name="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)], 'required':[('related_rqr_lieu_faits','=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="related_vsb_end_date" invisible="1"  />
+                                <field name="related_rqr_end_date" invisible="1"  />
+                                <field name="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)], 'required':[('related_rqr_end_date','=', True)]}"/>
+                                <field name="related_vsb_cause_faits" invisible="1"  />
+                                <field name="related_rqr_cause_faits" invisible="1"  />
+                                <field name="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)], 'required':[('related_rqr_cause_faits','=', True)]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="related_vsb_description_faits" invisible="1"  />
+                            <field name="related_rqr_description_faits" invisible="1"  />
+                            <field name="description_faits" attrs="{'invisible': [('related_vsb_description_faits', '=', False)], 'required':[('related_rqr_description_faits','=', True)]}"/>
+
+                            <field name="related_vsb_risque_reproductivite" invisible="1"  />
+                            <field name="related_rqr_risque_reproductivite" invisible="1"  />
+                            <field name="risque_reproductivite" attrs="{'invisible': [('related_vsb_risque_reproductivite', '=', False)], 'required':[('related_rqr_risque_reproductivite','=', True)]}"/>
+
+                            <field name="related_vsb_risque_extension" invisible="1"  />
+                            <field name="related_rqr_risque_extension" invisible="1"  />
+                            <field name="risque_extension" attrs="{'invisible': [('related_vsb_risque_extension', '=', False)], 'required':[('related_rqr_risque_extension','=', True)]}"/>
+
+                            <field name="related_vsb_risque_contentieux" invisible="1"  />
+                            <field name="related_rqr_risque_contentieux" invisible="1"  />
+                            <field name="risque_contentieux" attrs="{'invisible': [('related_vsb_risque_contentieux', '=', False)], 'required':[('related_rqr_risque_contentieux','=', True)]}"/>
+
+                            <field name="related_vsb_evenement_maitrise" invisible="1"  />
+                            <field name="related_rqr_evenement_maitrise" invisible="1"  />
+                            <field name="evenement_maitrise" attrs="{'invisible': [('related_vsb_evenement_maitrise', '=', False)], 'required':[('related_rqr_evenement_maitrise','=', True)]}"/>
+
+                            <field name="related_vsb_si_non_maitrise" invisible="1"  />
+                            <field name="related_rqr_si_non_maitrise" invisible="1"  />
+                            <field name="si_non_maitrise" attrs="{'invisible': [('related_vsb_si_non_maitrise', '=', False)], 'required':[('related_rqr_si_non_maitrise','=', True)]}"/>
+
+                            <field name="related_vsb_element_faits" invisible="1"  />
+                            <field name="related_rqr_element_faits" invisible="1"  />
+                            <field name="element_faits" attrs="{'invisible': [('related_vsb_element_faits', '=', False)], 'required':[('related_rqr_element_faits','=', True)]}"/>
+                        </group>
+                    </page>
+                    <page string="Auteurs" attrs="{'invisible': [('related_onglet_auteurs','=',False)]}">
+                        <field name="related_aut_vsb_identifie"  invisible="1"  />
+                        <field name="related_aut_rqr_identifie"  invisible="1"  />
+                        <field name="related_aut_vsb_name" invisible="1"  />
+                        <field name="related_aut_rqr_name" invisible="1"   />
+                        <field name="related_aut_vsb_birthdate" invisible="1"  />
+                        <field name="related_aut_rqr_birthdate" invisible="1"   />
+                        <field name="related_aut_vsb_disposition_id" invisible="1"  />
+                        <field name="related_aut_rqr_disposition_id" invisible="1"   />
+                        <field name="related_aut_vsb_sexe_id" invisible="1"  />
+                        <field name="related_aut_rqr_sexe_id" invisible="1"   />
+                        <field name="related_aut_vsb_prenom" invisible="1"  />
+                        <field name="related_aut_rqr_prenom" invisible="1"   />
+                        <field name="related_aut_vsb_qualite_id" invisible="1"  />
+                        <field name="related_aut_rqr_qualite_id" invisible="1"   />
+                        <field name="related_aut_vsb_adresse" invisible="1"  />
+                        <field name="related_aut_rqr_adresse" invisible="1"   />
+                        <field  name="auteur_ids" 
+                                context="{
+                                    'default_related_vsb_identifie': related_aut_vsb_identifie, 
+                                    'default_related_rqr_identifie': related_aut_rqr_identifie, 
+                                    'default_related_vsb_name': related_aut_vsb_name, 
+                                    'default_related_rqr_name': related_aut_rqr_name, 
+                                    'default_related_vsb_birthdate': related_aut_vsb_birthdate, 
+                                    'default_related_rqr_birthdate': related_aut_rqr_birthdate, 
+                                    'default_related_vsb_sexe_id': related_aut_vsb_sexe_id, 
+                                    'default_related_rqr_sexe_id': related_aut_rqr_sexe_id, 
+                                    'default_related_vsb_disposition_id': related_aut_vsb_disposition_id, 
+                                    'default_related_rqr_disposition_id': related_aut_rqr_disposition_id, 
+                                    'default_related_vsb_adresse': related_aut_vsb_adresse, 
+                                    'default_related_rqr_adresse': related_aut_rqr_adresse, 
+                                    'default_related_vsb_prenom': related_aut_vsb_prenom, 
+                                    'default_related_rqr_prenom': related_aut_rqr_prenom, 
+                                    'default_related_vsb_qualite_id': related_aut_vsb_qualite_id, 
+                                    'default_related_rqr_qualite_id': related_aut_rqr_qualite_id}" >
+                            <form string="Auteurs">
+                                <group col="2" colspan="4">
+                                    <field name="related_vsb_identifie" invisible="1"  />
+                                    <field name="related_rqr_identifie" invisible="1"  />
+                                    <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    <field name="related_vsb_name" invisible="1"  />
+                                    <field name="related_rqr_name" invisible="1"  />
+                                    <field name="name"  attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
+                                    <field name="related_vsb_prenom" invisible="1"  />
+                                    <field name="related_rqr_prenom" invisible="1"  />
+                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}" />
+                                    <field name="related_vsb_sexe_id" invisible="1"  />
+                                    <field name="related_rqr_sexe_id" invisible="1"  />
+                                    <field name="sexe_id" attrs="{'invisible': [('related_vsb_sexe_id', '=', False)], 'required':[('related_rqr_sexe_id','=', True)]}" />
+                                    <field name="related_vsb_birthdate" invisible="1"  />
+                                    <field name="related_rqr_birthdate" invisible="1"  />
+                                    <field name="birthdate" attrs="{'invisible': [('related_vsb_birthdate', '=', False)], 'required':[('related_rqr_birthdate','=', True)]}" />
+                                    <field name="related_vsb_qualite_id" invisible="1"  />
+                                    <field name="related_rqr_qualite_id" invisible="1"  />
+                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}" />
+                                    <field name="related_vsb_disposition_id" invisible="1"  />
+                                    <field name="related_rqr_disposition_id" invisible="1"  />
+                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}" />
+                                    <field name="related_vsb_adresse" invisible="1"  />
+                                    <field name="related_rqr_adresse" invisible="1"  />
+                                    <field name="adresse" attrs="{'invisible': [('related_vsb_adresse', '=', False)], 'required':[('related_rqr_adresse','=', True)]}" />
+                                    <field name="is_eig_id" invisible="1" />
+                                </group>
+                            </form>
+                            <tree string="Auteurs">
+                                <field name="identifie"/>
+                                <field name="name" />
+                                <field name="prenom"  />
+                                <field name="sexe_id"  />
+                                <field name="birthdate"  />
+                                <field name="qualite_id"  />
+                                <field name="disposition_id"  />
+                                <field name="is_eig_id" invisible="1" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Témoins" attrs="{'invisible': [('related_onglet_temoins','=',False)]}">
+                        <field name="related_tem_vsb_identifie"  invisible="1"  />
+                        <field name="related_tem_rqr_identifie"  invisible="1"  />
+                        <field name="related_tem_vsb_name" invisible="1"  />
+                        <field name="related_tem_rqr_name" invisible="1"   />
+                        <field name="related_tem_vsb_sexe_id" invisible="1"  />
+                        <field name="related_tem_rqr_sexe_id" invisible="1"   />
+                        <field name="related_tem_vsb_address" invisible="1"  />
+                        <field name="related_tem_rqr_address" invisible="1"   />
+                        <field name="related_tem_vsb_birthdate" invisible="1"  />
+                        <field name="related_tem_rqr_birthdate" invisible="1"   />
+                        <field name="related_tem_vsb_disposition_id" invisible="1"  />
+                        <field name="related_tem_rqr_disposition_id" invisible="1"   />
+                        <field name="related_tem_vsb_prenom" invisible="1"  />
+                        <field name="related_tem_rqr_prenom" invisible="1"   />
+                        <field name="related_tem_vsb_qualite_id" invisible="1"  />
+                        <field name="related_tem_rqr_qualite_id" invisible="1"   />
+                        <field name="temoin_ids" 
+                             context="{
+                                'default_related_vsb_identifie': related_tem_vsb_identifie, 
+                                'default_related_rqr_identifie': related_tem_rqr_identifie, 
+                                'default_related_vsb_name': related_tem_vsb_name, 
+                                'default_related_rqr_name': related_tem_rqr_name, 
+                                'default_related_vsb_sexe_id': related_tem_vsb_name, 
+                                'default_related_rqr_sexe_id': related_tem_rqr_name, 
+                                'default_related_vsb_birthdate': related_tem_vsb_birthdate, 
+                                'default_related_rqr_birthdate': related_tem_rqr_birthdate, 
+                                'default_related_vsb_address': related_tem_vsb_address, 
+                                'default_related_rqr_address': related_tem_rqr_address, 
+                                'default_related_vsb_disposition_id': related_tem_vsb_disposition_id, 
+                                'default_related_rqr_disposition_id': related_tem_rqr_disposition_id, 
+                                'default_related_vsb_prenom': related_tem_vsb_prenom, 
+                                'default_related_rqr_prenom': related_tem_rqr_prenom, 
+                                'default_related_vsb_qualite_id': related_tem_vsb_qualite_id, 
+                                'default_related_rqr_qualite_id': related_tem_rqr_qualite_id }">
+                            <form string="Témoins">
+                                <group col="2" colspan="4">
+                                    <field name="related_vsb_identifie" invisible="1"  />
+                                    <field name="related_rqr_identifie" invisible="1"  />
+                                    <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    <field name="related_vsb_name" invisible="1"  />
+                                    <field name="related_rqr_name" invisible="1"  />
+                                    <field name="name"  attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
+                                    <field name="related_vsb_prenom" invisible="1"  />
+                                    <field name="related_rqr_prenom" invisible="1"  />
+                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}" />
+                                    <field name="related_vsb_sexe_id" invisible="1"  />
+                                    <field name="related_rqr_sexe_id" invisible="1"  />
+                                    <field name="sexe_id" attrs="{'invisible': [('related_vsb_sexe_id', '=', False)], 'required':[('related_rqr_sexe_id','=', True)]}" />
+                                    <field name="related_vsb_birthdate" invisible="1"  />
+                                    <field name="related_rqr_birthdate" invisible="1"  />
+                                    <field name="birthdate" attrs="{'invisible': [('related_vsb_birthdate', '=', False)], 'required':[('related_rqr_birthdate','=', True)]}" />
+                                    <field name="related_vsb_address" invisible="1"  />
+                                    <field name="related_rqr_address" invisible="1"  />
+                                    <field name="address"  attrs="{'invisible': [('related_vsb_address', '=', False)], 'required':[('related_rqr_address','=', True)]}"/>
+                                    <field name="related_vsb_disposition_id" invisible="1"  />
+                                    <field name="related_rqr_disposition_id" invisible="1"  />
+                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}" />
+                                    <field name="related_vsb_qualite_id" invisible="1"  />
+                                    <field name="related_rqr_qualite_id" invisible="1"  />
+                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}" />
+                                    <field name="is_eig_id" invisible="1" />
+                                </group>
+                            </form>
+                            <tree string="Témoins">
+                                <field name="identifie"/>
+                                <field name="name"/>
+                                <field name="prenom" />
+                                <field name="sexe_id" />
+                                <field name="address" />
+                                <field name="birthdate" />
+                                <field name="qualite_id" />
+                                <field name="disposition_id" />
+                                <field name="is_eig_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Victimes" attrs="{'invisible': [('related_onglet_victimes','=',False)]}">
+                        <group invisible="1">
+                            <field name="related_vict_vsb_identifie"  invisible="1"  />
+                            <field name="related_vict_rqr_identifie"  invisible="1"  />
+                            <field name="related_vict_vsb_name"  invisible="1"  />
+                            <field name="related_vict_rqr_name"   invisible="1" />
+                            <field name="related_vict_vsb_prenom"  invisible="1" />
+                            <field name="related_vict_rqr_prenom"  invisible="1"  />
+                            <field name="related_vict_vsb_sexe_id" invisible="1"  />
+                            <field name="related_vict_rqr_sexe_id" invisible="1"   />
+                            <field name="related_vict_vsb_address"  invisible="1" />
+                            <field name="related_vict_rqr_address"  invisible="1"  />
+                            <field name="related_vict_vsb_ecole"  invisible="1" />
+                            <field name="related_vict_rqr_ecole"  invisible="1"  />
+                            <field name="related_vict_vsb_birthdate"  invisible="1" />
+                            <field name="related_vict_rqr_birthdate"   invisible="1" />
+                            <field name="related_vict_vsb_qualite_id"  invisible="1" />
+                            <field name="related_vict_rqr_qualite_id"  invisible="1"  />
+                            <field name="related_vict_vsb_disposition_id"  invisible="1" />
+                            <field name="related_vict_rqr_disposition_id"   invisible="1" />
+                            <field name="related_vict_vsb_consequence_id"  invisible="1" />
+                            <field name="related_vict_rqr_consequence_id"  invisible="1"  />
+                            <field name="related_vict_vsb_nom_pere"   invisible="1" />
+                            <field name="related_vict_rqr_nom_pere"  invisible="1"  />
+                            <field name="related_vict_vsb_prenom_pere"  invisible="1" />
+                            <field name="related_vict_rqr_prenom_pere"  invisible="1"  />
+                            <field name="related_vict_vsb_address_pere" invisible="1"  />
+                            <field name="related_vict_rqr_address_pere"  invisible="1" />
+                            <field name="related_vict_vsb_nom_mere" invisible="1"  />
+                            <field name="related_vict_rqr_nom_mere"  invisible="1"  />
+                            <field name="related_vict_vsb_prenom_mere"  invisible="1" />
+                            <field name="related_vict_rqr_prenom_mere"   invisible="1" />
+                            <field name="related_vict_vsb_address_mere" invisible="1"  />
+                            <field name="related_vict_rqr_address_mere"  invisible="1"  />
+                        </group> 
+                        <field name="victim_ids"
+                               context="{
+                                    'default_related_vsb_identifie': related_vict_vsb_identifie, 
+                                    'default_related_rqr_identifie': related_vict_rqr_identifie, 
+                                    'default_related_vsb_name': related_vict_vsb_name, 
+                                    'default_related_rqr_name': related_vict_rqr_name, 
+                                    'default_related_vsb_address': related_vict_vsb_address, 
+                                    'default_related_rqr_address': related_vict_rqr_address, 
+                                    'default_related_vsb_ecole': related_vict_vsb_ecole, 
+                                    'default_related_rqr_ecole': related_vict_rqr_ecole, 
+                                    'default_related_vsb_birthdate': related_vict_vsb_birthdate, 
+                                    'default_related_rqr_birthdate': related_vict_rqr_birthdate,
+                                    'default_related_vsb_disposition_id': related_vict_vsb_disposition_id, 
+                                    'default_related_rqr_disposition_id':related_vict_rqr_disposition_id,
+                                    'default_related_vsb_prenom': related_vict_vsb_prenom, 
+                                    'default_related_rqr_prenom': related_vict_rqr_prenom, 
+                                    'default_related_vsb_sexe_id': related_vict_vsb_sexe_id, 
+                                    'default_related_rqr_sexe_id': related_vict_rqr_sexe_id,
+                                    'default_related_vsb_qualite_id': related_vict_vsb_qualite_id, 
+                                    'default_related_rqr_qualite_id': related_vict_rqr_qualite_id,
+                                    'default_related_vsb_consequence_id': related_vict_vsb_consequence_id, 
+                                    'default_related_rqr_consequence_id': related_vict_rqr_consequence_id,
+                                    'default_related_vsb_nom_pere': related_vict_vsb_nom_pere, 
+                                    'default_related_rqr_nom_pere': related_vict_rqr_nom_pere,
+                                    'default_related_vsb_nom_mere': related_vict_vsb_nom_mere, 
+                                    'default_related_rqr_nom_mere': related_vict_rqr_nom_mere,
+                                    'default_related_vsb_prenom_pere': related_vict_vsb_prenom_pere, 
+                                    'default_related_rqr_prenom_pere': related_vict_rqr_prenom_pere,
+                                    'default_related_vsb_prenom_mere': related_vict_vsb_prenom_mere, 
+                                    'default_related_rqr_prenom_mere': related_vict_rqr_prenom_mere,
+                                    'default_related_vsb_address_pere': related_vict_vsb_address_pere, 
+                                    'default_related_rqr_address_pere': related_vict_rqr_address_pere,
+                                    'default_related_vsb_address_mere': related_vict_vsb_address_mere, 
+                                    'default_related_rqr_address_mere': related_vict_rqr_address_mere }" >
+                            <form string="Victimes">
+                                <group col="2" colspan="4">
+                                    <field name="related_vsb_identifie" invisible="1"  />
+                                    <field name="related_rqr_identifie" invisible="1"  />
+                                    <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    <field name="related_vsb_name" invisible="1"  />
+                                    <field name="related_rqr_name" invisible="1"  />
+                                    <field name="name" attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
+                                    <field name="related_vsb_prenom"  invisible="1" />
+                                    <field name="related_rqr_prenom"  invisible="1" />
+                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}"/>
+                                    <field name="related_vsb_sexe_id" invisible="1"  />
+                                    <field name="related_rqr_sexe_id" invisible="1"  />
+                                    <field name="sexe_id" attrs="{'invisible': [('related_vsb_sexe_id', '=', False)], 'required':[('related_rqr_sexe_id','=', True)]}"/>
+                                    <field name="related_vsb_birthdate" invisible="1"  />
+                                    <field name="related_rqr_birthdate" invisible="1"  />
+                                    <field name="birthdate" attrs="{'invisible': [('related_vsb_birthdate', '=', False)], 'required':[('related_rqr_birthdate','=', True)]}"/>
+                                    <field name="related_vsb_address" invisible="1"  />
+                                    <field name="related_rqr_address" invisible="1"  />
+                                    <field name="address" attrs="{'invisible': [('related_vsb_address', '=', False)], 'required':[('related_rqr_address','=', True)]}"/>
+                                    <field name="related_vsb_ecole" invisible="1"  />
+                                    <field name="related_rqr_ecole" invisible="1"  />
+                                    <field name="ecole" attrs="{'invisible': [('related_vsb_ecole', '=', False)], 'required':[('related_rqr_ecole','=', True)]}"/>
+                                    <field name="related_vsb_qualite_id" invisible="1"  />
+                                    <field name="related_rqr_qualite_id" invisible="1"  />
+                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
+                                    <field name="related_vsb_consequence_id" invisible="1"  />
+                                    <field name="related_rqr_consequence_id" invisible="1"  />
+                                    <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
+                                    <field name="related_vsb_disposition_id" invisible="1"  />
+                                    <field name="related_rqr_disposition_id" invisible="1"  />
+                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
+                                </group>
+                                <group>
+                                <group string="Père">
+                                    <field name="related_vsb_nom_pere" invisible="1"  />
+                                    <field name="related_rqr_nom_pere" invisible="1"  />
+                                    <field name="nom_pere" attrs="{'invisible': [('related_vsb_nom_pere', '=', False)], 'required':[('related_rqr_nom_pere','=', True)]}"/>
+                                    <field name="related_vsb_prenom_pere" invisible="1"  />
+                                    <field name="related_rqr_prenom_pere" invisible="1"  />
+                                    <field name="prenom_pere" attrs="{'invisible': [('related_vsb_prenom_pere', '=', False)], 'required':[('related_rqr_prenom_pere','=', True)]}"/>
+                                    <field name="related_vsb_address_pere" invisible="1"  />
+                                    <field name="related_rqr_address_pere" invisible="1"  />
+                                    <field name="address_pere" attrs="{'invisible': [('related_vsb_address_pere', '=', False)], 'required':[('related_rqr_address_pere','=', True)]}"/>
+                                </group>
+                                <group string="Mère">
+                                    <field name="related_vsb_nom_mere"  invisible="1" />
+                                    <field name="related_rqr_nom_mere" invisible="1"  />
+                                    <field name="nom_mere" attrs="{'invisible': [('related_vsb_nom_mere', '=', False)], 'required':[('related_rqr_nom_mere','=', True)]}"/>
+                                    <field name="related_vsb_prenom_mere"  invisible="1" />
+                                    <field name="related_rqr_prenom_mere" invisible="1"  />
+                                    <field name="prenom_mere" attrs="{'invisible': [('related_vsb_prenom_mere', '=', False)], 'required':[('related_rqr_prenom_mere','=', True)]}"/>
+                                    <field name="related_vsb_address_mere"  invisible="1" />
+                                    <field name="related_rqr_address_mere"  invisible="1" />
+                                    <field name="address_mere" attrs="{'invisible': [('related_vsb_address_mere', '=', False)], 'required':[('related_rqr_address_mere','=', True)]}"/>
+                                    <field name="is_eig_id" invisible="1"/>
+                                </group>
+                                </group>
+                            </form>
+                            <tree string="Victimes">
+                                <field name="identifie"/>
+                                <field name="name"/>
+                                <field name="prenom"/>
+                                <field name="sexe_id"/>
+                                <field name="address"/>
+                                <field name="birthdate"/>
+                                <field name="qualite_id"/>
+                                <field name="disposition_id"/>
+                                <field name="consequence_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Mesures d'accompagnement" attrs="{'invisible': [('related_onglet_mesures','=',False)]}">
+                        <group>
+                            <field name="related_vsb_reunion_debriefing" invisible="1"  />
+                            <field name="related_rqr_reunion_debriefing" invisible="1"  />
+                            <field name="reunion_debriefing" attrs="{'invisible': [('related_vsb_reunion_debriefing', '=', False)], 'required':[('related_rqr_reunion_debriefing','=', True)]}"/>
+                            <field name="related_vsb_si_reunion_debriefing" invisible="1"  />
+                            <field name="related_rqr_si_reunion_debriefing" invisible="1"  />
+                            <field name="si_reunion_debriefing" attrs="{'invisible': [('related_vsb_si_reunion_debriefing', '=', False)], 'required':[('related_rqr_si_reunion_debriefing','=', True)]}"/>
+                            <field name="related_vsb_causes_profondes" invisible="1"  />
+                            <field name="related_rqr_causes_profondes" invisible="1"  />
+                            <field name="causes_profondes" attrs="{'invisible': [('related_vsb_causes_profondes', '=', False)], 'required':[('related_rqr_causes_profondes','=', True)]}"/>
+                            <field name="related_vsb_si_causes_profondes" invisible="1"  />
+                            <field name="related_rqr_si_causes_profondes" invisible="1"  />
+                            <field name="si_causes_profondes" attrs="{'invisible': [('related_vsb_si_causes_profondes', '=', False)], 'required':[('related_rqr_si_causes_profondes','=', True)]}"/>
+                            <field name="related_vsb_enseignements_a_tirer" invisible="1"  />
+                            <field name="related_rqr_enseignements_a_tirer" invisible="1"  />
+                            <field name="enseignements_a_tirer" attrs="{'invisible': [('related_vsb_enseignements_a_tirer', '=', False)], 'required':[('related_rqr_enseignements_a_tirer','=', True)]}"/>
+                            <field name="related_vsb_si_enseignements_a_tirer" invisible="1"  />
+                            <field name="related_rqr_si_enseignements_a_tirer" invisible="1"  />
+                            <field name="si_enseignements_a_tirer" attrs="{'invisible': [('related_vsb_si_enseignements_a_tirer', '=', False)], 'required':[('related_rqr_si_enseignements_a_tirer','=', True)]}"/>
+                            <field name="related_vsb_mesure_organisation" invisible="1"  />
+                            <field name="related_rqr_mesure_organisation" invisible="1"  />
+                            <field name="mesure_organisation" attrs="{'invisible': [('related_vsb_mesure_organisation', '=', False)], 'required':[('related_rqr_mesure_organisation','=', True)]}"/>
+                            <field name="related_vsb_mesure_usagers" invisible="1"  />
+                            <field name="related_rqr_mesure_usagers" invisible="1"  />
+                            <field name="mesure_usagers" attrs="{'invisible': [('related_vsb_mesure_usagers', '=', False)], 'required':[('related_rqr_mesure_usagers','=', True)]}"/>
+                            <field name="related_vsb_mesure_personnel" invisible="1"  />
+                            <field name="related_rqr_mesure_personnel" invisible="1"  />
+                            <field name="mesure_personnel" attrs="{'invisible': [('related_vsb_mesure_personnel', '=', False)], 'required':[('related_rqr_mesure_personnel','=', True)]}"/>
+                            <field name="related_vsb_mesure_autres" invisible="1"  />
+                            <field name="related_rqr_mesure_autres" invisible="1"  />
+                            <field name="mesure_autres"  attrs="{'invisible': [('related_vsb_mesure_autres', '=', False)], 'required':[('related_rqr_mesure_autres','=', True)]}"/>
+                        </group>
+                    </page>
+                    <page string="Information communication" attrs="{'invisible': [('related_onglet_infos','=',False)]}">
+                        <group>
+                            <group>
+                                <field name="related_vsb_intervention_police" invisible="1"  />
+                                <field name="related_rqr_intervention_police" invisible="1"  />
+                                <field name="intervention_police" attrs="{'invisible': [('related_vsb_intervention_police', '=', False)], 'required':[('related_rqr_intervention_police','=', True)]}"/>
+                                <field name="related_vsb_depot_plainte" invisible="1"  />
+                                <field name="related_rqr_depot_plainte" invisible="1"  />
+                                <field name="depot_plainte" attrs="{'invisible': [('related_vsb_depot_plainte', '=', False)], 'required':[('related_rqr_depot_plainte','=', True)]}"/>
+                            </group>
+                        </group>
+                        <group invisible="1">
+                            <field name="related_inf_vsb_date"  invisible="1"  />
+                            <field name="related_inf_rqr_date"  invisible="1"  />
+                            <field name="related_inf_vsb_user_id" invisible="1"  />
+                            <field name="related_inf_rqr_user_id" invisible="1"   />
+                            <field name="related_inf_vsb_responsible_id" invisible="1"  />
+                            <field name="related_inf_rqr_responsible_id" invisible="1"   />
+                            <field name="related_inf_vsb_support" invisible="1"  />
+                            <field name="related_inf_rqr_support"  invisible="1"  />
+                            <field name="related_inf_vsb_info_cible"  invisible="1"  />
+                            <field name="related_inf_rqr_info_cible" invisible="1"  />
+                            <field name="related_inf_vsb_impact" invisible="1"   />
+                            <field name="related_inf_rqr_impact" invisible="1"  />
+                        </group>
+                        <field name="infos_ids"
+                            context="{'default_related_vsb_date': related_inf_vsb_date, 'default_related_rqr_date': related_inf_rqr_date, 
+                            'default_related_vsb_user_id': related_inf_vsb_user_id, 'default_related_rqr_user_id': related_inf_rqr_user_id, 
+                            'default_related_vsb_responsible_id': related_inf_vsb_responsible_id, 'default_related_rqr_responsible_id': related_inf_rqr_responsible_id,
+                            'default_related_vsb_support': related_inf_vsb_support, 'default_related_rqr_support':related_inf_rqr_support,
+                            'default_related_vsb_info_cible': related_inf_vsb_info_cible, 'default_related_rqr_info_cible': related_inf_rqr_info_cible, 
+                            'default_related_vsb_impact': related_inf_vsb_impact, 'default_related_rqr_impact': related_inf_rqr_impact
+                            }" >
+                            <form string="Information communication">
+                                <group>
+                                    <group>
+                                        <field name="related_vsb_date" invisible="1"  />
+                                        <field name="related_rqr_date" invisible="1"  />    
+                                        <field name="date" attrs="{'invisible': [('related_vsb_date', '=', False)], 'required':[('related_rqr_date','=', True)]}"/>
+                                        <field name="related_vsb_support" invisible="1"  />
+                                        <field name="related_rqr_support" invisible="1"  />
+                                        <field name="support" attrs="{'invisible': [('related_vsb_support', '=', False)], 'required':[('related_rqr_support','=', True)]}"/>
+                                        <field name="related_vsb_info_cible" invisible="1"  />
+                                        <field name="related_rqr_info_cible" invisible="1"  />
+                                        <field name="info_cible" attrs="{'invisible': [('related_vsb_info_cible', '=', False)], 'required':[('related_rqr_info_cible','=', True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="related_vsb_user_id" invisible="1"  />
+                                        <field name="related_rqr_user_id" invisible="1"  />
+                                        <field name="user_id" attrs="{'invisible': [('related_vsb_user_id', '=', False)], 'required':[('related_rqr_user_id','=', True)]}"/>
+                                        <field name="related_vsb_responsible_id" invisible="1"  />
+                                        <field name="related_rqr_responsible_id" invisible="1"  />
+                                        <field name="responsible_id" attrs="{'invisible': [('related_vsb_responsible_id', '=', False)], 'required':[('related_rqr_responsible_id','=', True)]}"/>
+                                        <field name="related_vsb_impact" invisible="1"  />
+                                        <field name="related_rqr_impact" invisible="1"  />
+                                        <field name="impact" attrs="{'invisible': [('related_vsb_impact', '=', False)], 'required':[('related_rqr_impact','=', True)]}"/>
+                                        <field name="is_eig_id" invisible="1"/>
+                                    </group>
+                                </group>
+                            </form>
+                            <tree string="Information communication">
+                                <field name="date" />
+                                <field name="user_id" />
+                                <field name="responsible_id" />
+                                <field name="support" />
+                                <field name="info_cible" />
+                                <field name="impact" />
+                                <field name="is_eig_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Eléments complémentaires"  attrs="{'invisible': [('related_onglet_element_complementaire','=',False)]}">
+                        <group string="Motifs de retour"  attrs="{'invisible': [('related_group_motif_retour','=',False)]}">
+                            <field name="motif_ids" nolabel="1">
+                                <tree string="Motifs">
+                                    <field name="date" />
+                                    <field name="user_id" />
+                                    <field name="action" />
+                                    <field name="description" />
+                                    <field name="eig_id1" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Pièces jointes">
+                            <field name="related_vsb_note" invisible="1"  />
+                            <field name="related_rqr_note" invisible="1"  />
+                            <field name="note" placeholder="Note ... " attrs="{'invisible': [('related_vsb_note', '=', False)], 'required':[('related_rqr_note','=', True)]}"/>    
+                            <field name="related_vsb_attachment_ids" invisible="1"  />
+                            <field name="related_rqr_attachment_ids" invisible="1"  />
+                            <field name="attachment_ids" widget="many2many_binary" attrs="{'invisible': [('related_vsb_attachment_ids', '=', False)], 'required':[('related_rqr_attachment_ids','=', True)]}"/>
+                        </group>
+                    </page>
+            </notebook>
+        </sheet>
+        </form>
+        </field>
+        </record>
+        <record model="ir.ui.view" id="is_ove_eig_search_view">
+            <field name="name">is.ove.eig.search</field>
+            <field name="model">is.eig</field>
+            <field name="arch" type="xml">
+                <search string="Evénements Indésirables Graves">
+                    <field name="name"/>
+                    <field name="etablissement_id"/>
+                    <field name="type_event_id"/>
+                    <field name="nature_event_id"/>
+                    <field name="redacteur_id"/>
+                    <field name="valideur_id"/>
+                    <field name="type_risq_id"/>
+                    <field name="nature_risq_id"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+        <!-- Tous les EIG -->
+        <record id="is_ove_eig_action" model="ir.actions.act_window">
+            <field name="name">Tous les EIG</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- EIG Rédaction -->
+	    <record id="is_ove_eig_draft_action" model="ir.actions.act_window">
+	        <field name="name">Rédaction</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">is.eig</field>
+	        <field name="domain">[('state', '=', 'draft')]</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <!-- EIG Rédigé -->
+	    <record id="is_ove_eig_redige_action" model="ir.actions.act_window">
+	        <field name="name">Rédigé</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">is.eig</field>
+	        <field name="domain">[('state', '=', 'redige')]</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <!-- EIG  -->
+	    <record id="is_ove_eig_valide_action" model="ir.actions.act_window">
+	        <field name="name">Validé</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">is.eig</field>
+	        <field name="domain">[('state', '=', 'valide')]</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <!-- EIG A compléter -->
+	    <record id="is_ove_eig_complet_action" model="ir.actions.act_window">
+	        <field name="name">A compléter</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">is.eig</field>
+	        <field name="domain">[('state', '=', 'complet')]</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <!-- EIG Traité -->
+	    <record id="is_ove_eig_done_action" model="ir.actions.act_window">
+	        <field name="name">Traité</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">is.eig</field>
+	        <field name="domain">[('state', '=', 'done')]</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+        <!--  Nature Evenement  -->
+        <record model="ir.ui.view" id="is_nature_evenement_tree_view">
+            <field name="name">is.nature.evenement.tree</field>
+            <field name="model">is.nature.evenement</field>
+            <field name="arch" type="xml">
+            <tree string="Nature Evènement">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="is_nature_evenement_form_view">
+            <field name="name">is.nature.evenement.form</field>
+            <field name="model">is.nature.evenement</field>
+            <field name="arch" type="xml">
+	            <form string="Nature Evènement">
+	                <sheet>
+	                    <group>
+	                        <field name="name"/>
+	                    </group>
+	                </sheet>
+	            </form>
+            </field>
+        </record>
+        
+        <record id="is_nature_evenement_action" model="ir.actions.act_window">
+            <field name="name">Nature Evènement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.nature.evenement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Modèles de courriels -->
+        <record model="ir.actions.act_window" id="is_eig_action_email_template_tree_all">
+            <field name="name">Modèles de courriels</field>
+            <field name="res_model">mail.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="mail.email_template_tree" />
+            <field name="search_view_id" ref="mail.view_email_template_search"/>
+            <field name="context" eval="{'search_default_model_id': ref('is_eig12.model_is_eig')}" />
+        </record>
+
+        <!--  Destinataire -->
+        <record model="ir.ui.view" id="is_destinataire_tree_view">
+            <field name="name">is.destinataire.tree</field>
+            <field name="model">is.destinataire</field>
+            <field name="arch" type="xml">
+            <tree string="Destinataire">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_destinataire_form_view">
+            <field name="name">is.destinataire.form</field>
+            <field name="model">is.destinataire</field>
+            <field name="arch" type="xml">
+            <form string="Destinataire">
+                <sheet>
+					<group>
+					   <field name="name"/>
+					</group>
+				</sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_destinataire_action" model="ir.actions.act_window">
+            <field name="name">Destinataire</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.destinataire</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--  Auteur -->
+        <record model="ir.ui.view" id="is_auteur_tree_view">
+            <field name="name">is.auteur.tree</field>
+            <field name="model">is.auteur</field>
+            <field name="arch" type="xml">
+            <tree string="auteur">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_auteur_form_view">
+            <field name="name">is.auteur.form</field>
+            <field name="model">is.auteur</field>
+            <field name="arch" type="xml">
+            <form string="Auteur">
+                <sheet>
+                    <group>
+                      <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_auteur_action" model="ir.actions.act_window">
+            <field name="name">Auteur</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.auteur</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- DISPOSITION PRISE  -->
+        <record model="ir.ui.view" id="is_disposition_prise_tree_view">
+            <field name="name">is.disposition.prise.tree</field>
+            <field name="model">is.disposition.prise</field>
+            <field name="arch" type="xml">
+            <tree string="Disposition Prise">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_disposition_prise_form_view">
+            <field name="name">is.disposition.prise.form</field>
+            <field name="model">is.disposition.prise</field>
+            <field name="arch" type="xml">
+            <form string="Disposition Prise">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        
+        <record id="is_disposition_prise_action" model="ir.actions.act_window">
+            <field name="name">Disposition Prise</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.disposition.prise</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- CONSEQUENCE  -->
+        <record model="ir.ui.view" id="is_consequense_tree_view">
+            <field name="name">is.consequence.tree</field>
+            <field name="model">is.consequence</field>
+            <field name="arch" type="xml">
+            <tree string="Conséquense">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="is_consequence_form_view">
+            <field name="name">is.consequence.form</field>
+            <field name="model">is.consequence</field>
+            <field name="arch" type="xml">
+            <form string="Conséquence">
+                <sheet>
+	                <group>
+	                    <field name="name"/>
+	                </group>
+	            </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_consequence_action" model="ir.actions.act_window">
+            <field name="name">Conséquence</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.consequence</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Nature Risque  -->
+        <record model="ir.ui.view" id="is_nature_risque_tree_view">
+            <field name="name">is.nature.risque.tree</field>
+            <field name="model">is.nature.risque</field>
+            <field name="arch" type="xml">
+            <tree string="Nature Risque">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="is_nature_risque_form_view">
+            <field name="name">is.nature.risque.form</field>
+            <field name="model">is.nature.risque</field>
+            <field name="arch" type="xml">
+            <form string="Nature Risque">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_nature_risque_action" model="ir.actions.act_window">
+            <field name="name">Nature Risque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.nature.risque</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Type Risque  -->
+        <record model="ir.ui.view" id="is_type_risque_tree_view">
+            <field name="name">is.type.risque.tree</field>
+            <field name="model">is.type.risque</field>
+            <field name="arch" type="xml">
+            <tree string="Type Risque">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_type_risque_form_view">
+            <field name="name">is.type.risque.form</field>
+            <field name="model">is.type.risque</field>
+            <field name="arch" type="xml">
+            <form string="Type Risque">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_type_risque_action" model="ir.actions.act_window">
+            <field name="name">Type Risque</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.type.risque</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
     </data>
 </odoo>

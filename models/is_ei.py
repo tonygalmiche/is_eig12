@@ -5,7 +5,7 @@ from odoo import api, exceptions, fields, models, _
 
 class is_ei(models.Model):
     _name = 'is.ei'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     _description = u"Gestion des Événements Indésirables"
     _order = "name desc"
 
@@ -19,9 +19,10 @@ class is_ei(models.Model):
     date_constatation_faits = fields.Datetime('Date / Heure de la constatation des faits')
     description_faits       = fields.Text('Description des faits', required=True)
     evenement_survenu       = fields.Selection([('oui', 'Oui'),
-                              ('non', 'non or ne sait')], u'Evénement déjà survenu')
+                              ('non', 'non or ne sait'),
+                              ('ne_sait', 'ne sait')], u'Evénement déjà survenu')
     consequences            = fields.Text(u'Conséquences')
-    consequence_faits       = fields.Text('Conséquences', required=True)
+    consequence_faits       = fields.Text(u'Conséquences Faits', required=True)
     lieu_faits              = fields.Char('Lieu', required=True)
     victime_ids             = fields.One2many('is.victime.ei', 'ei_id', 'Victime')
     mesure_immediat         = fields.Text(u'Mesures immédiates', required=True)
@@ -34,7 +35,7 @@ class is_ei(models.Model):
     motif_ids               = fields.One2many('is.motif.retour.ei', 'ei_id1', 'Motif de retour', readonly=True)
     state                   = fields.Selection([('draft', u'Rédaction'),
                               ('redige', u'Rédigé'),
-                              ('valide', u'Validé')], u'État', default='draft', readonly=True, select=True)
+                              ('valide', u'Validé')], u'État', default='draft', readonly=True)
     pour_proteger           = fields.Text(u'Pour protéger, accompagner ou soutenir les personnes victimes ou exposées')
     pour_assurer            = fields.Text(u'Pour assurer la continuité de la prise en charge, le cas échéant')
     legard                  = fields.Text(u'A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)')
