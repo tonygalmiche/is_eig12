@@ -119,7 +119,7 @@ class is_consequence(models.Model):
     name = fields.Char(u'Conséquence', required=True)
 
 
-class is_destinataire (models.Model):
+class is_destinataire(models.Model):
     _name = 'is.destinataire'
     _description = u"Destinataire"
 
@@ -130,7 +130,7 @@ class is_destinataire (models.Model):
     ]
 
 
-class is_auteur (models.Model):
+class is_auteur(models.Model):
     _name = 'is.auteur'
     _description = u"Auteur"
 
