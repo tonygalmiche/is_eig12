@@ -309,7 +309,7 @@
                     <field name="btn_completer_vers_valider_eig" invisible="1" />
                     <button name="action_completer_vers_valider_eig" type="object" string="Valider" attrs="{'invisible':[('btn_completer_vers_valider_eig','!=',True)]}" class="oe_highlight" />
                     <!-- Etat Traité (fin)-->
-                    <button name="action_completer_vers_valider_eig" states="done" type="object" string="Valider" groups="is_eig.group_is_gestionnaire" />
+                    <button name="action_completer_vers_valider_eig" states="done" type="object" string="Valider" groups="is_eig12.group_is_gestionnaire" />
                     <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done" />
                 </header>
                 <sheet>
