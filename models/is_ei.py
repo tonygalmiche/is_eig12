@@ -18,8 +18,8 @@ class is_ei(models.Model):
     date_faits              = fields.Datetime('Date/heure', required=True)
     date_constatation_faits = fields.Datetime('Date / Heure de la constatation des faits')
     description_faits       = fields.Text('Description des faits', required=True)
-    evenement_survenu       = fields.Selection([('oui', 'Oui'),
-                              ('non', 'non or ne sait'),
+    evenement_survenu       = fields.Selection([('oui', 'oui'),
+                              ('non', 'non'),
                               ('ne_sait', 'ne sait')], u'Evénement déjà survenu')
     consequences            = fields.Text(u'Conséquences')
     consequence_faits       = fields.Text(u'Conséquences Faits', required=True)
