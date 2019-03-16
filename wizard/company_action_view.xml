@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="is_add_is_criteres_generaux_view" model="ir.ui.view">
+            <field name="name">add.is.criteres.generaux.view</field>
+            <field name="model">add.is.criteres.generaux</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Critères généraux">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_is_criteres_generaux" model="ir.actions.act_window">
+            <field name="name">Initialisation Critères généraux</field>
+            <field name="res_model">add.is.criteres.generaux</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_is_criteres_generaux_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="is_add_is_demande_intervention_secours" model="ir.ui.view">
+            <field name="name">add.is.demande.intervention.secours.view</field>
+            <field name="model">add.is.demande.intervention.secours</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Demande d’intervention des secours">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_is_demande_intervention_secours" model="ir.actions.act_window">
+            <field name="name">Initialisation Demande d’intervention des secours</field>
+            <field name="res_model">add.is.demande.intervention.secours</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_is_demande_intervention_secours"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="is_add_is_consequence_personne_prise_en_charge" model="ir.ui.view">
+            <field name="name">add.is.consequence.personne.prise.en.charge.view</field>
+            <field name="model">add.is.consequence.personne.prise.en.charge</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Conséquence pour la personne prises en charge">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_is_consequence_personne_prise_en_charge" model="ir.actions.act_window">
+            <field name="name">Initialisation Conséquence pour la personne prises en charge</field>
+            <field name="res_model">add.is.consequence.personne.prise.en.charge</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_is_consequence_personne_prise_en_charge"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="is_add_is_consequence_personnel" model="ir.ui.view">
+            <field name="name">add.is.consequence.personnel.view</field>
+            <field name="model">add.is.consequence.personnel</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Conséquence pour le personnel">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_is_consequence_personnel" model="ir.actions.act_window">
+            <field name="name">Initialisation Conséquence pour le personnel</field>
+            <field name="res_model">add.is.consequence.personnel</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_is_consequence_personnel"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="is_add_is_consequence_fonctionnement_stucture" model="ir.ui.view">
+            <field name="name">add.is.consequence.fonctionnement.stucture.view</field>
+            <field name="model">add.is.consequence.fonctionnement.stucture</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Conséquence pour l’organisation de la structure">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_is_consequence_fonctionnement_stucture" model="ir.actions.act_window">
+            <field name="name">Initialisation Conséquence pour l’organisation de la structure</field>
+            <field name="res_model">add.is.consequence.fonctionnement.stucture</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_is_consequence_fonctionnement_stucture"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="is_add_toutes_tables" model="ir.ui.view">
+            <field name="name">add.toutes.tables.view</field>
+            <field name="model">add.toutes.tables</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation de toutes les tables">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_add_de_toutes_les_tables" model="ir.actions.act_window">
+            <field name="name">Initialisation de toutes les tables</field>
+            <field name="res_model">add.toutes.tables</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="is_add_toutes_tables"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

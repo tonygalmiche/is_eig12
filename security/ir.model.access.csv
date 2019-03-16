@@ -30,3 +30,9 @@ access_is_eig_user,is_eig.user,model_is_eig,base.group_user,1,1,1,1
 access_is_default_type_event_user,is_default_type_event.user,model_is_default_type_event,base.group_user,1,1,1,1
 access_is_type_evenement_user,is_type_evenement.user,model_is_type_evenement,base.group_user,1,1,1,1
 access_is_nature_evenement_user,is.nature.evenement.user,model_is_nature_evenement,base.group_user,1,1,1,1
+access_is_criteres_generaux_user,is.criteres.generaux.user,model_is_criteres_generaux,base.group_user,1,1,1,1
+access_is_demande_intervention_secours_user,is.demande.intervention.secours.user,model_is_demande_intervention_secours,base.group_user,1,1,1,1
+access_is_consequence_personne_prise_en_charge_user,is.consequence.personne.prise.en.charge.user,model_is_consequence_personne_prise_en_charge,base.group_user,1,1,1,1
+access_is_consequence_personnel_user,is.consequence.personnel.user,model_is_consequence_personnel,base.group_user,1,1,1,1
+access_is_consequence_fonctionnement_stucture_user,is.consequence.fonctionnement.stucture.user,model_is_consequence_fonctionnement_stucture,base.group_user,1,1,1,1
+

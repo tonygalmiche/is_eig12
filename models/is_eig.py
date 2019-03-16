@@ -72,7 +72,9 @@ class is_type_evenement_mail(models.Model):
 class is_manip_fields(models.Model):
     _name = 'is.manip.fields'
     _description = u"Caractéristiques des champs"
+    _order = "name"
 
+    name            = fields.Char('Field Name', related='fields_id.field_description', store=True)
     fields_id       = fields.Many2one('ir.model.fields', 'Champs', ondelete='cascade', required=True)
     field_visible   = fields.Boolean('Visible')
     field_required  = fields.Boolean('Obligatoire')
@@ -82,6 +84,9 @@ class is_manip_fields(models.Model):
     is_eig_temoin   = fields.Boolean('Temoin', default=False)
     is_eig_victim   = fields.Boolean('Victim', default=False)
     is_eig_infos    = fields.Boolean('Infos', default=False)
+    is_eig_mesures  = fields.Boolean('Mesures', default=False)
+    is_eig_elements = fields.Boolean(u'Eléments', default=False)
+    is_eig_group    = fields.Boolean('Group', default=False)
 
 
 class is_nature_evenement(models.Model):
@@ -150,6 +155,56 @@ class is_motif_retour_eig(models.Model):
     action      = fields.Char('Action')
     description = fields.Text('Motif')
     eig_id1     = fields.Many2one('is.eig', 'EIG', readonly=True)
+
+
+class is_criteres_generaux(models.Model):
+    _name = 'is.criteres.generaux'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
+
+
+class is_demande_intervention_secours(models.Model):
+    _name = 'is.demande.intervention.secours'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
+
+
+class is_consequence_personne_prise_en_charge(models.Model):
+    _name = 'is.consequence.personne.prise.en.charge'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
+
+
+class is_consequence_personnel(models.Model):
+    _name = 'is.consequence.personnel'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
+
+
+class is_consequence_fonctionnement_stucture(models.Model):
+    _name = 'is.consequence.fonctionnement.stucture'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
 
 
 class is_eig_auteur(models.Model):
@@ -377,11 +432,45 @@ class is_eig(models.Model):
                 'related_rqr_nature_precision':  False,
                 'related_vsb_start_date':  False,
                 'related_rqr_start_date':  False,
+                'related_vsb_consequence_personne_prise_en_charge_ids': False,
+                'related_rqr_consequence_personne_prise_en_charge_ids': False,
+                'related_vsb_consequence_personnel_ids': False,
+                'related_rqr_consequence_personnel_ids': False,
+                'related_vsb_consequence_fonctionnement_stucture_ids': False,
+                'related_rqr_consequence_fonctionnement_stucture_ids': False,
+                'related_vsb_si_autre_pour_personnel': False,
+                'related_rqr_si_autre_pour_personnel': False,
+                'related_vsb_si_autre_pour_organisation': False,
+                'related_rqr_si_autre_pour_organisation': False,
+                'related_vsb_nb_jours_interuption_travail': False,
+                'related_rqr_nb_jours_interuption_travail': False,
+                'related_vsb_fait_deja_produit': False,
+                'related_rqr_fait_deja_produit': False,
+                'related_vsb_eig_deja_declare': False,
+                'related_rqr_eig_deja_declare': False,
+                'related_vsb_risque_reproductibilite': False,
+                'related_rqr_risque_reproductibilite': False,
+                'related_vsb_risque_extension': False,
+                'related_rqr_risque_extension': False,
+                'related_vsb_risque_contentieux': False,
+                'related_rqr_risque_contentieux': False,
+                'related_vsb_evenement_semble_maitrise': False,
+                'related_rqr_evenement_semble_maitrise': False,
+                'related_vsb_si_non_maitrise_precisez': False,
+                'related_rqr_si_non_maitrise_precisez': False,
+                'related_vsb_date_heure_constatation_faits': False,
+                'related_rqr_date_heure_constatation_faits': False,
                 'related_vsb_end_date':  False,
                 'related_vsb_description_faits':  False,
                 'related_rqr_description_faits':  False,
+                'related_vsb_criteres_generaux_ids': False,
+                'related_rqr_criteres_generaux_ids': False,
                 'related_vsb_risque_reproductivite':  False,
                 'related_rqr_risque_reproductivite':  False,
+                'related_vsb_solution_prise_en_charge':  False,
+                'related_rqr_solution_prise_en_charge':  False,
+                'related_vsb_demande_intervention_secours_ids': False,
+                'related_rqr_demande_intervention_secours_ids': False,
                 'related_vsb_risque_extension':  False,
                 'related_rqr_risque_extension':  False,
                 'related_vsb_risque_contentieux':  False,
@@ -544,6 +633,27 @@ class is_eig(models.Model):
                     vals.update({field: True})
                     if item.field_required:
                         field = str('related_inf_rqr_'+item.fields_id.name)
+                        vals.update({field: True})
+            for item in self.type_event_id.fields_mesures_id:
+                if item.field_visible :
+                    field = str('related_vsb_'+item.fields_id.name)
+                    vals.update({field: True})
+                    if item.field_required:
+                        field = str('related_rqr_'+item.fields_id.name)
+                        vals.update({field: True})
+            for item in self.type_event_id.fields_elements_id:
+                if item.field_visible :
+                    field = str('related_vsb_'+item.fields_id.name)
+                    vals.update({field: True})
+                    if item.field_required:
+                        field = str('related_rqr_'+item.fields_id.name)
+                        vals.update({field: True})
+            for item in self.type_event_id.fields_group_id:
+                if item.field_visible :
+                    field = str('related_vsb_'+item.fields_id.name)
+                    vals.update({field: True})
+                    if item.field_required:
+                        field = str('related_rqr_'+item.fields_id.name)
                         vals.update({field: True})
             return {'value': vals}
 
@@ -738,15 +848,69 @@ class is_eig(models.Model):
     type_risq_id                          = fields.Many2one('is.type.risque', "Type de risque", required=False, help=u"Permet de préciser sur quel temps du parcours de l'usager est apparu l'EIG.")
     nature_risq_id                        = fields.Many2one('is.nature.risque', "Nature de risque", required=True, help=u"Permet d'identifier la nature du risque afin d'alimenter la cartographie des risques de la fondation OVE")
     signalement_autorites                 = fields.Boolean(u'Signalement aux autorités judiciaires')
+    consequence_personne_prise_en_charge_ids             = fields.Many2many('is.consequence.personne.prise.en.charge', 'is_type_event_prise_charge_rel', 'type_event_id', 'price_charge_id', string=u'Pour la ou les personnes prises en charge')
+    related_vsb_consequence_personne_prise_en_charge_ids = fields.Boolean(u'Champs related_vsb_consequence_personne_prise_en_charge_ids - Visibilité')
+    related_rqr_consequence_personne_prise_en_charge_ids = fields.Boolean(u'Champs related_rqr_consequence_personne_prise_en_charge_ids - Obligation')
+    consequence_personnel_ids                            = fields.Many2many('is.consequence.personnel', 'is_type_event_personnel_rel', 'type_event_id', 'personnel_id', string=u'Pour les personnels')
+    related_vsb_consequence_personnel_ids                = fields.Boolean(u'Champs related_vsb_consequence_personnel_ids - Visibilité')
+    related_rqr_consequence_personnel_ids                = fields.Boolean(u'Champs related_rqr_consequence_personnel_ids - Obligation')
+    consequence_fonctionnement_stucture_ids              = fields.Many2many('is.consequence.fonctionnement.stucture', 'is_type_event_stucture_rel', 'type_event_id', 'stucture_id', string=u'Pour l’organisation et le fonctionnement de la structure')
+    related_vsb_consequence_fonctionnement_stucture_ids  = fields.Boolean(u'Champs related_vsb_consequence_fonctionnement_stucture_ids - Visibilité')
+    related_rqr_consequence_fonctionnement_stucture_ids  = fields.Boolean(u'Champs related_rqr_consequence_fonctionnement_stucture_ids - Obligation')
+    si_autre_pour_personnel                              = fields.Char(u'Si « autre (pour les personnels) », veuillez préciser')
+    related_vsb_si_autre_pour_personnel                  = fields.Boolean(u'Champs related_vsb_si_autre_pour_personnel - Visibilité')
+    related_rqr_si_autre_pour_personnel                  = fields.Boolean(u'Champs related_rqr_si_autre_pour_personnel - Obligation')
+    si_autre_pour_organisation                           = fields.Char(u'Si « autre (pour l’organisation et le fonctionnement de la structure) », veuillez préciser')
+    related_vsb_si_autre_pour_organisation               = fields.Boolean(u'Champs related_vsb_si_autre_pour_organisation - Visibilité')
+    related_rqr_si_autre_pour_organisation               = fields.Boolean(u'Champs related_rqr_si_autre_pour_organisation - Obligation')
+    nb_jours_interuption_travail                         = fields.Float(u'En cas d’interruption temporaire de travail, précisez le nombre de jours', digits=(12, 2))
+    related_vsb_nb_jours_interuption_travail             = fields.Boolean(u'Champs related_vsb_nb_jours_interuption_travail - Visibilité')
+    related_rqr_nb_jours_interuption_travail             = fields.Boolean(u'Champs related_rqr_nb_jours_interuption_travail - Obligation')
+    
+    fait_deja_produit                               = fields.Selection(OuiNon, u"Ces faits se sont-ils déjà produits en ce qui concerne la (les) personne(s) victime(s) ou auteur(s) ?")
+    related_vsb_fait_deja_produit               = fields.Boolean(u'Champs related_vsb_fait_deja_produit - Visibilité')
+    related_rqr_fait_deja_produit             = fields.Boolean(u'Champs related_rqr_fait_deja_produit - Obligation')
+    eig_deja_declare                    = fields.Selection(OuiNon, u"Un EIG a-t-il déjà été déclaré pour des faits similaires ?")
+    related_vsb_eig_deja_declare             = fields.Boolean(u'Champs related_vsb_eig_deja_declare - Visibilité')
+    related_rqr_eig_deja_declare             = fields.Boolean(u'Champs related_rqr_eig_deja_declare - Obligation')
+    risque_reproductibilite                    = fields.Selection(OuiNon, u"Risque de reproductivité ?")
+    related_vsb_risque_reproductibilite             = fields.Boolean(u'Champs related_vsb_risque_reproductibilite - Visibilité')
+    related_rqr_risque_reproductibilite             = fields.Boolean(u'Champs related_rqr_risque_reproductibilite - Obligation')
+    risque_extension                    = fields.Selection(OuiNon, u"Risque d’extension ?")
+    related_vsb_risque_extension             = fields.Boolean(u'Champs related_vsb_risque_extension - Visibilité')
+    related_rqr_risque_extension             = fields.Boolean(u'Champs related_rqr_risque_extension - Obligation')
+    risque_contentieux                    = fields.Selection(OuiNon, u"Risque de contentieux immédiat ?")
+    related_vsb_risque_contentieux             = fields.Boolean(u'Champs related_vsb_risque_contentieux - Visibilité')
+    related_rqr_risque_contentieux             = fields.Boolean(u'Champs related_rqr_risque_contentieux - Obligation')
+    evenement_semble_maitrise                    = fields.Selection(OuiNon, u"L’évènement semble-t-il maîtrisé ?")
+    related_vsb_evenement_semble_maitrise             = fields.Boolean(u'Champs related_vsb_evenement_semble_maitrise - Visibilité')
+    related_rqr_evenement_semble_maitrise             = fields.Boolean(u'Champs related_rqr_evenement_semble_maitrise - Obligation')
+    si_non_maitrise_precisez                    = fields.Char(u"Si non maîtrisé, précisez pourquoi")
+    related_vsb_si_non_maitrise_precisez             = fields.Boolean(u'Champs related_vsb_si_non_maitrise_precisez - Visibilité')
+    related_rqr_si_non_maitrise_precisez             = fields.Boolean(u'Champs related_rqr_si_non_maitrise_precisez - Obligation')
+    
+    
     start_date                            = fields.Datetime(u'Date heure de début', help=u"Date connue de début de l'événement. En cas de maladie il s'agit de la date connue de déclaration des symptômes chez le premier malade.")
     related_vsb_start_date                = fields.Boolean(u'Champs related_vsb_start_date - Visibilité')
     related_rqr_start_date                = fields.Boolean(u'Champs related_rqr_start_date - Obligation')
+    date_heure_constatation_faits             = fields.Datetime('Date et heure de la constatation des faits')
+    related_vsb_date_heure_constatation_faits = fields.Boolean(u'Champs related_vsb_date_heure_constatation_faits - Visibilité')
+    related_rqr_date_heure_constatation_faits = fields.Boolean(u'Champs related_rqr_date_heure_constatation_faits - Obligation')
     end_date                              = fields.Datetime('Date heure de fin', help=u"Date connue de fin de l'événement. En cas de maladie il s'agit de la date connue de déclaration des symptômes chez le dernier malade.")
     related_vsb_end_date                  = fields.Boolean(u'Champs related_vsb_end_date - Visibilité')
     related_rqr_end_date                  = fields.Boolean(u'Champs related_rqr_end_date - Obligation')
     description_faits                     = fields.Text('Description des faits', help=u"Permet de décrire de manière exhaustive et détaillée les faits survenus dans votre établissement. En cas de maladie il est nécessaire de préciser de quelle maladie ou contamination il s'agit en l'espèce.")
     related_vsb_description_faits         = fields.Boolean(u'Champs related_vsb_description_faits - Visibilité')
     related_rqr_description_faits         = fields.Boolean(u'Champs related_rqr_description_faits - Obligation')
+    criteres_generaux_ids                 = fields.Many2many('is.criteres.generaux', 'is_type_event_generaux_rel', 'type_event_id', 'generaux_id', string=u'Critères généraux')
+    related_vsb_criteres_generaux_ids     = fields.Boolean(u'Champs related_vsb_criteres_generaux_ids - Visibilité')
+    related_rqr_criteres_generaux_ids     = fields.Boolean(u'Champs related_rqr_criteres_generaux_ids - Obligation')
+    solution_prise_en_charge              = fields.Selection(OuiNon, u'En cas d’évènement ayant pour conséquence une exclusion temporaire ou définitive, y a-t-il des solutions de prises en charges ?')
+    related_vsb_solution_prise_en_charge  = fields.Boolean(u'Champs related_vsb_solution_prise_en_charge - Visibilité')
+    related_rqr_solution_prise_en_charge  = fields.Boolean(u'Champs related_rqr_solution_prise_en_charge - Obligation')
+    demande_intervention_secours_ids             = fields.Many2many('is.demande.intervention.secours', 'is_type_event_secours_rel', 'type_event_id', 'secours_id', string=u'Demande d’intervention des secours')
+    related_vsb_demande_intervention_secours_ids = fields.Boolean(u'Champs related_vsb_demande_intervention_secours_ids - Visibilité')
+    related_rqr_demande_intervention_secours_ids = fields.Boolean(u'Champs related_rqr_demande_intervention_secours_ids - Obligation')
     risque_reproductivite                 = fields.Selection(OuiNon, 'Risque de reproductivité')
     related_vsb_risque_reproductivite     = fields.Boolean(u'Champs related_vsb_risque_reproductivite - Visibilité')
     related_rqr_risque_reproductivite     = fields.Boolean(u'Champs related_rqr_risque_reproductivite - Obligation')
@@ -921,9 +1085,9 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig'),
-            ('name', 'in', ['start_date', 'end_date', 'nature_precision', 'description_faits',
-                           'lieu_faits', 'element_faits', 'cause_faits', 'mesure_organisation',
-                           'mesure_personnel', 'mesure_usagers', 'mesure_autres', 'note', 'attachment_ids',
+            ('name', 'in', ['start_date', 'date_heure_constatation_faits', 'end_date', 'nature_precision', 'description_faits',
+                           'lieu_faits', 'element_faits', 'cause_faits', 'criteres_generaux_ids', 'solution_prise_en_charge',
+                           'demande_intervention_secours_ids'
             ])])
         return field_ids
 
@@ -937,6 +1101,77 @@ class is_default_type_event(models.Model):
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig': True
+            })
+        return lst
+
+    @api.multi
+    def get_mesures_fields(self):
+        field_obj = self.env['ir.model.fields']
+        field_ids = field_obj.search([
+            ('model', '=', 'is.eig'),
+            ('name', 'in', ['mesure_organisation','mesure_personnel', 'mesure_usagers', 'mesure_autres',
+                           'reunion_debriefing','si_reunion_debriefing','causes_profondes','si_causes_profondes',
+                           'enseignements_a_tirer','si_enseignements_a_tirer',
+            ])])
+        return field_ids
+
+    @api.multi
+    def get_fields_mesures_properties(self, visible=False):
+        field_ids = self.get_mesures_fields()
+        lst = []
+        for field_id in field_ids:
+            lst.append({
+                'fields_id': field_id,
+                'field_visible': visible,
+                'field_required': False,
+                'is_eig_mesures': True,
+            })
+        return lst
+
+    @api.multi
+    def get_elements_fields(self):
+        field_obj = self.env['ir.model.fields']
+        field_ids = field_obj.search([
+            ('model', '=', 'is.eig'),
+            ('name', 'in', ['note', 'attachment_ids',
+            ])])
+        return field_ids
+
+    @api.multi
+    def get_fields_elements_properties(self, visible=False):
+        field_ids = self.get_elements_fields()
+        lst = []
+        for field_id in field_ids:
+            lst.append({
+                'fields_id': field_id,
+                'field_visible': visible,
+                'field_required': False,
+                'is_eig_elements': True,
+            })
+        return lst
+
+    @api.multi
+    def get_group_fields(self):
+        field_obj = self.env['ir.model.fields']
+        field_ids = field_obj.search([
+            ('model', '=', 'is.eig'),
+            ('name', 'in', ['consequence_personne_prise_en_charge_ids', 'consequence_personnel_ids', 'consequence_fonctionnement_stucture_ids',
+                            'si_autre_pour_personnel', 'si_autre_pour_organisation', 'nb_jours_interuption_travail',
+                            'fait_deja_produit', 'eig_deja_declare', 'risque_reproductibilite', 'risque_extension',
+                            'risque_contentieux', 'evenement_semble_maitrise', 'si_non_maitrise_precisez',
+            ])])
+        return field_ids
+
+    @api.multi
+    def get_fields_group_properties(self, visible=False):
+        field_ids = self.get_group_fields()
+        lst = []
+        for field_id in field_ids:
+            lst.append({
+                'fields_id': field_id,
+                'field_visible': visible,
+                'field_required': False,
+                'is_eig_group': True,
             })
         return lst
 
@@ -1047,18 +1282,65 @@ class is_default_type_event(models.Model):
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
             if field.name == 'cause_faits':
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+        mesures_lst = []
+        fields_mesures_ids = self.get_mesures_fields()
+        for field in fields_mesures_ids:
             if field.name == 'mesure_organisation':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
             if field.name == 'mesure_personnel':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
             if field.name == 'mesure_usagers':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
             if field.name == 'mesure_autres':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'reunion_debriefing':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'si_reunion_debriefing':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'causes_profondes':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'si_causes_profondes':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'enseignements_a_tirer':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'si_enseignements_a_tirer':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+        elements_lst = []
+        fields_elements_ids = self.get_elements_fields()
+        for field in fields_elements_ids:
             if field.name == 'note':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+                elements_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_elements': True}])
             if field.name == 'attachment_ids':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+                elements_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_elements': True}])
+        group_lst = []
+        fields_group_ids = self.get_group_fields()
+        for field in fields_group_ids:
+            if field.name == 'consequence_personne_prise_en_charge_ids':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'consequence_personnel_ids':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'consequence_fonctionnement_stucture_ids':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'si_autre_pour_personnel':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'si_autre_pour_organisation':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'nb_jours_interuption_travail':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'fait_deja_produit':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'eig_deja_declare':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'risque_reproductibilite':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'risque_extension':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'risque_contentieux':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'evenement_semble_maitrise':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'si_non_maitrise_precisez':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
         victim_lst = []
         default_victim_lst = self.get_fields_victim_properties(False)
         for item in default_victim_lst:
@@ -1076,7 +1358,16 @@ class is_default_type_event(models.Model):
         default_infos_lst = self.get_fields_infos_properties(False)
         for item in default_infos_lst:
             infos_lst.append([0,False, item])
-        return {'eig': eig_lst, 'auteur': auteur_lst, 'temoin': temoin_lst, 'victim': victim_lst, 'infos': infos_lst}
+        return {
+            'eig'     : eig_lst,
+            'auteur'  : auteur_lst,
+            'temoin'  : temoin_lst,
+            'victim'  : victim_lst,
+            'infos'   : infos_lst,
+            'mesures' : mesures_lst,
+            'elements': elements_lst,
+            'group'   : group_lst,
+        }
 
     @api.multi
     def update_vals_create(self, code):
@@ -1084,11 +1375,14 @@ class is_default_type_event(models.Model):
         if code == 'E1':
             properties = self.manip_type_evenement1()
             vals.update({
-                'fields_eig_id': properties['eig'],
-                'fields_auteur_id': properties['auteur'],
-                'fields_victim_id': properties['victim'],
-                'fields_temoin_id': properties['temoin'],
-                'fields_info_id': properties['infos']
+                'fields_eig_id'      : properties['eig'],
+                'fields_auteur_id'   : properties['auteur'],
+                'fields_victim_id'   : properties['victim'],
+                'fields_temoin_id'   : properties['temoin'],
+                'fields_info_id'     : properties['infos'],
+                'fields_mesures_id'  : properties['mesures'],
+                'fields_elements_id' : properties['elements'],
+                'fields_group_id'    : properties['group'],
             })
             return vals
 
@@ -1096,22 +1390,29 @@ class is_default_type_event(models.Model):
 class is_type_evenement(models.Model):
     _name = 'is.type.evenement'
     _description = u"Type d’événement"
+    _order = "name desc"
 
     @api.onchange('name')
     def onchange_name(self):
         if self.name:
-            default_obj    = self.env['is.default.type.event']
-            lst_eig        = default_obj.get_fields_eig_properties(True)
-            lst_eig_auteur = default_obj.get_fields_auteur_properties(True)
-            lst_eig_victim = default_obj.get_fields_victim_properties(True)
-            lst_eig_temoin = default_obj.get_fields_temoin_properties(True)
-            lst_eig_infos  = default_obj.get_fields_infos_properties(True)
+            default_obj      = self.env['is.default.type.event']
+            lst_eig          = default_obj.get_fields_eig_properties(True)
+            lst_eig_auteur   = default_obj.get_fields_auteur_properties(True)
+            lst_eig_victim   = default_obj.get_fields_victim_properties(True)
+            lst_eig_temoin   = default_obj.get_fields_temoin_properties(True)
+            lst_eig_infos    = default_obj.get_fields_infos_properties(True)
+            lst_eig_mesures  = default_obj.get_fields_mesures_properties(True)
+            lst_eig_elements = default_obj.get_fields_elements_properties(True)
+            lst_eig_group    = default_obj.get_fields_group_properties(True)
             return {'value': {
-                'fields_eig_id': lst_eig,
-                'fields_auteur_id': lst_eig_auteur,
-                'fields_victim_id': lst_eig_victim, 
-                'fields_temoin_id': lst_eig_temoin,
-                'fields_info_id': lst_eig_infos
+                'fields_eig_id'     : lst_eig,
+                'fields_auteur_id'  : lst_eig_auteur,
+                'fields_victim_id'  : lst_eig_victim, 
+                'fields_temoin_id'  : lst_eig_temoin,
+                'fields_info_id'    : lst_eig_infos,
+                'fields_mesures_id' : lst_eig_mesures,
+                'fields_elements_id': lst_eig_elements,
+                'fields_group_id'   : lst_eig_group,
             }}
 
     @api.model
@@ -1176,6 +1477,9 @@ class is_type_evenement(models.Model):
     fields_victim_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Victime', domain=[('is_eig_victim', '=', True)])
     fields_temoin_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Témoins', domain=[('is_eig_temoin', '=', True)])
     fields_info_id                = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs ', domain=[('is_eig_infos', '=', True)])
+    fields_mesures_id             = fields.One2many('is.manip.fields', 'type_event_id', u"Caractéristiques des champs Mesures d'accompagnement", domain=[('is_eig_mesures', '=', True)])
+    fields_elements_id            = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments complémentaires', domain=[('is_eig_elements', '=', True)])
+    fields_group_id               = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments Group', domain=[('is_eig_group', '=', True)])
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le Type d'évènement doit être unique !"),
