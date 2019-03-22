@@ -2,6 +2,16 @@
 
 from odoo import api, exceptions, fields, models, _, SUPERUSER_ID
 from odoo.exceptions import UserError
+import uuid
+import os
+import codecs
+from py3o.template import Template
+import base64
+from datetime import datetime, timedelta
+import time
+from pytz import timezone
+import pytz
+
 
 # SUPERUSER_ID = 2
 
@@ -18,6 +28,7 @@ OuiNon=[
 
 class is_departement(models.Model):
     _name = 'is.departement'
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     _description = u"Département"
     _order = "name"
 
@@ -26,6 +37,7 @@ class is_departement(models.Model):
     mail_ars = fields.Char(string='Mail ARS')
     mail_cg  = fields.Char(string='Mail CD', help="Mail du Conseil Départemental")
     mail_ase = fields.Char(string='Mail ASE')
+    input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
 
     _sql_constraints = [
         ('code_uniq', 'unique(code)', u"Le code du département doit être unique !"),
@@ -159,6 +171,7 @@ class is_motif_retour_eig(models.Model):
 
 class is_criteres_generaux(models.Model):
     _name = 'is.criteres.generaux'
+    _description = 'Criteres Generaux'
 
     name = fields.Char('Nom' , required=True)
 
@@ -169,6 +182,7 @@ class is_criteres_generaux(models.Model):
 
 class is_demande_intervention_secours(models.Model):
     _name = 'is.demande.intervention.secours'
+    _description = 'Intervention Secours'
 
     name = fields.Char('Nom' , required=True)
 
@@ -179,6 +193,7 @@ class is_demande_intervention_secours(models.Model):
 
 class is_consequence_personne_prise_en_charge(models.Model):
     _name = 'is.consequence.personne.prise.en.charge'
+    _description = 'COnsequence Charge'
 
     name = fields.Char('Nom' , required=True)
 
@@ -189,6 +204,7 @@ class is_consequence_personne_prise_en_charge(models.Model):
 
 class is_consequence_personnel(models.Model):
     _name = 'is.consequence.personnel'
+    _description = 'Consequence Personnel'
 
     name = fields.Char('Nom' , required=True)
 
@@ -199,6 +215,7 @@ class is_consequence_personnel(models.Model):
 
 class is_consequence_fonctionnement_stucture(models.Model):
     _name = 'is.consequence.fonctionnement.stucture'
+    _description = 'Consequence Fonctionnement Stucture'
 
     name = fields.Char('Nom' , required=True)
 
@@ -821,6 +838,138 @@ class is_eig(models.Model):
             vals.update({'valideur_id': etablissement.director_id and etablissement.director_id.id or False})
         return super(is_eig, self).create(vals)
 
+    @api.multi
+    def generation_odt(self):
+        for data in self:
+            data.generation_document("ODT")
+        return True
+
+    @api.multi
+    def f1(self, val):
+        val=str(val)
+        if (val=="1" or val=="t" or val=="True" or val=="true"):
+            r="☑"
+        else:
+            r="□"
+        return r
+
+    @api.multi
+    def f2(self,val):
+        if (self.nature_event_id.id == val):
+            r="☑"
+        else:
+            r="□"
+        return r
+
+    @api.multi
+    def f3(self,val):
+        r=1
+        for lig in self.infos_ids:
+            if lig.user_id.id == val:
+                r=1
+        return r
+
+    @api.multi
+    def f4(self,val):
+        for lig in self.infos_ids:
+            if(lig.user_id.id == val):
+                #print "=> date=",lig.date
+                return str(lig.date)
+        return False
+
+
+    @api.multi
+    def f5(self,val):
+        for lig in self.infos_ids:
+            if(lig.user_id.id == val):
+                return lig.support or ''
+        return ""
+
+    @api.multi
+    def h(self, date):
+        if date==False:
+            return ""
+        utc = pytz.utc
+        utc_dt  = datetime.strptime(str(date)[:19], '%Y-%m-%d %H:%M:%S').replace(tzinfo=utc)
+        europe = timezone('Europe/Paris')
+        loc_dt = utc_dt.astimezone(europe)
+        return loc_dt.strftime('%d/%m/%Y %H:%M')
+
+    @api.multi
+    def d(self, date):
+        if date==False:
+            return ""
+        utc = pytz.utc
+        utc_dt  = datetime.strptime(str(date)[:19], '%Y-%m-%d').replace(tzinfo=utc)
+        europe = timezone('Europe/Paris')
+        loc_dt = utc_dt.astimezone(europe)
+        return loc_dt.strftime('%d/%m/%Y')
+
+    @api.multi
+    def t(self, txt):
+        if txt==False:
+            return ""
+        return txt
+
+    @api.multi
+    def generation_document_par_nom(self, type="ODT", v=[], contenu="", nom=""):
+        for data in self:
+            name=nom[:-4]
+            if type=="PDF":
+                name=name+".pdf"
+            else:
+                name=name+".odt"
+            path = "/tmp/py3o_template.odt"
+            dest = "/tmp/"+name
+            f = open(path,'wb')
+            f.write(base64.b64decode(contenu))
+            t = Template(path, dest)
+            items = list()
+            item1 = Item()
+            items.append(item1)
+            o = Item()
+            data1 = dict(items=items, document=o,test01="toto",o=data)
+            t.render(data1)
+            r = base64.b64encode(open(dest,'rb').read())
+            vals = {
+                'name':        name,
+                'datas_fname': name,
+                'type':        'binary',
+                'res_model':   'is.eig',
+                'res_id':      data.id,
+                'datas':       r,
+            }
+            output=self.env['ir.attachment'].create(vals)
+            vals={
+                'attachment_ids': [(6,0,[output.id])],
+            }
+            data.with_context(stop_write_recursion=1).write(vals)
+
+    def generation_pdf(self):
+        self.generation_document("PDF")
+        return True
+
+    @api.multi
+    def generation_document(self, type="ODT"):
+        v = {}
+        for rec in self:
+            v["o"] = rec
+            if rec.signalement_autorites:
+                company_obj = self.env['res.company']
+                company_ids = company_obj.search([('id', '=', 1)])
+                for company in company_ids:
+                    for attachment in company.attachment_ids:
+                        for l in attachment.read(['name','datas']):
+                            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            # ** Recherche des modeles associés au département *****************
+#             etablissement_id = rec.etablissement_id.id
+#             departement_id = rec.etablissement_id.departement_id.id
+#             for attch in rec.etablissement_id.departement_id.input_attach_ids:
+#                 for l in attch.read(['name','datas']):
+#                     rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+        return True
+
+
 
     btn_rediger_eig                       = fields.Boolean('Rediger EIG', compute='_btn_rediger_eig')
     btn_valider_eig                       = fields.Boolean('Valider EIG', compute='_btn_valider_eig')
@@ -923,7 +1072,7 @@ class is_eig(models.Model):
     evenement_maitrise                    = fields.Selection(OuiNon, "L'événement semble t-il maîtrisé")
     related_vsb_evenement_maitrise        = fields.Boolean(u'Champs related_vsb_evenement_maitrise - Visibilité')
     related_rqr_evenement_maitrise        = fields.Boolean(u'Champs related_rqr_evenement_maitrise - Obligation')
-    si_non_maitrise                       = fields.Text("Si non maîtrisé, précisez pourquoi")
+    si_non_maitrise                       = fields.Text(u"Si non maîtrisé")
     related_vsb_si_non_maitrise           = fields.Boolean(u'Champs related_vsb_si_non_maitrise - Visibilité')
     related_rqr_si_non_maitrise           = fields.Boolean(u'Champs related_rqr_si_non_maitrise - Obligation')
     lieu_faits                            = fields.Char('Lieu', help=u"Permet d'indiquer le lieu de déroulement des faits")
@@ -1074,7 +1223,10 @@ class is_eig(models.Model):
     related_onglet_infos                  = fields.Boolean(u'Champs related_onglet_infos - Onglet Infos')
     related_onglet_element_complementaire = fields.Boolean(u'Champs related_onglet_element_complementaire - Onglet Eléments complémentaires')
     related_group_motif_retour            = fields.Boolean(u'Champs related_group_motif_retour - Tableau motif retour')
+    attachment_ids = fields.Many2many('ir.attachment', string='Files')
 
+class Item(object):
+    pass
 
 class is_default_type_event(models.Model):
     _name = 'is.default.type.event'
@@ -1484,4 +1636,10 @@ class is_type_evenement(models.Model):
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le Type d'évènement doit être unique !"),
     ]
+
+
+class res_company(models.Model):
+    _inherit = 'res.company'
+
+    attachment_ids = fields.Many2many('ir.attachment', 'company_attach_rel', 'res_id', 'attachment_id', string='Files')
 

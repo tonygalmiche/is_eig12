@@ -25,6 +25,7 @@
                         <group>
                             <field name="name"/>
                             <field name="mail_ars"/>
+                            <field name="input_attach_ids" widget="many2many_binary" />
                         </group>
                         <group>
                             <field name="code"/>
@@ -32,6 +33,10 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+				    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+				    <field name="message_ids" widget="mail_thread"/>
+				 </div>
             </form>
             </field>
         </record>
@@ -383,10 +388,10 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done" />
                 </header>
                 <sheet>
-                    <!-- <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                    <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
                         <button class="oe_inline oe_stat_button" string="Génération ODT " name= "generation_odt" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="base.group_system"/>
-                        <button class="oe_inline oe_stat_button" string="Génération PDF " name= "generation_pdf" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig.group_is_gestionnaire"/>
-                    </div> -->
+                        <!-- <button class="oe_inline oe_stat_button" string="Génération PDF " name= "generation_pdf" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig12.group_is_gestionnaire"/> -->
+                    </div>
                     <group>
                         <group>
                               <field name="name" readonly="1"/>
@@ -405,6 +410,7 @@
                             <field name="related_vsb_nature_precision" invisible="1"  />
                             <field name="related_rqr_nature_precision" invisible="1"  />
                             <field name="nature_precision" attrs="{'invisible': [('related_vsb_nature_precision', '=', False)], 'required':[('related_rqr_nature_precision','=', True)]}"/>
+                            <field name="attachment_ids" widget="many2many_binary" />
                         </group>
                         <group string="Risque"     attrs="{'invisible': [('type_event_id','=',False)]}">
                             <field name="type_risq_id" attrs="{'invisible': [('state','=','draft')]}  " />
@@ -1533,6 +1539,9 @@
                         <button name="%(action_add_is_consequence_fonctionnement_stucture)d"  type="action" string="Initialisation Conséquence pour l’organisation de la structure" />
                         <button name="%(action_add_de_toutes_les_tables)d"                    type="action" string="Initialisation de toutes les tables" />
                     </header>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="attachment_ids" widget="many2many_binary" />
                 </xpath>
             </field>
         </record>
