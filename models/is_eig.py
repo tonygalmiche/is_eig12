@@ -713,8 +713,9 @@ class is_eig(models.Model):
         data_ids = obj.search([('module', '=', 'is_eig'), ('name', '=', 'group_is_traiteur')])
         mail = ""
         resid = 0
-        for o in obj.read(data_ids, ['res_id', 'name']):
-            resid = o["res_id"]
+        for data in data_ids:
+            for o in data.read(['res_id','name']):
+                resid = o["res_id"]
         if resid:
             ctx = self.env['res.groups']
             for g in ctx.browse(resid):
