@@ -15,14 +15,10 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_is_criteres_generaux" model="ir.actions.act_window">
-            <field name="name">Initialisation Critères généraux</field>
-            <field name="res_model">add.is.criteres.generaux</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="is_add_is_criteres_generaux_view"/>
-            <field name="target">new</field>
-        </record>
+        <act_window id="action_add_is_criteres_generaux" name="Initialisation Critères généraux"
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.criteres.generaux" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
         <record id="is_add_is_demande_intervention_secours" model="ir.ui.view">
             <field name="name">add.is.demande.intervention.secours.view</field>
@@ -37,14 +33,18 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_is_demande_intervention_secours" model="ir.actions.act_window">
+        <!-- <record id="action_add_is_demande_intervention_secours" model="ir.actions.act_window">
             <field name="name">Initialisation Demande d’intervention des secours</field>
             <field name="res_model">add.is.demande.intervention.secours</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="is_add_is_demande_intervention_secours"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+        <act_window id="action_add_is_demande_intervention_secours" name="Initialisation Demande d’intervention des secours"
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.demande.intervention.secours" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
         <record id="is_add_is_consequence_personne_prise_en_charge" model="ir.ui.view">
             <field name="name">add.is.consequence.personne.prise.en.charge.view</field>
@@ -59,14 +59,18 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_is_consequence_personne_prise_en_charge" model="ir.actions.act_window">
+        <!-- <record id="action_add_is_consequence_personne_prise_en_charge" model="ir.actions.act_window">
             <field name="name">Initialisation Conséquence pour la personne prises en charge</field>
             <field name="res_model">add.is.consequence.personne.prise.en.charge</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="is_add_is_consequence_personne_prise_en_charge"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+        <act_window id="action_add_is_consequence_personne_prise_en_charge" name="Initialisation Conséquence pour la personne prises en charge"
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.consequence.personne.prise.en.charge" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
         <record id="is_add_is_consequence_personnel" model="ir.ui.view">
             <field name="name">add.is.consequence.personnel.view</field>
@@ -81,14 +85,18 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_is_consequence_personnel" model="ir.actions.act_window">
+        <!-- <record id="action_add_is_consequence_personnel" model="ir.actions.act_window">
             <field name="name">Initialisation Conséquence pour le personnel</field>
             <field name="res_model">add.is.consequence.personnel</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="is_add_is_consequence_personnel"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+        <act_window id="action_add_is_consequence_personnel" name="Initialisation Conséquence pour le personnel"
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.consequence.personnel" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
         <record id="is_add_is_consequence_fonctionnement_stucture" model="ir.ui.view">
             <field name="name">add.is.consequence.fonctionnement.stucture.view</field>
@@ -103,14 +111,18 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_is_consequence_fonctionnement_stucture" model="ir.actions.act_window">
+        <!-- <record id="action_add_is_consequence_fonctionnement_stucture" model="ir.actions.act_window">
             <field name="name">Initialisation Conséquence pour l’organisation de la structure</field>
             <field name="res_model">add.is.consequence.fonctionnement.stucture</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="is_add_is_consequence_fonctionnement_stucture"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+        <act_window id="action_add_is_consequence_fonctionnement_stucture" name="Initialisation Conséquence pour l’organisation de la structure"
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.consequence.fonctionnement.stucture" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
         <record id="is_add_toutes_tables" model="ir.ui.view">
             <field name="name">add.toutes.tables.view</field>
@@ -125,14 +137,18 @@
                 </form>
             </field>
         </record>
-        <record id="action_add_de_toutes_les_tables" model="ir.actions.act_window">
+        <!-- <record id="action_add_de_toutes_les_tables" model="ir.actions.act_window">
             <field name="name">Initialisation de toutes les tables</field>
             <field name="res_model">add.toutes.tables</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="is_add_toutes_tables"/>
             <field name="target">new</field>
-        </record>
+        </record> -->
+        <act_window id="action_add_de_toutes_les_tables" name="Initialisation de toutes les tables"
+            multi="True" key2="client_action_multi" 
+            res_model="add.toutes.tables" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
 
     </data>
 </odoo>

@@ -864,7 +864,7 @@ class is_eig(models.Model):
 
     @api.multi
     def f3(self,val):
-        r=1
+        r=0
         for lig in self.infos_ids:
             if lig.user_id.id == val:
                 r=1
@@ -878,13 +878,16 @@ class is_eig(models.Model):
                 return str(lig.date)
         return False
 
-
     @api.multi
     def f5(self,val):
         for lig in self.infos_ids:
             if(lig.user_id.id == val):
                 return lig.support or ''
         return ""
+
+    @api.multi
+    def attach_length(self,val):
+        return len(val)
 
     @api.multi
     def h(self, date):
@@ -908,9 +911,15 @@ class is_eig(models.Model):
 
     @api.multi
     def t(self, txt):
-        if txt==False:
+        if not txt:
             return ""
         return txt
+
+    @api.multi
+    def t1(self, txt):
+        if not txt:
+            return ""
+        return txt.name
 
     @api.multi
     def generation_document_par_nom(self, type="ODT", v=[], contenu="", nom=""):
@@ -924,7 +933,11 @@ class is_eig(models.Model):
             dest = "/tmp/"+name
             f = open(path,'wb')
             f.write(base64.b64decode(contenu))
+#             f.close()
             t = Template(path, dest)
+            if type=="PDF":
+                cde="soffice --headless   --convert-to pdf:writer_pdf_Export "+name+" --outdir /tmp"
+                os.system(cde)
             items = list()
             item1 = Item()
             items.append(item1)
@@ -932,6 +945,7 @@ class is_eig(models.Model):
             data1 = dict(items=items, document=o,test01="toto",o=data)
             t.render(data1)
             r = base64.b64encode(open(dest,'rb').read())
+            
             vals = {
                 'name':        name,
                 'datas_fname': name,
@@ -940,11 +954,21 @@ class is_eig(models.Model):
                 'res_id':      data.id,
                 'datas':       r,
             }
-            output=self.env['ir.attachment'].create(vals)
-            vals={
-                'attachment_ids': [(6,0,[output.id])],
-            }
-            data.with_context(stop_write_recursion=1).write(vals)
+            obj = self.env['ir.attachment']
+            ids = obj.search([('res_model','=', 'is.eig'),('res_id','=', data.id),('name','=',name)])
+            if ids:
+                ids[0].write(vals)
+                print ("Modification ir.attachment id="+str(ids[0]),ids)
+                vals1={
+                    'attachment_ids': [(4,ids[0].id)],
+                }
+            else:
+                id = obj.create(vals)
+                print ("Création ir.attachment id="+str(id))
+                vals1={
+                    'attachment_ids': [(4, id.id)],
+                }
+            data.with_context(stop_write_recursion=1).write(vals1)
 
     def generation_pdf(self):
         self.generation_document("PDF")
@@ -962,12 +986,10 @@ class is_eig(models.Model):
                     for attachment in company.attachment_ids:
                         for l in attachment.read(['name','datas']):
                             rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-            # ** Recherche des modeles associés au département *****************
-#             etablissement_id = rec.etablissement_id.id
-#             departement_id = rec.etablissement_id.departement_id.id
-#             for attch in rec.etablissement_id.departement_id.input_attach_ids:
-#                 for l in attch.read(['name','datas']):
-#                     rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+#             ** Recherche des modeles associés au département *****************
+            for attch in rec.etablissement_id.departement_id.input_attach_ids:
+                for l in attch.read(['name','datas']):
+                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
         return True
 
 

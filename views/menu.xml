@@ -35,11 +35,11 @@
         <menuitem name="Conséquence"       id="menu_is_consequence_action"       sequence="6"  parent="menu_parametrage_tables" action="is_consequence_action" />
         <menuitem name="Nature Risque"     id="menu_is_nature_risque_action"     sequence="7"  parent="menu_parametrage_tables" action="is_nature_risque_action" />
         <menuitem name="Type Risque"       id="menu_is_type_risque_action"       sequence="8"  parent="menu_parametrage_tables" action="is_type_risque_action" />
-        <menuitem name="Critères généraux"                                        id="menu_is_criteres_generaux_action"                    sequence="9"  parent="menu_parametrage_tables" action="is_criteres_generaux_action" />
-        <menuitem name="Demande d’intervention des secours"                       id="menu_is_demande_intervention_secours_action"         sequence="10" parent="menu_parametrage_tables" action="is_demande_intervention_secours_action" />
-        <menuitem name="Pour la ou les personnes prises en charge"                id="menu_is_consequence_personne_prise_en_charge_action" sequence="11" parent="menu_parametrage_tables" action="is_consequence_personne_prise_en_charge_action" />
-        <menuitem name="Pour les personnels"                                      id="menu_is_consequence_personnel_action"                sequence="12" parent="menu_parametrage_tables" action="is_consequence_personnel_action" />
-        <menuitem name="Pour l’organisation et le fonctionnement de la structure" id="menu_is_consequence_fonctionnement_stucture_action"  sequence="13" parent="menu_parametrage_tables" action="is_consequence_fonctionnement_stucture_action" />
+        <menuitem name="Critères généraux"                                                    id="menu_is_criteres_generaux_action"                    sequence="9"  parent="menu_parametrage_tables" action="is_criteres_generaux_action" />
+        <menuitem name="Demande d’intervention des secours"                                   id="menu_is_demande_intervention_secours_action"         sequence="10" parent="menu_parametrage_tables" action="is_demande_intervention_secours_action" />
+        <menuitem name="Conséquence pour la ou les personnes prises en charge"                id="menu_is_consequence_personne_prise_en_charge_action" sequence="11" parent="menu_parametrage_tables" action="is_consequence_personne_prise_en_charge_action" />
+        <menuitem name="Conséquence pour le personnel'"                                       id="menu_is_consequence_personnel_action"                sequence="12" parent="menu_parametrage_tables" action="is_consequence_personnel_action" />
+        <menuitem name="Conséquence pour l’organisation et le fonctionnement de la structure" id="menu_is_consequence_fonctionnement_stucture_action"  sequence="13" parent="menu_parametrage_tables" action="is_consequence_fonctionnement_stucture_action" />
 
         <menuitem name="Déclaration" id="menu_declaration"  sequence="10"/>
         <menuitem name="EIG"         id="menu_eig"          sequence="20" parent="menu_declaration" />
