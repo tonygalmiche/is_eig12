@@ -34,4 +34,6 @@ access_is_demande_intervention_secours_user,is.demande.intervention.secours.user
 access_is_consequence_personne_prise_en_charge_user,is.consequence.personne.prise.en.charge.user,model_is_consequence_personne_prise_en_charge,base.group_user,1,1,1,1
 access_is_consequence_personnel_user,is.consequence.personnel.user,model_is_consequence_personnel,base.group_user,1,1,1,1
 access_is_consequence_fonctionnement_stucture_user,is.consequence.fonctionnement.stucture.user,model_is_consequence_fonctionnement_stucture,base.group_user,1,1,1,1
+access_is_eig_autre_personne_user,is_eig_autre_personne.user,model_is_eig_autre_personne,base.group_user,1,1,1,1
+access_is_qualite_autre_user,is_qualite_autre.user,model_is_qualite_autre,base.group_user,1,1,1,1
 

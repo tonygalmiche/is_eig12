@@ -150,5 +150,80 @@
             res_model="add.toutes.tables" src_model="res.company"
             view_mode="form" target="new" view_type="form"/>
 
+        <record id="is_add_add_is_type_evenement" model="ir.ui.view">
+            <field name="name">view.add.is.type.evenement.form</field>
+            <field name="model">add.is.type.evenement</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Type Evènement">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_add_is_type_evenement" name="Initialisation Type Evènement "
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.type.evenement" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
+
+        <!-- Initialisation Nature Evènement  -->
+        <record id="is_add_is_nature_evenement_view" model="ir.ui.view">
+            <field name="name">view.add.is.nature.evenement.form</field>
+            <field name="model">add.is.nature.evenement</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Nature Evènement ">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_add_is_nature_evenement" name="Initialisation Nature Evènement  "
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.nature.evenement" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
+
+        <!-- Initialisation Destinataires  -->
+        <record id="is_add_is_destinataire_view" model="ir.ui.view">
+            <field name="name">view.add.is.destinataire.form</field>
+            <field name="model">add.is.destinataire</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Destinataires ">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_add_add_is_destinataire" name="Initialisation Destinataires  "
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.destinataire" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
+
+        <!-- Initialisation Qualité  -->
+        <record id="is_add_is_qualite_view" model="ir.ui.view">
+            <field name="name">view.add.is.qualite.form</field>
+            <field name="model">add.is.qualite</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Qualité ">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_add_add_is_destinataire" name="Initialisation Qualité  "
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.qualite" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
+
     </data>
 </odoo>
