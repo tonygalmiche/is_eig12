@@ -15,8 +15,6 @@ access_is_type_evenement_user,is.type.evenement.user,model_is_type_evenement,bas
 access_is_manip_fields_user,is.manip.fields.user,model_is_manip_fields,base.group_user,1,1,1,1
 access_is_type_evenement_mail_user,is.type.evenement.mail.user,model_is_type_evenement_mail,base.group_user,1,1,1,1
 
-access_is_type_risque_user,is_type_risque.user,model_is_type_risque,base.group_user,1,1,1,1
-access_is_nature_risque_user,is_nature_risque.user,model_is_nature_risque,base.group_user,1,1,1,1
 access_is_disposition_prise_user,is_disposition_prise.user,model_is_disposition_prise,base.group_user,1,1,1,1
 access_is_consequence_user,is_consequence.user,model_is_consequence,base.group_user,1,1,1,1
 access_is_destinataire_user,is_destinataire.user,model_is_destinataire,base.group_user,1,1,1,1
