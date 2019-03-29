@@ -84,7 +84,7 @@ class is_type_evenement_mail(models.Model):
 class is_manip_fields(models.Model):
     _name = 'is.manip.fields'
     _description = u"Caractéristiques des champs"
-    _order = "name"
+    _order = "sequence"
 
     name            = fields.Char('Field Name', related='fields_id.field_description', store=True)
     sequence        = fields.Integer('Sequence')
@@ -1486,12 +1486,26 @@ class is_default_type_event(models.Model):
     def get_fields_eig_properties(self, visible=False):
         field_ids = self.get_eig_fields()
         lst = []
+        sequence = {
+            'start_date': 1,
+            'cause_faits': 2,
+            'criteres_generaux_ids': 3,
+            'date_heure_constatation_faits': 4,
+            'end_date': 5,
+            'demande_intervention_secours_ids': 6,
+            'description_faits': 7,
+            'element_faits': 8,
+            'solution_prise_en_charge': 9,
+            'lieu_faits': 10,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0, {
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
-                'is_eig': True
+                'is_eig': True,
+                'sequence': seq,
             }))
         return lst
 
