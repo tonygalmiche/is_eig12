@@ -189,6 +189,7 @@
                   <page string="Entête">
                       <field name="fields_entete_id" nolabel="1" context="{'default_is_eig_entete': True}">
                          <tree string="Entête" editable="bottom">
+                             <field name="sequence" widget="handle" />
                              <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
                              <field name="field_visible"/>
                              <field name="field_required"/>
@@ -210,6 +211,7 @@
                   <page string="Faits">
                    <field name="fields_eig_id" nolabel="1" context="{'default_is_eig': True}">
                        <tree string="Caractéristiques des champs de EIG" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
@@ -231,6 +233,7 @@
                 <page string="Auteur">
                    <field name="fields_auteur_id" nolabel="1" context="{'default_is_eig_auteur': True}">
                        <tree string="Caractéristiques des champs de Auteur" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig.auteur')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
@@ -251,6 +254,7 @@
                 <page string="Témoins">
                     <field name="fields_temoin_id" nolabel="1" context="{'default_is_eig_temoin': True}">
                         <tree string="Caractéristiques des champs de Témoins" editable="bottom">
+                            <field name="sequence" widget="handle" />
                             <field name="fields_id" domain="[('model', '=', 'is.eig.temoin')]"/>
                             <field name="field_visible"/>
                             <field name="field_required"/>
@@ -272,7 +276,30 @@
                 <page string="Personne(s) faisant l’objet de l’IP">
                    <field name="fields_victim_id" nolabel="1"  context="{'default_is_eig_victim': True}">
                        <tree string="Caractéristiques des champs de Victime" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig.victime')]"/>
+                           <field name="field_visible"/>
+                           <field name="field_required"/>
+                           <field name="is_eig" invisible="1"/>
+                           <field name="is_eig_auteur" invisible="1"/>
+                           <field name="is_eig_temoin" invisible="1"/>
+                           <field name="is_eig_victim" invisible="1"/>
+                           <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
+                           <field name="is_eig_mesures" invisible="1" />
+                           <field name="is_eig_elements" invisible="1" />
+                           <field name="is_eig_group" invisible="1" />
+                           <field name="is_eig_entete" invisible="1" />
+                           <field name="is_eig_autre_personne" invisible="1" />
+                           <field name="type_event_id" invisible="1" />
+                       </tree>
+                   </field>
+                </page>
+                <page string="Autre(s) personne(s) concernée(s) par l’IP">
+                   <field name="fields_autre_personne_id" nolabel="1" context="{'default_is_eig_autre_personne': True}">
+                       <tree string="Autre(s) personne(s) concernée(s) par l’IP" editable="bottom">
+                           <field name="sequence" widget="handle" />
+                           <field name="fields_id" domain="[('model', '=', 'is.eig.autre.personne')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
                            <field name="is_eig" invisible="1"/>
@@ -314,6 +341,7 @@
                 <page string="Information communication">
                    <field name="fields_info_id" nolabel="1" context="{'default_is_eig_infos': True}">
                        <tree string="Caractéristiques des champs de Communication" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.infos.communication')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
@@ -333,6 +361,7 @@
                    </field>
                    <field name="fields_info2_id" nolabel="1" context="{'default_is_eig_infos2': True}">
                        <tree string="Caractéristiques des champs de Communication2" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
@@ -354,6 +383,7 @@
                 <page string="Eléments complémentaires">
                    <field name="fields_elements_id" nolabel="1" context="{'default_is_eig_elements': True}">
                        <tree string="Caractéristiques des champs de Eléments" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
@@ -375,28 +405,8 @@
                 <page string="Form Group">
                    <field name="fields_group_id" nolabel="1" context="{'default_is_eig_group': True}">
                        <tree string="Caractéristiques des champs de Group" editable="bottom">
+                           <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
-                           <field name="field_visible"/>
-                           <field name="field_required"/>
-                           <field name="is_eig" invisible="1"/>
-                           <field name="is_eig_auteur" invisible="1"/>
-                           <field name="is_eig_temoin" invisible="1"/>
-                           <field name="is_eig_victim" invisible="1"/>
-                           <field name="is_eig_infos" invisible="1"/>
-                           <field name="is_eig_infos2" invisible="1"/>
-                           <field name="is_eig_mesures" invisible="1" />
-                           <field name="is_eig_elements" invisible="1" />
-                           <field name="is_eig_group" invisible="1" />
-                           <field name="is_eig_entete" invisible="1" />
-                           <field name="is_eig_autre_personne" invisible="1" />
-                           <field name="type_event_id" invisible="1" />
-                       </tree>
-                   </field>
-                </page>
-                <page string="Autre(s) personne(s) concernée(s) par l’IP">
-                   <field name="fields_autre_personne_id" nolabel="1" context="{'default_is_eig_autre_personne': True}">
-                       <tree string="Autre(s) personne(s) concernée(s) par l’IP" editable="bottom">
-                           <field name="fields_id" domain="[('model', '=', 'is.eig.autre.personne')]"/>
                            <field name="field_visible"/>
                            <field name="field_required"/>
                            <field name="is_eig" invisible="1"/>
@@ -431,6 +441,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.type.evenement</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'skippedtype': True}</field>
         </record>
 
         <!-- EIG -->    
@@ -1122,6 +1133,76 @@
                             </tree>
                         </field>
                     </page>
+                    <page string="Autre(s) personne(s) concernée(s) par l’IP" >
+                        <group invisible="1">
+                            <field name="related_autre_personne_vsb_identifie"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_identifie"   invisible="1" />
+                            <field name="related_autre_personne_vsb_nom"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_nom"   invisible="1" />
+                            <field name="related_autre_personne_vsb_prenom"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_prenom"   invisible="1" />
+                            <field name="related_autre_personne_vsb_qualite_id"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_qualite_id"   invisible="1" />
+                            <field name="related_autre_personne_vsb_consequence_id"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_consequence_id"   invisible="1" />
+                            <field name="related_autre_personne_vsb_disposition_id"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_disposition_id"   invisible="1" />
+                            <field name="related_autre_personne_vsb_auteur_victime"  invisible="1"  />
+                            <field name="related_autre_personne_rqr_auteur_victime"   invisible="1" />
+                        </group> 
+                        <field name="autre_personne_ids"
+                               context="{
+                                    'default_related_vsb_identifie': related_autre_personne_vsb_identifie, 
+                                    'default_related_rqr_identifie': related_autre_personne_rqr_identifie,
+                                    'default_related_vsb_nom': related_autre_personne_vsb_nom, 
+                                    'default_related_rqr_nom': related_autre_personne_rqr_nom,
+                                    'default_related_vsb_prenom': related_autre_personne_vsb_prenom, 
+                                    'default_related_rqr_prenom': related_autre_personne_rqr_prenom,
+                                    'default_related_vsb_qualite_id': related_autre_personne_vsb_qualite_id, 
+                                    'default_related_rqr_qualite_id': related_autre_personne_rqr_qualite_id,
+                                    'default_related_vsb_consequence_id': related_autre_personne_vsb_consequence_id, 
+                                    'default_related_rqr_consequence_id': related_autre_personne_rqr_consequence_id,
+                                    'default_related_vsb_disposition_id': related_autre_personne_vsb_disposition_id, 
+                                    'default_related_rqr_disposition_id': related_autre_personne_rqr_disposition_id,
+                                    'default_related_vsb_auteur_victime': related_autre_personne_vsb_auteur_victime, 
+                                    'default_related_rqr_auteur_victime': related_autre_personne_rqr_auteur_victime, 
+                                    }" >
+                            <form string="Autre(s) personne(s) concernée(s) par l’IP">
+                                <group col="2" colspan="4">
+                                    <field name="related_vsb_identifie" invisible="1"  />
+                                    <field name="related_rqr_identifie" invisible="1"  />
+                                    <field name="identifie" attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}"/>
+                                    <field name="related_vsb_nom" invisible="1"  />
+                                    <field name="related_rqr_nom" invisible="1"  />
+                                    <field name="nom" attrs="{'invisible': [('related_vsb_nom', '=', False)], 'required':[('related_rqr_nom','=', True)]}"/>
+                                    <field name="related_vsb_prenom" invisible="1"  />
+                                    <field name="related_rqr_prenom" invisible="1"  />
+                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}"/>
+                                    <field name="related_vsb_qualite_id" invisible="1"  />
+                                    <field name="related_rqr_qualite_id" invisible="1"  />
+                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
+                                    <field name="related_vsb_consequence_id" invisible="1"  />
+                                    <field name="related_rqr_consequence_id" invisible="1"  />
+                                    <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
+                                    <field name="related_vsb_disposition_id" invisible="1"  />
+                                    <field name="related_rqr_disposition_id" invisible="1"  />
+                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
+                                    <field name="related_vsb_auteur_victime" invisible="1"  />
+                                    <field name="related_rqr_auteur_victime" invisible="1"  />
+                                    <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
+                                </group>
+                            </form>
+                            <tree string="Autre(s) personne(s) concernée(s) par l’IP">
+                                <field name="identifie"/>
+                                <field name="nom"/>
+                                <field name="prenom"/>
+                                <field name="qualite_id"/>
+                                <field name="consequence_id"/>
+                                <field name="disposition_id"/>
+                                <field name="auteur_victime"/>
+                            </tree>
+                        </field>
+                    </page>
                     <page string="Analyse - Mesures prises et envisagées" attrs="{'invisible': [('related_onglet_mesures','=',False)]}">
                         <group>
                             <!-- <label colspan="4" for="mesure_autres"  attrs="{'invisible': [('related_vsb_mesure_autres', '=', False)]}" />
@@ -1410,77 +1491,6 @@
                             <field name="related_rqr_attachment_ids" invisible="1"  />
                             <field name="attachment_ids" widget="many2many_binary" attrs="{'invisible': [('related_vsb_attachment_ids', '=', False)], 'required':[('related_rqr_attachment_ids','=', True)]}"/>
                         </group>
-                    </page>
-                    
-                    <page string="Autre(s) personne(s) concernée(s) par l’IP" >
-                        <group invisible="1">
-                            <field name="related_autre_personne_vsb_identifie"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_identifie"   invisible="1" />
-                            <field name="related_autre_personne_vsb_nom"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_nom"   invisible="1" />
-                            <field name="related_autre_personne_vsb_prenom"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_prenom"   invisible="1" />
-                            <field name="related_autre_personne_vsb_qualite_id"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_qualite_id"   invisible="1" />
-                            <field name="related_autre_personne_vsb_consequence_id"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_consequence_id"   invisible="1" />
-                            <field name="related_autre_personne_vsb_disposition_id"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_disposition_id"   invisible="1" />
-                            <field name="related_autre_personne_vsb_auteur_victime"  invisible="1"  />
-                            <field name="related_autre_personne_rqr_auteur_victime"   invisible="1" />
-                        </group> 
-                        <field name="autre_personne_ids"
-                               context="{
-                                    'default_related_vsb_identifie': related_autre_personne_vsb_identifie, 
-                                    'default_related_rqr_identifie': related_autre_personne_rqr_identifie,
-                                    'default_related_vsb_nom': related_autre_personne_vsb_nom, 
-                                    'default_related_rqr_nom': related_autre_personne_rqr_nom,
-                                    'default_related_vsb_prenom': related_autre_personne_vsb_prenom, 
-                                    'default_related_rqr_prenom': related_autre_personne_rqr_prenom,
-                                    'default_related_vsb_qualite_id': related_autre_personne_vsb_qualite_id, 
-                                    'default_related_rqr_qualite_id': related_autre_personne_rqr_qualite_id,
-                                    'default_related_vsb_consequence_id': related_autre_personne_vsb_consequence_id, 
-                                    'default_related_rqr_consequence_id': related_autre_personne_rqr_consequence_id,
-                                    'default_related_vsb_disposition_id': related_autre_personne_vsb_disposition_id, 
-                                    'default_related_rqr_disposition_id': related_autre_personne_rqr_disposition_id,
-                                    'default_related_vsb_auteur_victime': related_autre_personne_vsb_auteur_victime, 
-                                    'default_related_rqr_auteur_victime': related_autre_personne_rqr_auteur_victime, 
-                                    }" >
-                            <form string="Autre(s) personne(s) concernée(s) par l’IP">
-                                <group col="2" colspan="4">
-                                    <field name="related_vsb_identifie" invisible="1"  />
-                                    <field name="related_rqr_identifie" invisible="1"  />
-                                    <field name="identifie" attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}"/>
-                                    <field name="related_vsb_nom" invisible="1"  />
-                                    <field name="related_rqr_nom" invisible="1"  />
-                                    <field name="nom" attrs="{'invisible': [('related_vsb_nom', '=', False)], 'required':[('related_rqr_nom','=', True)]}"/>
-                                    <field name="related_vsb_prenom" invisible="1"  />
-                                    <field name="related_rqr_prenom" invisible="1"  />
-                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}"/>
-                                    <field name="related_vsb_qualite_id" invisible="1"  />
-                                    <field name="related_rqr_qualite_id" invisible="1"  />
-                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
-                                    <field name="related_vsb_consequence_id" invisible="1"  />
-                                    <field name="related_rqr_consequence_id" invisible="1"  />
-                                    <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
-                                    <field name="related_vsb_disposition_id" invisible="1"  />
-                                    <field name="related_rqr_disposition_id" invisible="1"  />
-                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
-                                    <field name="related_vsb_auteur_victime" invisible="1"  />
-                                    <field name="related_rqr_auteur_victime" invisible="1"  />
-                                    <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
-                                </group>
-                            </form>
-                            <tree string="Autre(s) personne(s) concernée(s) par l’IP">
-                                <field name="identifie"/>
-                                <field name="nom"/>
-                                <field name="prenom"/>
-                                <field name="qualite_id"/>
-                                <field name="consequence_id"/>
-                                <field name="disposition_id"/>
-                                <field name="auteur_victime"/>
-                            </tree>
-                        </field>
                     </page>
             </notebook>
         </sheet>

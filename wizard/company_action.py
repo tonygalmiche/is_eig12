@@ -267,6 +267,10 @@ class add_is_nature_evenement(models.TransientModel):
                     type_data1.is_nature_ids = [(4,create_id.id)]
                     type_data2.is_nature_ids = [(4,create_id.id)]
                     type_data3.is_nature_ids = [(4,create_id.id)]
+                else:
+                    type_data1.is_nature_ids = [(4,nature_ids.ids[0])]
+                    type_data2.is_nature_ids = [(4,nature_ids.ids[0])]
+                    type_data3.is_nature_ids = [(4,nature_ids.ids[0])]
         if type_data1 and type_data2 and type_data3 and type_data4:
             for data in common_list:
                 nature_ids = add_data_obj.search([('name', '=', data)])
@@ -276,12 +280,19 @@ class add_is_nature_evenement(models.TransientModel):
                     type_data2.is_nature_ids = [(4,create_id.id)]
                     type_data3.is_nature_ids = [(4,create_id.id)]
                     type_data4.is_nature_ids = [(4,create_id.id)]
+                else:
+                    type_data1.is_nature_ids = [(4,nature_ids.ids[0])]
+                    type_data2.is_nature_ids = [(4,nature_ids.ids[0])]
+                    type_data3.is_nature_ids = [(4,nature_ids.ids[0])]
+                    type_data4.is_nature_ids = [(4,nature_ids.ids[0])]
         if type_data4:
             for data in chu_list:
                 nature_ids = add_data_obj.search([('name', '=', data)])
                 if not nature_ids:
                     create_id = add_data_obj.create({'name': data})
                     type_data4.is_nature_ids = [(4,create_id.id)]
+                else:
+                    type_data4.is_nature_ids = [(4,nature_ids.ids[0])]
         return True
 
 

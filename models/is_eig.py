@@ -87,6 +87,7 @@ class is_manip_fields(models.Model):
     _order = "name"
 
     name            = fields.Char('Field Name', related='fields_id.field_description', store=True)
+    sequence        = fields.Integer('Sequence')
     fields_id       = fields.Many2one('ir.model.fields', 'Champs', ondelete='cascade', required=True)
     field_visible   = fields.Boolean('Visible')
     field_required  = fields.Boolean('Obligatoire')
@@ -1486,12 +1487,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_eig_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig': True
-            })
+            }))
         return lst
 
     @api.multi
@@ -1512,12 +1513,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_mesures_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_mesures': True,
-            })
+            }))
         return lst
 
     @api.multi
@@ -1534,12 +1535,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_elements_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_elements': True,
-            })
+            }))
         return lst
 
     @api.multi
@@ -1559,12 +1560,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_group_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_group': True,
-            })
+            }))
         return lst
 
     @api.multi
@@ -1582,12 +1583,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_entete_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_entete': True,
-            })
+            }))
         return lst
 
     @api.multi
@@ -1605,12 +1606,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_auteur_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_auteur': True
-            })
+            }))
         return lst
 
     @api.multi
@@ -1630,12 +1631,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_victim_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False, 
                 'is_eig_victim': True
-            })
+            }))
         return lst
 
     @api.multi
@@ -1653,12 +1654,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_temoin_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0, {
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_temoin': True
-            })
+            }))
         return lst
 
     @api.multi
@@ -1676,7 +1677,7 @@ class is_default_type_event(models.Model):
         field_ids = self.get_infos_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({'fields_id': field_id, 'field_visible': visible, 'field_required': False, 'is_eig_infos': True})
+            lst.append((0,0,{'fields_id': field_id.id, 'field_visible': visible, 'field_required': False, 'is_eig_infos': True}))
         return lst
 
     @api.multi
@@ -1694,12 +1695,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_infos2_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0,{
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_infos2': True,
-            })
+            }))
         return lst
 
     @api.multi
@@ -1716,12 +1717,12 @@ class is_default_type_event(models.Model):
         field_ids = self.get_autre_personne_fields()
         lst = []
         for field_id in field_ids:
-            lst.append({
-                'fields_id': field_id,
+            lst.append((0,0,{
+                'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False, 
                 'is_eig_autre_personne': True
-            })
+            }))
         return lst
 
     @api.multi
@@ -1906,40 +1907,127 @@ class is_type_evenement(models.Model):
     _description = u"Type d’événement"
     _order = "sequence desc"
 
-    @api.onchange('name')
-    def onchange_name(self):
-        if self.name:
-            default_obj        = self.env['is.default.type.event']
-            lst_eig            = default_obj.get_fields_eig_properties(True)
-            lst_eig_auteur     = default_obj.get_fields_auteur_properties(True)
-            lst_eig_victim     = default_obj.get_fields_victim_properties(True)
-            lst_eig_temoin     = default_obj.get_fields_temoin_properties(True)
-            lst_eig_infos      = default_obj.get_fields_infos_properties(True)
-            lst_eig_infos2     = default_obj.get_fields_infos2_properties(True)
-            lst_eig_mesures    = default_obj.get_fields_mesures_properties(True)
-            lst_eig_elements   = default_obj.get_fields_elements_properties(True)
-            lst_eig_group      = default_obj.get_fields_group_properties(True)
-            lst_entete_group   = default_obj.get_fields_entete_properties(True)
-            lst_autre_personne = default_obj.get_fields_autre_personne_properties(True)
-            return {'value': {
-                'fields_eig_id'           : lst_eig,
-                'fields_auteur_id'        : lst_eig_auteur,
-                'fields_victim_id'        : lst_eig_victim, 
-                'fields_temoin_id'        : lst_eig_temoin,
-                'fields_info_id'          : lst_eig_infos,
-                'fields_info2_id'         : lst_eig_infos2,
-                'fields_mesures_id'       : lst_eig_mesures,
-                'fields_elements_id'      : lst_eig_elements,
-                'fields_group_id'         : lst_eig_group,
-                'fields_entete_id'        : lst_entete_group,
-                'fields_autre_personne_id': lst_autre_personne,
-            }}
+#     @api.onchange('name')
+#     def onchange_name(self):
+# #         if self.name:
+#             default_obj        = self.env['is.default.type.event']
+#             lst_eig            = default_obj.get_fields_eig_properties(True)
+#             lst_eig_auteur     = default_obj.get_fields_auteur_properties(True)
+#             lst_eig_victim     = default_obj.get_fields_victim_properties(True)
+#             lst_eig_temoin     = default_obj.get_fields_temoin_properties(True)
+#             lst_eig_infos      = default_obj.get_fields_infos_properties(True)
+#             lst_eig_infos2     = default_obj.get_fields_infos2_properties(True)
+#             lst_eig_mesures    = default_obj.get_fields_mesures_properties(True)
+#             lst_eig_elements   = default_obj.get_fields_elements_properties(True)
+#             lst_eig_group      = default_obj.get_fields_group_properties(True)
+#             lst_entete_group   = default_obj.get_fields_entete_properties(True)
+#             lst_autre_personne = default_obj.get_fields_autre_personne_properties(True)
+#             return {'value': {
+#                 'fields_eig_id'           : lst_eig,
+#                 'fields_auteur_id'        : lst_eig_auteur,
+#                 'fields_victim_id'        : lst_eig_victim, 
+#                 'fields_temoin_id'        : lst_eig_temoin,
+#                 'fields_info_id'          : lst_eig_infos,
+#                 'fields_info2_id'         : lst_eig_infos2,
+#                 'fields_mesures_id'       : lst_eig_mesures,
+#                 'fields_elements_id'      : lst_eig_elements,
+#                 'fields_group_id'         : lst_eig_group,
+#                 'fields_entete_id'        : lst_entete_group,
+#                 'fields_autre_personne_id': lst_autre_personne,
+#             }}
+
+    @api.model
+    def default_get(self,default_fields):
+        res = super(is_type_evenement, self).default_get(default_fields)
+        default_obj        = self.env['is.default.type.event']
+        res['fields_eig_id']            = default_obj.get_fields_eig_properties(True)
+        res['fields_auteur_id']         = default_obj.get_fields_auteur_properties(True)
+        res['fields_victim_id']         = default_obj.get_fields_victim_properties(True)
+        res['fields_temoin_id']         = default_obj.get_fields_temoin_properties(True)
+        res['fields_info_id']           = default_obj.get_fields_infos_properties(True)
+        res['fields_info2_id']          = default_obj.get_fields_infos2_properties(True)
+        res['fields_mesures_id']        = default_obj.get_fields_mesures_properties(True)
+        res['fields_elements_id']       = default_obj.get_fields_elements_properties(True)
+        res['fields_group_id']          = default_obj.get_fields_group_properties(True)
+        res['fields_entete_id']         = default_obj.get_fields_entete_properties(True)
+        res['fields_autre_personne_id'] = default_obj.get_fields_autre_personne_properties(True)
+        return res
 
     @api.model
     def create(self, vals):
         if 'code' in vals and vals['code']:
             value = self.env['is_default_type_event'].update_vals_create(vals['code'])
             vals.update(value)
+        add_data_obj = self.env['is.nature.evenement']
+        if 'name' in vals and vals['name']:
+            if vals['name'] in [u'Situation exceptionnelle pour public d’AMI ou de CHU']:
+                type4_list = [
+                    u"Actes de malveillance au sein de la structure",
+                    u"Autre (évènement relatif à la sécurité des biens et des personnes)",
+                    u"Tentative de suicide",
+                    u"Violences physiques",
+                    u"Violences psychologiques et morales",
+                    u"Violences sexuelles",
+                    u"Accident corporel grave",
+                    u"Autre (évènements relatifs aux victimes présumées)",
+                    u"Décès",
+                    u"Défaillances techniques graves",
+                    u"Epidémie - Propagation de parasites",
+                    u"Explosions ou incendie ou inondation",
+                    u"Fugues ou disparition de personnes accueillies > à 48 H",
+                    u"Intoxication alimentaire si plusieurs personnes sont concernées",
+                    u"Négligences graves de l’entourage",
+                    u"Racket",
+                    u"Trafic au sein de l’établissement",
+                    u"Vols récurrents et /ou qualifiés à l’encontre des autres résidents et ou des salariés ou des bénévoles",
+                ]
+                nature_ids = add_data_obj.search([('name', 'in', type4_list)])
+                if nature_ids:
+                    vals['is_nature_ids'] = [(6, 0, nature_ids.ids)]
+            if vals['name'] in [u'Situation exceptionnelle', u'Information préoccupante', u'Signalement au Procureur']:
+                type123_list = [
+                    u"Absence imprévue de plusieurs professionnels, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies",
+                    u"Autre (accident ou incident lié à une erreur ou à un défaut de soin ou de surveillance)",
+                    u"Autre (évènement en santé environnementale)",
+                    u"Autre (évènement relatif à l’accompagnement des usagers)",
+                    u"Autre (évènement relatif au fonctionnement et organisation de l’établissement)",
+                    u"Comportements violents de la part d’usagers à l’égard d’autres usagers",
+                    u"Comportements violents de la part d’usagers à l’égard de professionnels",
+                    u"Conflits sociaux ou menaces de conflits sociaux pouvant entraîner un risque pour l’usager",
+                    u"Décès accidentel ou consécutif à un défaut de surveillance ou de prise en charge de la personne",
+                    u"Défaillance technique significative et durable",
+                    u"Difficultés relationnelles récurrentes avec la famille entraînant une perturbation de l’organisation ou du fonctionnement de la structure",
+                    u"Disparition(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)",
+                    u"Epidémie",
+                    u"Erreur d’identité dans la délivrance d’un médicament",
+                    u"Fugue(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)",
+                    u"Intoxication",
+                    u"Intrusion informatique",
+                    u"Légionnelles",
+                    u"Maladie infectieuse",
+                    u"Maltraitances non précisées",
+                    u"Manquements graves au règlement du lieu d’hébergement ou d’accueil qui compromettent la prise en charge",
+                    u"Mise en danger par dérive sectaire et radicalisation",
+                    u"Négligences graves ou erreurs successives",
+                    u"Non-respect de la prescription médicale, erreur dans la dispensation, la préparation ou l’administration",
+                    u"Présentation de faux diplômes",
+                    u"Sinistre ou évènement météorologique exceptionnel",
+                    u"Suicide",
+                    u"Turn-over du personnel ou grève, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies",
+                    u"Vacance de poste prolongée, notamment d’encadrement, difficulté de recrutement",
+                    u"Violences médicales ou médicamenteuses",
+                    u"Vols récurrents à l’encontre des résidents, si dépôt de plainte",
+                    u"Actes de malveillance au sein de la structure",
+                    u"Autre (évènement relatif à la sécurité des biens et des personnes)",
+                    u"Tentative de suicide",
+                    u"Violences physiques",
+                    u"Violences psychologiques et morales",
+                    u"Violences sexuelles",
+                ]
+                nature_ids = add_data_obj.search([('name', 'in', type123_list)])
+                if nature_ids:
+                    vals['is_nature_ids'] = [(6, 0, nature_ids.ids)]
+            
         return super(is_type_evenement, self).create(vals)
 
     @api.multi
