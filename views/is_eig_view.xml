@@ -593,11 +593,18 @@
                     <notebook  attrs="{'invisible': [('type_event_id','=',False)]}" colspan="4" >
                     <page string="Faits" attrs="{'invisible': [('related_onglet_faits','=',False)]}">
                         <group>
-                            <label colspan="4" for="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)]}" />
+                            <label colspan="4" for="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)]}" />
                             <div>
-                            <field name="related_vsb_start_date" invisible="1"  />
-                            <field name="related_rqr_start_date" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
+                            <field name="related_vsb_cause_faits" invisible="1"  />
+                            <field name="related_rqr_cause_faits" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)], 'required':[('related_rqr_cause_faits','=', True)]}"/>
+                            </div>
+                            
+                            <label colspan="4" for="criteres_generaux_ids" attrs="{'invisible': [('related_vsb_criteres_generaux_ids', '=', False)]}" />
+                            <div>
+                            <field name="related_vsb_criteres_generaux_ids" invisible="1"  />
+                            <field name="related_rqr_criteres_generaux_ids" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="criteres_generaux_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_criteres_generaux_ids', '=', False)], 'required':[('related_rqr_criteres_generaux_ids','=', True)]}" />
                             </div>
                             
                             <label colspan="4" for="date_heure_constatation_faits" attrs="{'invisible': [('related_vsb_date_heure_constatation_faits', '=', False)]}" />
@@ -607,23 +614,25 @@
                             <field colspan="4" nolabel="1" name="date_heure_constatation_faits" attrs="{'invisible': [('related_vsb_date_heure_constatation_faits', '=', False)], 'required':[('related_rqr_date_heure_constatation_faits','=', True)]}"/>
                             </div>
                             
-                            <label colspan="4" for="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)]}" />
+                            <label colspan="4" for="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)]}" />
                             <div>
-                            <field name="related_vsb_lieu_faits" invisible="1"  />
-                            <field name="related_rqr_lieu_faits" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)], 'required':[('related_rqr_lieu_faits','=', True)]}"/>
+                            <field name="related_vsb_start_date" invisible="1"  />
+                            <field name="related_rqr_start_date" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
                             </div>
+                            
                             <label colspan="4" for="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)]}" />
                             <div>
                             <field name="related_vsb_end_date" invisible="1"  />
                             <field name="related_rqr_end_date" invisible="1"  />
                             <field colspan="4" nolabel="1" name="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)], 'required':[('related_rqr_end_date','=', True)]}"/>
                             </div>
-                            <label colspan="4" for="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)]}" />
+                            
+                            <label colspan="4" for="demande_intervention_secours_ids" attrs="{'invisible': [('related_vsb_demande_intervention_secours_ids', '=', False)]}" />
                             <div>
-                            <field name="related_vsb_cause_faits" invisible="1"  />
-                            <field name="related_rqr_cause_faits" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)], 'required':[('related_rqr_cause_faits','=', True)]}"/>
+                            <field name="related_vsb_demande_intervention_secours_ids" invisible="1"  />
+                            <field name="related_rqr_demande_intervention_secours_ids" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="demande_intervention_secours_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_demande_intervention_secours_ids', '=', False)], 'required':[('related_rqr_demande_intervention_secours_ids','=', True)]}" />
                             </div>
                             
                             <label colspan="4" for="description_faits" attrs="{'invisible': [('related_vsb_description_faits', '=', False)]}" />
@@ -632,28 +641,28 @@
                             <field name="related_rqr_description_faits" invisible="1"  />
                             <field colspan="4" nolabel="1" name="description_faits" attrs="{'invisible': [('related_vsb_description_faits', '=', False)], 'required':[('related_rqr_description_faits','=', True)]}"/>
                             </div>
-
-                            <label colspan="4" for="criteres_generaux_ids" attrs="{'invisible': [('related_vsb_criteres_generaux_ids', '=', False)]}" />
+                            
+                            <label colspan="4" for="element_faits" attrs="{'invisible': [('related_vsb_element_faits', '=', False)]}" />
                             <div>
-                            <field name="related_vsb_criteres_generaux_ids" invisible="1"  />
-                            <field name="related_rqr_criteres_generaux_ids" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="criteres_generaux_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_criteres_generaux_ids', '=', False)], 'required':[('related_rqr_criteres_generaux_ids','=', True)]}" />
+                            <field name="related_vsb_element_faits" invisible="1"  />
+                            <field name="related_rqr_element_faits" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="element_faits" attrs="{'invisible': [('related_vsb_element_faits', '=', False)], 'required':[('related_rqr_element_faits','=', True)]}"/>
                             </div>
-
+                            
                             <label for="solution_prise_en_charge" colspan="4" attrs="{'invisible': [('related_vsb_solution_prise_en_charge', '=', False)]}" />
                             <div>
                             <field name="related_vsb_solution_prise_en_charge" invisible="1"  />
                             <field name="related_rqr_solution_prise_en_charge" invisible="1"  />
                             <field name="solution_prise_en_charge" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_solution_prise_en_charge', '=', False)], 'required':[('related_rqr_solution_prise_en_charge','=', True)]}" />
                             </div>
-
-                            <label colspan="4" for="demande_intervention_secours_ids" attrs="{'invisible': [('related_vsb_demande_intervention_secours_ids', '=', False)]}" />
+                            
+                            <label colspan="4" for="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)]}" />
                             <div>
-                            <field name="related_vsb_demande_intervention_secours_ids" invisible="1"  />
-                            <field name="related_rqr_demande_intervention_secours_ids" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="demande_intervention_secours_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_demande_intervention_secours_ids', '=', False)], 'required':[('related_rqr_demande_intervention_secours_ids','=', True)]}" />
+                            <field name="related_vsb_lieu_faits" invisible="1"  />
+                            <field name="related_rqr_lieu_faits" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)], 'required':[('related_rqr_lieu_faits','=', True)]}"/>
                             </div>
-
+                            
                             <label colspan="4" for="risque_reproductivite" attrs="{'invisible': [('related_vsb_risque_reproductivite', '=', False)]}" />
                             <div>
                             <field name="related_vsb_risque_reproductivite" invisible="1"  />
@@ -687,13 +696,6 @@
                             <field name="related_vsb_si_non_maitrise" invisible="1"  />
                             <field name="related_rqr_si_non_maitrise" invisible="1"  />
                             <field colspan="4" nolabel="1" name="si_non_maitrise" attrs="{'invisible': [('related_vsb_si_non_maitrise', '=', False)], 'required':[('related_rqr_si_non_maitrise','=', True)]}"/>
-                            </div>
-
-                            <label colspan="4" for="element_faits" attrs="{'invisible': [('related_vsb_element_faits', '=', False)]}" />
-                            <div>
-                            <field name="related_vsb_element_faits" invisible="1"  />
-                            <field name="related_rqr_element_faits" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="element_faits" attrs="{'invisible': [('related_vsb_element_faits', '=', False)], 'required':[('related_rqr_element_faits','=', True)]}"/>
                             </div>
                         </group>
                         <group string="Au moment de la transmission de l’information, quelles sont les conséquences constatées" 
