@@ -128,6 +128,8 @@ class add_toutes_tables(models.TransientModel):
         add_data_obj.add_data()
         add_data_obj = self.env['add.is.qualite']
         add_data_obj.add_data()
+        add_data_obj = self.env['add.is.qualite.autre']
+        add_data_obj.add_data()
         return True
 
 
@@ -160,30 +162,34 @@ class add_is_type_evenement(models.TransientModel):
             'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.'
         }
         
-        exist_ids = add_data_obj.search([('name', '=', type_data1.name)])
-        if not exist_ids:
-            add_data_obj.create(add_dict1)
-        else:
-            for e in exist_ids:
-                e.write(add_dict1)
-        exist_ids = add_data_obj.search([('name', '=', type_data2.name)])
-        if not exist_ids:
-            add_data_obj.create(add_dict2)
-        else:
-            for e in exist_ids:
-                e.write(add_dict2)
-        exist_ids = add_data_obj.search([('name', '=', type_data3.name)])
-        if not exist_ids:
-            add_data_obj.create(add_dict3)
-        else:
-            for e in exist_ids:
-                e.write(add_dict3)
-        exist_ids = add_data_obj.search([('name', '=', type_data4.name)])
-        if not exist_ids:
-            add_data_obj.create(add_dict4)
-        else:
-            for e in exist_ids:
-                e.write(add_dict4)
+        if type_data1:
+            exist_ids = add_data_obj.search([('name', '=', type_data1.name)])
+            if not exist_ids:
+                add_data_obj.create(add_dict1)
+            else:
+                for e in exist_ids:
+                    e.write(add_dict1)
+        if type_data2:
+            exist_ids = add_data_obj.search([('name', '=', type_data2.name)])
+            if not exist_ids:
+                add_data_obj.create(add_dict2)
+            else:
+                for e in exist_ids:
+                    e.write(add_dict2)
+        if type_data3:
+            exist_ids = add_data_obj.search([('name', '=', type_data3.name)])
+            if not exist_ids:
+                add_data_obj.create(add_dict3)
+            else:
+                for e in exist_ids:
+                    e.write(add_dict3)
+        if type_data4:
+            exist_ids = add_data_obj.search([('name', '=', type_data4.name)])
+            if not exist_ids:
+                add_data_obj.create(add_dict4)
+            else:
+                for e in exist_ids:
+                    e.write(add_dict4)
         return True
 
 
@@ -253,26 +259,29 @@ class add_is_nature_evenement(models.TransientModel):
             u"Trafic au sein de l’établissement",
             u"Vols récurrents et /ou qualifiés à l’encontre des autres résidents et ou des salariés ou des bénévoles",
         ]
-        for data in add_list:
-            nature_ids = add_data_obj.search([('name', '=', data)])
-            if not nature_ids:
-                create_id = add_data_obj.create({'name': data})
-                type_data1.is_nature_ids = [(4,create_id.id)]
-                type_data2.is_nature_ids = [(4,create_id.id)]
-                type_data3.is_nature_ids = [(4,create_id.id)]
-        for data in common_list:
-            nature_ids = add_data_obj.search([('name', '=', data)])
-            if not nature_ids:
-                create_id = add_data_obj.create({'name': data})
-                type_data1.is_nature_ids = [(4,create_id.id)]
-                type_data2.is_nature_ids = [(4,create_id.id)]
-                type_data3.is_nature_ids = [(4,create_id.id)]
-                type_data4.is_nature_ids = [(4,create_id.id)]
-        for data in chu_list:
-            nature_ids = add_data_obj.search([('name', '=', data)])
-            if not nature_ids:
-                create_id = add_data_obj.create({'name': data})
-                type_data4.is_nature_ids = [(4,create_id.id)]
+        if type_data1 and type_data2 and type_data3:
+            for data in add_list:
+                nature_ids = add_data_obj.search([('name', '=', data)])
+                if not nature_ids:
+                    create_id = add_data_obj.create({'name': data})
+                    type_data1.is_nature_ids = [(4,create_id.id)]
+                    type_data2.is_nature_ids = [(4,create_id.id)]
+                    type_data3.is_nature_ids = [(4,create_id.id)]
+        if type_data1 and type_data2 and type_data3 and type_data4:
+            for data in common_list:
+                nature_ids = add_data_obj.search([('name', '=', data)])
+                if not nature_ids:
+                    create_id = add_data_obj.create({'name': data})
+                    type_data1.is_nature_ids = [(4,create_id.id)]
+                    type_data2.is_nature_ids = [(4,create_id.id)]
+                    type_data3.is_nature_ids = [(4,create_id.id)]
+                    type_data4.is_nature_ids = [(4,create_id.id)]
+        if type_data4:
+            for data in chu_list:
+                nature_ids = add_data_obj.search([('name', '=', data)])
+                if not nature_ids:
+                    create_id = add_data_obj.create({'name': data})
+                    type_data4.is_nature_ids = [(4,create_id.id)]
         return True
 
 
@@ -315,4 +324,25 @@ class add_is_qualite(models.TransientModel):
             if not qualite_ids:
                 add_data_obj.create({'name': data})
         return True
+
+
+class add_is_qualite_autre(models.TransientModel):
+    _name = 'add.is.qualite.autre'
+    _description = u"Initialisation Qualité Autre"
+
+    @api.multi
+    def add_data(self):
+        add_data_obj = self.env['is.qualite.autre']
+        add_list = [
+            "Usager",
+            "Famille",
+            "Professionnel",
+            "Autre",
+        ]
+        for data in add_list:
+            qualite_ids = add_data_obj.search([('name', '=', data)])
+            if not qualite_ids:
+                add_data_obj.create({'name': data})
+        return True
+
 

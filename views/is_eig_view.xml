@@ -197,6 +197,7 @@
                              <field name="is_eig_temoin" invisible="1"/>
                              <field name="is_eig_victim" invisible="1"/>
                              <field name="is_eig_infos" invisible="1"/>
+                             <field name="is_eig_infos2" invisible="1"/>
                              <field name="is_eig_mesures" invisible="1" />
                              <field name="is_eig_elements" invisible="1" />
                              <field name="is_eig_group" invisible="1" />
@@ -217,6 +218,7 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
@@ -257,6 +259,7 @@
                             <field name="is_eig_temoin" invisible="1"/>
                             <field name="is_eig_victim" invisible="1"/>
                             <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                             <field name="is_eig_mesures" invisible="1" />
                             <field name="is_eig_elements" invisible="1" />
                             <field name="is_eig_group" invisible="1" />
@@ -277,6 +280,7 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
@@ -297,6 +301,7 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
@@ -317,6 +322,26 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
+                           <field name="is_eig_mesures" invisible="1" />
+                           <field name="is_eig_elements" invisible="1" />
+                           <field name="is_eig_group" invisible="1" />
+                           <field name="is_eig_entete" invisible="1" />
+                           <field name="is_eig_autre_personne" invisible="1" />
+                           <field name="type_event_id" invisible="1" />
+                       </tree>
+                   </field>
+                   <field name="fields_info2_id" nolabel="1" context="{'default_is_eig_infos2': True}">
+                       <tree string="Caractéristiques des champs de Communication2" editable="bottom">
+                           <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
+                           <field name="field_visible"/>
+                           <field name="field_required"/>
+                           <field name="is_eig" invisible="1"/>
+                           <field name="is_eig_auteur" invisible="1"/>
+                           <field name="is_eig_temoin" invisible="1"/>
+                           <field name="is_eig_victim" invisible="1"/>
+                           <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
@@ -337,6 +362,7 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
@@ -357,19 +383,13 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
                            <field name="is_eig_entete" invisible="1" />
                            <field name="is_eig_autre_personne" invisible="1" />
                            <field name="type_event_id" invisible="1" />
-                       </tree>
-                   </field>
-                </page>
-                <page string="Nature d'événement">
-                   <field name="is_nature_ids" nolabel="1">
-                       <tree string="Nature d'événement" editable="bottom">
-                           <field name="name"/>
                        </tree>
                    </field>
                 </page>
@@ -384,12 +404,20 @@
                            <field name="is_eig_temoin" invisible="1"/>
                            <field name="is_eig_victim" invisible="1"/>
                            <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
                            <field name="is_eig_mesures" invisible="1" />
                            <field name="is_eig_elements" invisible="1" />
                            <field name="is_eig_group" invisible="1" />
                            <field name="is_eig_entete" invisible="1" />
                            <field name="is_eig_autre_personne" invisible="1" />
                            <field name="type_event_id" invisible="1" />
+                       </tree>
+                   </field>
+                </page>
+                <page string="Nature d'événement">
+                   <field name="is_nature_ids" nolabel="1">
+                       <tree string="Nature d'événement" editable="bottom">
+                           <field name="name"/>
                        </tree>
                    </field>
                 </page>
@@ -472,7 +500,7 @@
                         <group string="Evènement" attrs="{'invisible': [('etablissement_id','=',False)]}">
                             <field name="type_event_id" />
                             <field name="event_description" style="background-color:yellow;" attrs="{'invisible': [('event_description', '=', False)]}" />
-                            <field name="event_information_speciale" style="background-color:red;" attrs="{'invisible': [('event_information_speciale', '=', False)]}" />
+                            <field name="event_information_speciale" style="background-color:orange;" attrs="{'invisible': [('event_information_speciale', '=', False)]}" />
                             <field name="type_nature_event_ids" widget="many2many_tags" invisible="1" />
                         </group>
                         <group attrs="{'invisible': [('type_event_id','=',False)]}">

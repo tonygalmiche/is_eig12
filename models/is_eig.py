@@ -96,6 +96,7 @@ class is_manip_fields(models.Model):
     is_eig_temoin   = fields.Boolean('Temoin', default=False)
     is_eig_victim   = fields.Boolean('Victim', default=False)
     is_eig_infos    = fields.Boolean('Infos', default=False)
+    is_eig_infos2   = fields.Boolean('Infos2', default=False)
     is_eig_mesures  = fields.Boolean('Mesures', default=False)
     is_eig_elements = fields.Boolean(u'Eléments', default=False)
     is_eig_group    = fields.Boolean('Group', default=False)
@@ -756,6 +757,13 @@ class is_eig(models.Model):
                     if item.field_required:
                         field = str('related_inf_rqr_'+item.fields_id.name)
                         vals.update({field: True})
+            for item in self.type_event_id.fields_info2_id:
+                if item.field_visible :
+                    field = str('related_vsb_'+item.fields_id.name)
+                    vals.update({field: True})
+                    if item.field_required:
+                        field = str('related_rqr_'+item.fields_id.name)
+                        vals.update({field: True})
             for item in self.type_event_id.fields_mesures_id:
                 if item.field_visible :
                     field = str('related_vsb_'+item.fields_id.name)
@@ -1251,7 +1259,7 @@ class is_eig(models.Model):
     related_rqr_causes_profondes          = fields.Boolean(u'Champs related_rqr_causes_profondes - Obligation')
     
     
-    premiere_cause_identifiee                    = fields.Boolean(u"1ere(s) cause(s) identifiée(s) (coche)")
+    premiere_cause_identifiee                    = fields.Boolean(u"1ere(s) cause(s) identifiée(s)")
     related_vsb_premiere_cause_identifiee        = fields.Boolean(u'Champs related_vsb_premiere_cause_identifiee - Visibilité')
     related_rqr_premiere_cause_identifiee        = fields.Boolean(u'Champs related_rqr_premiere_cause_identifiee - Obligation')
     evolution_previsible                         = fields.Text(u"Evolutions prévisibles ou difficultés attendues")
@@ -1672,6 +1680,29 @@ class is_default_type_event(models.Model):
         return lst
 
     @api.multi
+    def get_infos2_fields(self):
+        field_obj = self.env['ir.model.fields']
+        field_ids = field_obj.search([
+            ('model', '=', 'is.eig'),
+            ('name', 'in', ['intervention_police', 'depot_plainte', 'enquete_police',
+                            'depot_plainte_famille', 'communication_prevue', 'communication_prevue_oui'
+            ])])
+        return field_ids
+
+    @api.multi
+    def get_fields_infos2_properties(self, visible=False):
+        field_ids = self.get_infos2_fields()
+        lst = []
+        for field_id in field_ids:
+            lst.append({
+                'fields_id': field_id,
+                'field_visible': visible,
+                'field_required': False,
+                'is_eig_infos2': True,
+            })
+        return lst
+
+    @api.multi
     def get_autre_personne_fields(self):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
@@ -1815,6 +1846,21 @@ class is_default_type_event(models.Model):
         default_infos_lst = self.get_fields_infos_properties(False)
         for item in default_infos_lst:
             infos_lst.append([0,False, item])
+        infos2_lst = []
+        fields_infos2_ids = self.get_infos2_fields()
+        for field in fields_infos2_ids:
+            if field.name == 'intervention_police':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
+            if field.name == 'depot_plainte':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
+            if field.name == 'enquete_police':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
+            if field.name == 'depot_plainte_famille':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
+            if field.name == 'communication_prevue':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
+            if field.name == 'communication_prevue_oui':
+                infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
         autre_personne_lst = []
         default_autre_personne_lst = self.get_fields_autre_personne_properties(False)
         for item in default_autre_personne_lst:
@@ -1826,6 +1872,7 @@ class is_default_type_event(models.Model):
             'temoin'        : temoin_lst,
             'victim'        : victim_lst,
             'infos'         : infos_lst,
+            'infos2'        : infos2_lst,
             'mesures'       : mesures_lst,
             'elements'      : elements_lst,
             'group'         : group_lst,
@@ -1844,6 +1891,7 @@ class is_default_type_event(models.Model):
                 'fields_victim_id'        : properties['victim'],
                 'fields_temoin_id'        : properties['temoin'],
                 'fields_info_id'          : properties['infos'],
+                'fields_info2_id'         : properties['infos2'],
                 'fields_mesures_id'       : properties['mesures'],
                 'fields_elements_id'      : properties['elements'],
                 'fields_group_id'         : properties['group'],
@@ -1867,6 +1915,7 @@ class is_type_evenement(models.Model):
             lst_eig_victim     = default_obj.get_fields_victim_properties(True)
             lst_eig_temoin     = default_obj.get_fields_temoin_properties(True)
             lst_eig_infos      = default_obj.get_fields_infos_properties(True)
+            lst_eig_infos2     = default_obj.get_fields_infos2_properties(True)
             lst_eig_mesures    = default_obj.get_fields_mesures_properties(True)
             lst_eig_elements   = default_obj.get_fields_elements_properties(True)
             lst_eig_group      = default_obj.get_fields_group_properties(True)
@@ -1878,6 +1927,7 @@ class is_type_evenement(models.Model):
                 'fields_victim_id'        : lst_eig_victim, 
                 'fields_temoin_id'        : lst_eig_temoin,
                 'fields_info_id'          : lst_eig_infos,
+                'fields_info2_id'         : lst_eig_infos2,
                 'fields_mesures_id'       : lst_eig_mesures,
                 'fields_elements_id'      : lst_eig_elements,
                 'fields_group_id'         : lst_eig_group,
@@ -1938,19 +1988,20 @@ class is_type_evenement(models.Model):
     description                   = fields.Text('Description')
     information_speciale          = fields.Text(u'Information spéciale')
     mail_destination_ids          = fields.One2many('is.type.evenement.mail', 'type_evenement_id', 'Mail de destination')
-    onglet_faits                  = fields.Boolean(u'Afficher onglet Faits')
-    onglet_auteurs                = fields.Boolean(u'Afficher onglet Auteurs')
-    onglet_temoins                = fields.Boolean(u'Afficher onglet Témoins')
-    onglet_victimes               = fields.Boolean(u'Afficher onglet Victimes')
-    onglet_mesures                = fields.Boolean(u'Afficher onglet Mesures')
-    onglet_infos                  = fields.Boolean(u'Afficher onglet Infos')
-    onglet_element_complementaire = fields.Boolean(u'Afficher onglet Eléments complémentaires')
+    onglet_faits                  = fields.Boolean(u'Afficher onglet Faits', default=True)
+    onglet_auteurs                = fields.Boolean(u'Afficher onglet Auteurs', default=True)
+    onglet_temoins                = fields.Boolean(u'Afficher onglet Témoins', default=True)
+    onglet_victimes               = fields.Boolean(u'Afficher onglet Victimes', default=True)
+    onglet_mesures                = fields.Boolean(u'Afficher onglet Mesures', default=True)
+    onglet_infos                  = fields.Boolean(u'Afficher onglet Infos', default=True)
+    onglet_element_complementaire = fields.Boolean(u'Afficher onglet Eléments complémentaires', default=True)
     fields_entete_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Entête', domain=[('is_eig_entete', '=', True)])
     fields_eig_id                 = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs EIG', domain=[('is_eig', '=', True)])
     fields_auteur_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Auteur', domain=[('is_eig_auteur', '=', True)])
     fields_victim_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Victime', domain=[('is_eig_victim', '=', True)])
     fields_temoin_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Témoins', domain=[('is_eig_temoin', '=', True)])
     fields_info_id                = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs ', domain=[('is_eig_infos', '=', True)])
+    fields_info2_id               = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs ', domain=[('is_eig_infos2', '=', True)])
     fields_mesures_id             = fields.One2many('is.manip.fields', 'type_event_id', u"Caractéristiques des champs Mesures d'accompagnement", domain=[('is_eig_mesures', '=', True)])
     fields_elements_id            = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments complémentaires', domain=[('is_eig_elements', '=', True)])
     fields_group_id               = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments Group', domain=[('is_eig_group', '=', True)])

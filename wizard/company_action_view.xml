@@ -225,5 +225,24 @@
             res_model="add.is.qualite" src_model="res.company"
             view_mode="form" target="new" view_type="form"/>
 
+        <!-- Initialisation Qualité Autre -->
+        <record id="is_add_is_qualite_autre_view" model="ir.ui.view">
+            <field name="name">view.add.is.qualite.autre.form</field>
+            <field name="model">add.is.qualite.autre</field>
+            <field name="arch" type="xml">
+                <form string="Initialisation Qualité (autre) ">
+                    <footer>
+                        <button name="add_data" string="Ok" type="object" class="oe_highlight"/>
+                        or 
+                        <button string="Annuler" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_add_is_qualite_autre" name="Initialisation Qualité (autre)  "
+            multi="True" key2="client_action_multi" 
+            res_model="add.is.qualite.autre" src_model="res.company"
+            view_mode="form" target="new" view_type="form"/>
+
     </data>
 </odoo>

@@ -53,14 +53,14 @@
         <menuitem name="Conséquence pour l’organisation et le fonctionnement de la structure" id="menu_is_consequence_fonctionnement_stucture_action"  sequence="13" parent="menu_parametrage_tables" action="is_consequence_fonctionnement_stucture_action" />
         <menuitem name="Qualité (autre)"                                                      id="menu_is_qualite_autre"                               sequence="14" parent="menu_parametrage_tables" action="is_qualite_autre_action" />
 
-        <menuitem name="Evènements Indésirables Graves" id="menu_declaration"            parent="menu_main_eig"     sequence="10"/>
-        <menuitem name="EIG"                            id="menu_eig"                    parent="menu_declaration"  sequence="20" />
-        <menuitem action="is_ove_eig_action"         id="menu_is_ove_eig_action"         parent="menu_eig" sequence="10"/>
-        <menuitem action="is_ove_eig_draft_action"   id="menu_is_ove_eig_draft_action"   parent="menu_eig" sequence="11"/>
-        <menuitem action="is_ove_eig_redige_action"  id="menu_is_ove_eig_redige_action"  parent="menu_eig" sequence="12"/>
-        <menuitem action="is_ove_eig_valide_action"  id="menu_is_ove_eig_valide_action"  parent="menu_eig" sequence="13"/>
-        <menuitem action="is_ove_eig_complet_action" id="menu_is_ove_eig_complet_action" parent="menu_eig" sequence="14"/>
-        <menuitem action="is_ove_eig_done_action"    id="menu_is_ove_eig_done_action"    parent="menu_eig" sequence="15"/>
+        <menuitem name="Événements Indésirables Graves" id="menu_declaration"            parent="menu_main_eig"     sequence="10"/>
+        <!-- <menuitem name="EIG"                            id="menu_eig"                    parent="menu_declaration"  sequence="20" /> -->
+        <menuitem action="is_ove_eig_action"         id="menu_is_ove_eig_action"         parent="menu_declaration" sequence="10"/>
+        <menuitem action="is_ove_eig_draft_action"   id="menu_is_ove_eig_draft_action"   parent="menu_declaration" sequence="11"/>
+        <menuitem action="is_ove_eig_redige_action"  id="menu_is_ove_eig_redige_action"  parent="menu_declaration" sequence="12"/>
+        <menuitem action="is_ove_eig_valide_action"  id="menu_is_ove_eig_valide_action"  parent="menu_declaration" sequence="13"/>
+        <menuitem action="is_ove_eig_complet_action" id="menu_is_ove_eig_complet_action" parent="menu_declaration" sequence="14"/>
+        <menuitem action="is_ove_eig_done_action"    id="menu_is_ove_eig_done_action"    parent="menu_declaration" sequence="15"/>
 
     </data>
 </odoo>
