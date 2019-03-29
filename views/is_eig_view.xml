@@ -593,6 +593,13 @@
                     <notebook  attrs="{'invisible': [('type_event_id','=',False)]}" colspan="4" >
                     <page string="Faits" attrs="{'invisible': [('related_onglet_faits','=',False)]}">
                         <group>
+                            <label colspan="4" for="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)]}" />
+                            <div>
+                            <field name="related_vsb_start_date" invisible="1"  />
+                            <field name="related_rqr_start_date" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
+                            </div>
+                            
                             <label colspan="4" for="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)]}" />
                             <div>
                             <field name="related_vsb_cause_faits" invisible="1"  />
@@ -612,13 +619,6 @@
                             <field name="related_vsb_date_heure_constatation_faits" invisible="1"  />
                             <field name="related_rqr_date_heure_constatation_faits" invisible="1"  />
                             <field colspan="4" nolabel="1" name="date_heure_constatation_faits" attrs="{'invisible': [('related_vsb_date_heure_constatation_faits', '=', False)], 'required':[('related_rqr_date_heure_constatation_faits','=', True)]}"/>
-                            </div>
-                            
-                            <label colspan="4" for="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)]}" />
-                            <div>
-                            <field name="related_vsb_start_date" invisible="1"  />
-                            <field name="related_rqr_start_date" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
                             </div>
                             
                             <label colspan="4" for="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)]}" />
