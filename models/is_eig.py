@@ -1053,19 +1053,13 @@ class is_eig(models.Model):
     def generation_document_par_nom(self, type="ODT", v=[], contenu="", nom=""):
         for data in self:
             name=nom[:-4]
-            if type=="PDF":
-                name=name+".pdf"
-            else:
-                name=name+".odt"
+            name=name+".odt"
             path = "/tmp/py3o_template.odt"
             dest = "/tmp/"+name
             f = open(path,'wb')
             f.write(base64.b64decode(contenu))
 #             f.close()
             t = Template(path, dest)
-            if type=="PDF":
-                cde="soffice --headless   --convert-to pdf:writer_pdf_Export "+name+" --outdir /tmp"
-                os.system(cde)
             items = list()
             item1 = Item()
             items.append(item1)
@@ -1073,7 +1067,17 @@ class is_eig(models.Model):
             data1 = dict(items=items, document=o,test01="toto",o=data)
             t.render(data1)
             r = base64.b64encode(open(dest,'rb').read())
-            
+            if type=="PDF":
+                cde="soffice --headless   --convert-to pdf:writer_pdf_Export "+dest+" --outdir /tmp"
+                os.system(cde)
+                r = base64.b64encode(open(dest,'rb').read())
+            name1=nom[:-4]
+            if type=="PDF":
+                name=name1+".pdf"
+                read_pdf = "/tmp/"+name
+                r = base64.b64encode(open(read_pdf,'rb').read())
+            else:
+                name=name1+".odt"
             vals = {
                 'name':        name,
                 'datas_fname': name,
@@ -1086,10 +1090,10 @@ class is_eig(models.Model):
             ids = obj.search([('res_model','=', 'is.eig'),('res_id','=', data.id),('name','=',name)])
             if ids:
                 ids[0].write(vals)
-                print ("Modification ir.attachment id="+str(ids[0]),ids)
                 vals1={
                     'attachment_ids': [(4,ids[0].id)],
                 }
+                print ("Modification ir.attachment id="+str(ids[0]),ids)
             else:
                 id = obj.create(vals)
                 print ("Création ir.attachment id="+str(id))
