@@ -1638,12 +1638,24 @@ class is_default_type_event(models.Model):
     def get_fields_auteur_properties(self, visible=False):
         field_ids = self.get_auteur_fields()
         lst = []
+        sequence = {
+            'identifie': 1,
+            'name': 2,
+            'prenom': 3,
+            'sexe_id': 4,
+            'birthdate': 5,
+            'qualite_id': 6,
+            'disposition_id': 7,
+            'adresse': 8,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0, {
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
-                'is_eig_auteur': True
+                'is_eig_auteur': True,
+                'sequence': seq,
             }))
         return lst
 
@@ -1663,12 +1675,27 @@ class is_default_type_event(models.Model):
     def get_fields_victim_properties(self, visible=False):
         field_ids = self.get_victim_fields()
         lst = []
+        sequence = {
+            'identifie': 1,
+            'name': 2,
+            'prenom': 3,
+            'sexe_id': 4,
+            'birthdate': 5,
+            'address': 6,
+            'ecole': 7,
+            'qualite_id': 8,
+            'consequence_id': 9,
+            'disposition_id': 10,
+            'auteur_victime': 11,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0, {
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False, 
-                'is_eig_victim': True
+                'is_eig_victim': True,
+                'sequence': seq,
             }))
         return lst
 
@@ -1686,12 +1713,24 @@ class is_default_type_event(models.Model):
     def get_fields_temoin_properties(self, visible=False):
         field_ids = self.get_temoin_fields()
         lst = []
+        sequence = {
+            'identifie': 1,
+            'name': 2,
+            'prenom': 3,
+            'sexe_id': 4,
+            'birthdate': 5,
+            'address': 6,
+            'disposition_id': 7,
+            'qualite_id': 8,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0, {
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
-                'is_eig_temoin': True
+                'is_eig_temoin': True,
+                'sequence': seq,
             }))
         return lst
 
@@ -1759,12 +1798,23 @@ class is_default_type_event(models.Model):
     def get_fields_autre_personne_properties(self, visible=False):
         field_ids = self.get_autre_personne_fields()
         lst = []
+        sequence = {
+            'identifie': 1,
+            'nom': 2,
+            'prenom': 3,
+            'qualite_id': 4,
+            'consequence_id': 5,
+            'disposition_id': 6,
+            'auteur_victime': 7,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0,{
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False, 
-                'is_eig_autre_personne': True
+                'is_eig_autre_personne': True,
+                'sequence': seq,
             }))
         return lst
 

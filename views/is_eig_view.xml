@@ -1074,7 +1074,7 @@
                                     <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
                                     <field name="related_vsb_disposition_id" invisible="1"  />
                                     <field name="related_rqr_disposition_id" invisible="1"  />
-                                    <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
+                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
                                     <field name="related_vsb_auteur_victime" invisible="1"  />
                                     <field name="related_rqr_auteur_victime" invisible="1"  />
                                     <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
