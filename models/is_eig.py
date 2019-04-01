@@ -1488,15 +1488,15 @@ class is_default_type_event(models.Model):
         lst = []
         sequence = {
             'start_date': 1,
-            'cause_faits': 2,
-            'criteres_generaux_ids': 3,
-            'date_heure_constatation_faits': 4,
-            'end_date': 5,
-            'demande_intervention_secours_ids': 6,
-            'description_faits': 7,
-            'element_faits': 8,
-            'solution_prise_en_charge': 9,
-            'lieu_faits': 10,
+            'date_heure_constatation_faits': 2,
+            'lieu_faits': 3,
+            'end_date': 4,
+            'cause_faits': 5,
+            'description_faits': 6,
+            'criteres_generaux_ids': 7,
+            'solution_prise_en_charge': 8,
+            'demande_intervention_secours_ids': 9,
+            'element_faits': 10,
         }
         for field_id in field_ids:
             seq = sequence.get(field_id.name, 999)
@@ -1526,12 +1526,31 @@ class is_default_type_event(models.Model):
     def get_fields_mesures_properties(self, visible=False):
         field_ids = self.get_mesures_fields()
         lst = []
+        sequence = {
+            'si_causes_profondes': 1,
+            'si_reunion_debriefing': 2,
+            'reunion_debriefing': 3,
+            'causes_profondes': 4,
+            'premiere_cause_identifiee': 5,
+            'evolution_previsible': 6,
+            'enseignements_a_tirer': 7,
+            'mesure_pour_proteger_accompagner': 8,
+            'mesure_pour_assurer_continuite': 9,
+            'mesure_egard_autres_personnes': 10,
+            'mesure_autre': 11,
+            'mesure_usagers': 12,
+            'mesure_personnel': 13,
+            'mesure_organisation': 14,
+            'mesure_structure': 15,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0, {
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_mesures': True,
+                'sequence': seq,
             }))
         return lst
 
@@ -1708,12 +1727,22 @@ class is_default_type_event(models.Model):
     def get_fields_infos2_properties(self, visible=False):
         field_ids = self.get_infos2_fields()
         lst = []
+        sequence = {
+            'intervention_police': 1,
+            'depot_plainte': 2,
+            'enquete_police': 3,
+            'communication_prevue': 4,
+            'communication_prevue_oui': 5,
+            'depot_plainte_famille': 6,
+        }
         for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
             lst.append((0,0,{
                 'fields_id': field_id.id,
                 'field_visible': visible,
                 'field_required': False,
                 'is_eig_infos2': True,
+                'sequence': seq,
             }))
         return lst
 
