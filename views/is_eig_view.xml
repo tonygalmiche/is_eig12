@@ -1574,6 +1574,7 @@
             <field name="arch" type="xml">
             <tree string="Nature Evènement">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>
