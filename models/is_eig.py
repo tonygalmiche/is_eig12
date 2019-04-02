@@ -110,6 +110,7 @@ class is_nature_evenement(models.Model):
     _description = u"Nature d'événement"
 
     name = fields.Char('Nature', required=True)
+    code = fields.Integer('Code')
 
 
 # class is_type_risque(models.Model):
@@ -974,9 +975,11 @@ class is_eig(models.Model):
         return True
 
     @api.multi
-    def f1_nature(self, ids, val):
-        for id in ids:
-            if id == val:
+    def nature(self, ids, val):
+        nature_ids = self.env['is.nature.evenement'].search([('id','in',ids), ('code','=',val)])
+        r="□"
+        for ne in nature_ids:
+            if ne.code == val:
                 return "☑"
             else:
                 r="□"
