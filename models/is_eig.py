@@ -980,7 +980,7 @@ class is_eig(models.Model):
         for data in self:
             nature_ids = self.env['is.nature.evenement'].search([('id','in',data.nature_event_id.ids), ('code','=',str(val))])
             for ne in nature_ids:
-                if ne.code == val:
+                if ne.code == str(val):
                     return "☑"
                 else:
                     r="□"
