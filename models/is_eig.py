@@ -975,14 +975,15 @@ class is_eig(models.Model):
         return True
 
     @api.multi
-    def nature(self, ids, val):
-        nature_ids = self.env['is.nature.evenement'].search([('id','in',ids), ('code','=',val)])
+    def nature(self, val):
         r="□"
-        for ne in nature_ids:
-            if ne.code == val:
-                return "☑"
-            else:
-                r="□"
+        for data in self:
+            nature_ids = self.env['is.nature.evenement'].search([('id','in',data.nature_event_id.ids), ('code','=',val)])
+            for ne in nature_ids:
+                if ne.code == val:
+                    return "☑"
+                else:
+                    r="□"
         return r
 
     @api.multi
