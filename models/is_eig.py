@@ -974,6 +974,15 @@ class is_eig(models.Model):
         return True
 
     @api.multi
+    def f1_nature(self, ids, val):
+        for id in ids:
+            if id == val:
+                return "☑"
+            else:
+                r="□"
+        return r
+
+    @api.multi
     def f1(self, val):
         val=str(val)
         if (val=="1" or val=="t" or val=="True" or val=="true"):
