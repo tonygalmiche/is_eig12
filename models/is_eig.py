@@ -1072,7 +1072,7 @@ class is_eig(models.Model):
             f = open(path,'wb')
             f.write(base64.b64decode(contenu))
 #             f.close()
-            t = Template(path, dest)
+            t = Template(path, dest, escape_false=' ')
             items = list()
             item1 = Item()
             items.append(item1)
