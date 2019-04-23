@@ -25,11 +25,12 @@
                         <group>
                             <field name="name"/>
                             <field name="mail_ars"/>
-                            <field name="input_attach_ids" widget="many2many_binary" />
+                            <field name="input_attach_ids" string="Modèle ODT" widget="many2many_binary" />
                         </group>
                         <group>
                             <field name="code"/>
                             <field name="mail_cg"/>
+                            <field name="trame_id" />
                         </group>
                     </group>
                 </sheet>
@@ -161,8 +162,8 @@
             <form string="Type Evènement">
                 <sheet>
                 <group>
-                    <field name="code" invisible="1"/>
                     <field name="name" />
+                    <field name="code" />
                     <field name="description" />
                     <field name="information_speciale" />
                     <field name="mail_destination_ids" >
@@ -517,7 +518,7 @@
                         <group attrs="{'invisible': [('type_event_id','=',False)]}">
                             <!-- <field name="type_risq_id" attrs="{'invisible': [('state','=','draft')]}  " />
                             <field name="nature_risq_id" /> -->
-                            <field name="attachment_ids" widget="many2many_binary" />
+                            <field name="attachment_ids" widget="many2many_binary" string="Pièces jointes"/>
                             <field name="related_vsb_signalement_autorites" invisible="1" />
                             <field name="signalement_autorites" attrs="{'invisible': [('related_vsb_signalement_autorites', '=', False)]}" />
                             <field name="related_vsb_auteur_ids" invisible="1" />
@@ -1494,6 +1495,11 @@
                     </page>
             </notebook>
         </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+        </div>
         </form>
         </field>
         </record>
@@ -1816,6 +1822,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -1876,6 +1883,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -1906,6 +1914,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -1936,6 +1945,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -1998,6 +2008,41 @@
                     <field name="attachment_ids" widget="many2many_binary" />
                 </xpath>
             </field>
+        </record>
+
+        <!--  Trame -->
+        <record model="ir.ui.view" id="is_trame_tree_view">
+            <field name="name">is.trame.tree</field>
+            <field name="model">is.trame</field>
+            <field name="arch" type="xml">
+            <tree string="Trame">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_trame_form_view">
+            <field name="name">is.trame.form</field>
+            <field name="model">is.trame</field>
+            <field name="arch" type="xml">
+            <form string="Trame">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <group>
+                            <field name="attachment_ids" widget="many2many_binary" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_trame_action" model="ir.actions.act_window">
+            <field name="name">Trame</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.trame</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
     </data>

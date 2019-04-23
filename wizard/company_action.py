@@ -11,11 +11,11 @@ class add_is_criteres_generaux(models.TransientModel):
     def add_data(self):
         add_data_obj = self.env['is.criteres.generaux']
         add_list = [
-            u'Evènement inhabituel par sa nature, son ampleur ou sa gravité',
-            u'Evènement ayant pour conséquence une exclusion temporaire ou définitive',
-            u'Evènement ayant pour conséquence une sanction disciplinaire grave ou une procédure judiciaire à l’encontre de personnels',
-            u'Evènement nécessitant l’activation du Plan Bleu',
-            u'Evènement nécessitant l’activation d’une CUMP',
+            [u'Evènement inhabituel par sa nature, son ampleur ou sa gravité', 1],
+            [u'Evènement ayant pour conséquence une exclusion temporaire ou définitive', 2],
+            [u'Evènement ayant pour conséquence une sanction disciplinaire grave ou une procédure judiciaire à l’encontre de personnels', 3],
+            [u'Evènement nécessitant l’activation du Plan Bleu', 4],
+            [u'Evènement nécessitant l’activation d’une CUMP', 5],
         ]
         for data in add_list:
             generaux_ids = add_data_obj.search([('name', '=', data)])
@@ -52,11 +52,11 @@ class add_is_consequence_personne_prise_en_charge(models.TransientModel):
     def add_data(self):
         add_data_obj = self.env['is.consequence.personne.prise.en.charge']
         add_list = [
-            u'décès',
-            'mise en jeu du pronostic vital',
-            u'probable déficit fonctionnel permanent',
-            'soins internes',
-            'hospitalisation',
+            [u'décès', 1],
+            ['mise en jeu du pronostic vital', 2],
+            [u'probable déficit fonctionnel permanent', 3],
+            ['soins internes', 4],
+            ['hospitalisation', 5],
         ]
         for data in add_list:
             generaux_ids = add_data_obj.search([('name', '=', data)])
@@ -73,9 +73,9 @@ class add_is_consequence_personnel(models.TransientModel):
     def add_data(self):
         add_data_obj = self.env['is.consequence.personnel']
         add_list = [
-            'interruption temporaire de travail',
-            u'réquisition',
-            'autre (y compris suicide ou tentative de suicide)',
+            ['interruption temporaire de travail', 1],
+            [u'réquisition', 2],
+            ['autre (y compris suicide ou tentative de suicide)', 3],
         ]
         for data in add_list:
             generaux_ids = add_data_obj.search([('name', '=', data)])
@@ -92,12 +92,12 @@ class add_is_consequence_fonctionnement_stucture(models.TransientModel):
     def add_data(self):
         add_data_obj = self.env['is.consequence.fonctionnement.stucture']
         add_list = [
-            u'difficulté d’approvisionnement',
-            u'difficulté d’accès à la structure ou au lieu de prise en charge',
-            u'nécessité de déplacer des résidents',
-            u'suspension d’activité',
-            u"intervention des forces de l’ordre ou des secours",
-            u'autre (à préciser)',
+            [u'difficulté d’approvisionnement', 1],
+            [u'difficulté d’accès à la structure ou au lieu de prise en charge', 2],
+            [u'nécessité de déplacer des résidents', 3],
+            [u'suspension d’activité', 4],
+            [u"intervention des forces de l’ordre ou des secours", 5],
+            [u'autre (à préciser)', 6],
         ]
         for data in add_list:
             generaux_ids = add_data_obj.search([('name', '=', data)])
@@ -205,59 +205,59 @@ class add_is_nature_evenement(models.TransientModel):
         type_data3 = self.env.ref('is_eig12.is_type_evenement_3', False)
         type_data4 = self.env.ref('is_eig12.is_type_evenement_4', False)
         add_list = [
-            u"Absence imprévue de plusieurs professionnels, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies",
-            u"Autre (accident ou incident lié à une erreur ou à un défaut de soin ou de surveillance)",
-            u"Autre (évènement en santé environnementale)",
-            u"Autre (évènement relatif à l’accompagnement des usagers)",
-            u"Autre (évènement relatif au fonctionnement et organisation de l’établissement)",
-            u"Comportements violents de la part d’usagers à l’égard d’autres usagers",
-            u"Comportements violents de la part d’usagers à l’égard de professionnels",
-            u"Conflits sociaux ou menaces de conflits sociaux pouvant entraîner un risque pour l’usager",
-            u"Décès accidentel ou consécutif à un défaut de surveillance ou de prise en charge de la personne",
-            u"Défaillance technique significative et durable",
-            u"Difficultés relationnelles récurrentes avec la famille entraînant une perturbation de l’organisation ou du fonctionnement de la structure",
-            u"Disparition(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)",
-            u"Epidémie",
-            u"Erreur d’identité dans la délivrance d’un médicament",
-            u"Fugue(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)",
-            u"Intoxication",
-            u"Intrusion informatique",
-            u"Légionnelles",
-            u"Maladie infectieuse",
-            u"Maltraitances non précisées",
-            u"Manquements graves au règlement du lieu d’hébergement ou d’accueil qui compromettent la prise en charge",
-            u"Mise en danger par dérive sectaire et radicalisation",
-            u"Négligences graves ou erreurs successives",
-            u"Non-respect de la prescription médicale, erreur dans la dispensation, la préparation ou l’administration",
-            u"Présentation de faux diplômes",
-            u"Sinistre ou évènement météorologique exceptionnel",
-            u"Suicide",
-            u"Turn-over du personnel ou grève, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies",
-            u"Vacance de poste prolongée, notamment d’encadrement, difficulté de recrutement",
-            u"Violences médicales ou médicamenteuses",
-            u"Vols récurrents à l’encontre des résidents, si dépôt de plainte",
+            [u"Absence imprévue de plusieurs professionnels, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies", 1],
+            [u"Autre (accident ou incident lié à une erreur ou à un défaut de soin ou de surveillance)", 2],
+            [u"Autre (évènement en santé environnementale)", 3],
+            [u"Autre (évènement relatif à l’accompagnement des usagers)", 4],
+            [u"Autre (évènement relatif au fonctionnement et organisation de l’établissement)", 5],
+            [u"Comportements violents de la part d’usagers à l’égard d’autres usagers", 6],
+            [u"Comportements violents de la part d’usagers à l’égard de professionnels", 7],
+            [u"Conflits sociaux ou menaces de conflits sociaux pouvant entraîner un risque pour l’usager", 8],
+            [u"Décès accidentel ou consécutif à un défaut de surveillance ou de prise en charge de la personne", 9],
+            [u"Défaillance technique significative et durable", 10],
+            [u"Difficultés relationnelles récurrentes avec la famille entraînant une perturbation de l’organisation ou du fonctionnement de la structure", 11],
+            [u"Disparition(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)", 12],
+            [u"Epidémie", 13],
+            [u"Erreur d’identité dans la délivrance d’un médicament", 14],
+            [u"Fugue(s) inquiétante(s) de personne(s) accueillie(s) (services de police ou gendarmeries alertés)", 15],
+            [u"Intoxication", 16],
+            [u"Intrusion informatique", 17],
+            [u"Légionnelles", 18],
+            [u"Maladie infectieuse", 19],
+            [u"Maltraitances non précisées", 20],
+            [u"Manquements graves au règlement du lieu d’hébergement ou d’accueil qui compromettent la prise en charge", 21],
+            [u"Mise en danger par dérive sectaire et radicalisation", 22],
+            [u"Négligences graves ou erreurs successives", 23],
+            [u"Non-respect de la prescription médicale, erreur dans la dispensation, la préparation ou l’administration", 24],
+            [u"Présentation de faux diplômes", 26],
+            [u"Sinistre ou évènement météorologique exceptionnel", 27],
+            [u"Suicide", 28],
+            [u"Turn-over du personnel ou grève, mettant en difficulté l’effectivité de l’accompagnement ou la sécurité des personnes accueillies", 29],
+            [u"Vacance de poste prolongée, notamment d’encadrement, difficulté de recrutement", 30],
+            [u"Violences médicales ou médicamenteuses", 31],
+            [u"Vols récurrents à l’encontre des résidents, si dépôt de plainte", 32],
         ]
         common_list = [
-            u"Actes de malveillance au sein de la structure",
-            u"Autre (évènement relatif à la sécurité des biens et des personnes)",
-            u"Tentative de suicide",
-            u"Violences physiques",
-            u"Violences psychologiques et morales",
-            u"Violences sexuelles",
+            [u"Actes de malveillance au sein de la structure", 33],
+            [u"Autre (évènement relatif à la sécurité des biens et des personnes)", 34],
+            [u"Tentative de suicide", 35],
+            [u"Violences physiques", 36],
+            [u"Violences psychologiques et morales", 37],
+            [u"Violences sexuelles", 38],
         ]
         chu_list = [
-            u"Accident corporel grave",
-            u"Autre (évènements relatifs aux victimes présumées)",
-            u"Décès",
-            u"Défaillances techniques graves",
-            u"Epidémie - Propagation de parasites",
-            u"Explosions ou incendie ou inondation",
-            u"Fugues ou disparition de personnes accueillies > à 48 H",
-            u"Intoxication alimentaire si plusieurs personnes sont concernées",
-            u"Négligences graves de l’entourage",
-            u"Racket",
-            u"Trafic au sein de l’établissement",
-            u"Vols récurrents et /ou qualifiés à l’encontre des autres résidents et ou des salariés ou des bénévoles",
+            [u"Accident corporel grave", 39],
+            [u"Autre (évènements relatifs aux victimes présumées)", 40],
+            [u"Décès", 41],
+            [u"Défaillances techniques graves", 42],
+            [u"Epidémie - Propagation de parasites", 43],
+            [u"Explosions ou incendie ou inondation", 44],
+            [u"Fugues ou disparition de personnes accueillies > à 48 H", 45],
+            [u"Intoxication alimentaire si plusieurs personnes sont concernées", 46],
+            [u"Négligences graves de l’entourage", 47],
+            [u"Racket", 48],
+            [u"Trafic au sein de l’établissement", 49],
+            [u"Vols récurrents et /ou qualifiés à l’encontre des autres résidents et ou des salariés ou des bénévoles", 50],
         ]
         if type_data1 and type_data2 and type_data3:
             for data in add_list:

@@ -35,3 +35,6 @@ access_is_consequence_fonctionnement_stucture_user,is.consequence.fonctionnement
 access_is_eig_autre_personne_user,is_eig_autre_personne.user,model_is_eig_autre_personne,base.group_user,1,1,1,1
 access_is_qualite_autre_user,is_qualite_autre.user,model_is_qualite_autre,base.group_user,1,1,1,1
 
+access_is_trame_user,is_trame.user,model_is_trame,base.group_user,1,0,0,0
+access_is_trame_gestionnaire,is_trame.user,model_is_trame,group_is_gestionnaire,1,1,1,1
+

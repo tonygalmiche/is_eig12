@@ -6,6 +6,7 @@
         <record id="is_type_evenement_1" model="is.type.evenement">
             <field name="name">Situation exceptionnelle</field>
             <field name="description">Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.</field>
+            <field name="code">SE</field>
         </record>
         <record id="is_type_evenement_2" model="is.type.evenement">
             <field name="name">Information préoccupante</field>

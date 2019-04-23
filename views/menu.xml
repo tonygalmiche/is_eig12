@@ -21,6 +21,7 @@
         <menuitem name="Type Evènement"       id="menu_is_type_evenement_action"   sequence="4"  action="is_type_evenement_action"              parent="menu_parametrage_eig" />
         <menuitem name="Nature Evènement"     id="menu_is_nature_evenement_action" sequence="5"  action="is_nature_evenement_action"            parent="menu_parametrage_eig" />
         <menuitem name="Modèles de courriels" id="menu_is_eig_email_templates"     sequence="6"  action="is_eig_action_email_template_tree_all" parent="menu_parametrage_eig" />
+        <menuitem name="Trame"                id="menu_is_trame"                   sequence="7"  action="is_trame_action"                       parent="menu_parametrage_eig" />
 
         <!-- Incident -->
         <menuitem name="Incident"           id="menu_ei_root"         sequence="20" parent="menu_main_eig" />

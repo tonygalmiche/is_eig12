@@ -38,6 +38,7 @@ class is_departement(models.Model):
     mail_cg  = fields.Char(string='Mail CD', help="Mail du Conseil Départemental")
     mail_ase = fields.Char(string='Mail ASE')
     input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
+    trame_id         = fields.Many2one('is.trame', string=u'Modèle ODT Situation Exceptionnelle (SE)')
 
     _sql_constraints = [
         ('code_uniq', 'unique(code)', u"Le code du département doit être unique !"),
@@ -179,6 +180,7 @@ class is_criteres_generaux(models.Model):
     _description = 'Criteres Generaux'
 
     name = fields.Char('Nom' , required=True)
+    code = fields.Char('Code')
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
@@ -198,9 +200,10 @@ class is_demande_intervention_secours(models.Model):
 
 class is_consequence_personne_prise_en_charge(models.Model):
     _name = 'is.consequence.personne.prise.en.charge'
-    _description = 'COnsequence Charge'
+    _description = 'Consequence Charge'
 
     name = fields.Char('Nom' , required=True)
+    code = fields.Char('Code')
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
@@ -212,6 +215,7 @@ class is_consequence_personnel(models.Model):
     _description = 'Consequence Personnel'
 
     name = fields.Char('Nom' , required=True)
+    code = fields.Char('Code')
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
@@ -223,6 +227,7 @@ class is_consequence_fonctionnement_stucture(models.Model):
     _description = 'Consequence Fonctionnement Stucture'
 
     name = fields.Char('Nom' , required=True)
+    code = fields.Char('Code')
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
@@ -424,6 +429,7 @@ class is_eig_autre_personne(models.Model):
 
 class is_eig(models.Model):
     _name = 'is.eig'
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     _description = u"Événements Indésirables Graves"
     _order = "name desc"
 
@@ -987,6 +993,54 @@ class is_eig(models.Model):
         return r
 
     @api.multi
+    def consequence(self, val):
+        r="□"
+        for data in self:
+            data_ids = self.env['is.consequence.fonctionnement.stucture'].search([('id','in',data.consequence_fonctionnement_stucture_ids.ids), ('code','=',str(val))])
+            for ne in data_ids:
+                if ne.code == str(val):
+                    return "☑"
+                else:
+                    r="□"
+        return r
+
+    @api.multi
+    def criteres(self, val):
+        r="□"
+        for data in self:
+            data_ids = self.env['is.criteres.generaux'].search([('id','in',data.criteres_generaux_ids.ids), ('code','=',str(val))])
+            for ne in data_ids:
+                if ne.code == str(val):
+                    return "☑"
+                else:
+                    r="□"
+        return r
+
+    @api.multi
+    def prise(self, val):
+        r="□"
+        for data in self:
+            data_ids = self.env['is.consequence.personne.prise.en.charge'].search([('id','in',data.consequence_personne_prise_en_charge_ids.ids), ('code','=',str(val))])
+            for ne in data_ids:
+                if ne.code == str(val):
+                    return "☑"
+                else:
+                    r="□"
+        return r
+
+    @api.multi
+    def personnel(self, val):
+        r="□"
+        for data in self:
+            data_ids = self.env['is.consequence.personnel'].search([('id','in',data.consequence_personnel_ids.ids), ('code','=',str(val))])
+            for ne in data_ids:
+                if ne.code == str(val):
+                    return "☑"
+                else:
+                    r="□"
+        return r
+
+    @api.multi
     def f1(self, val):
         val=str(val)
         if (val=="1" or val=="t" or val=="True" or val=="true"):
@@ -1123,18 +1177,19 @@ class is_eig(models.Model):
     def generation_document(self, type="ODT"):
         v = {}
         for rec in self:
-            v["o"] = rec
-            if rec.signalement_autorites:
-                company_obj = self.env['res.company']
-                company_ids = company_obj.search([('id', '=', 1)])
-                for company in company_ids:
-                    for attachment in company.attachment_ids:
-                        for l in attachment.read(['name','datas']):
-                            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-#             ** Recherche des modeles associés au département *****************
-            for attch in rec.etablissement_id.departement_id.input_attach_ids:
-                for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            if rec.type_event_id.code == "SE":
+                v["o"] = rec
+                if rec.signalement_autorites:
+                    company_obj = self.env['res.company']
+                    company_ids = company_obj.search([('id', '=', 1)])
+                    for company in company_ids:
+                        for attachment in company.attachment_ids:
+                            for l in attachment.read(['name','datas']):
+                                rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+    #             ** Recherche des modeles associés au département *****************
+                for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
+                    for l in attch.read(['name','datas']):
+                        rec.generation_document_par_nom(type, v, l["datas"], l["name"])
         return True
 
 
@@ -2009,7 +2064,7 @@ class is_default_type_event(models.Model):
                 'fields_entete_id'        : properties['entete'],
                 'fields_autre_personne_id': properties['autre_personne'],
             })
-            return vals
+        return vals
 
 
 class is_type_evenement(models.Model):
@@ -2066,7 +2121,7 @@ class is_type_evenement(models.Model):
     @api.model
     def create(self, vals):
         if 'code' in vals and vals['code']:
-            value = self.env['is_default_type_event'].update_vals_create(vals['code'])
+            value = self.env['is.default.type.event'].update_vals_create(vals['code'])
             vals.update(value)
         add_data_obj = self.env['is.nature.evenement']
         if 'name' in vals and vals['name']:
@@ -2180,8 +2235,8 @@ class is_type_evenement(models.Model):
                     data.update_one2many_fields(infos_obj,  eig_id.id, data.fields_info_id)
         return res
 
-    code                          = fields.Char('Code')
     name                          = fields.Char('Nom', required=True)
+    code                          = fields.Char('Code')
     sequence                      = fields.Integer('Sequence')
     description                   = fields.Text('Description')
     information_speciale          = fields.Text(u'Information spéciale')
@@ -2215,4 +2270,12 @@ class res_company(models.Model):
     _inherit = 'res.company'
 
     attachment_ids = fields.Many2many('ir.attachment', 'company_attach_rel', 'res_id', 'attachment_id', string='Files')
+
+
+class is_trame(models.Model):
+    _name = 'is.trame'
+    _description = 'Trame'
+
+    name = fields.Char(string='Nom de la trame', required=True)
+    attachment_ids = fields.Many2many('ir.attachment', string=u"Modèle ODT", required=True)
 
