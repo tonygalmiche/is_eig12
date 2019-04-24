@@ -993,6 +993,16 @@ class is_eig(models.Model):
         return r
 
     @api.multi
+    def type_event(self, val):
+        r="□"
+        for data in self:
+            if data.type_event_id.code == str(val):
+                return "☑"
+            else:
+                r="□"
+        return r
+
+    @api.multi
     def consequence(self, val):
         r="□"
         for data in self:
@@ -1038,6 +1048,15 @@ class is_eig(models.Model):
                     return "☑"
                 else:
                     r="□"
+        return r
+
+    @api.multi
+    def slt(self, val):
+        val=str(val)
+        if val=="oui":
+            r="☑"
+        else:
+            r="□"
         return r
 
     @api.multi
