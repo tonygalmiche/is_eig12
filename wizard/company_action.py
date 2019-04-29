@@ -18,9 +18,12 @@ class add_is_criteres_generaux(models.TransientModel):
             [u'Evènement nécessitant l’activation d’une CUMP', 5],
         ]
         for data in add_list:
-            generaux_ids = add_data_obj.search([('name', '=', data)])
+            generaux_ids = add_data_obj.search([('name', '=', data[0])])
             if not generaux_ids:
-                add_data_obj.create({'name': data})
+                add_data_obj.create({'name': data[0], 'code': data[1]})
+            else:
+                for c in generaux_ids:
+                    c.write({'name': data[0], 'code': data[1]})
         return True
 
 
@@ -59,9 +62,12 @@ class add_is_consequence_personne_prise_en_charge(models.TransientModel):
             ['hospitalisation', 5],
         ]
         for data in add_list:
-            generaux_ids = add_data_obj.search([('name', '=', data)])
+            generaux_ids = add_data_obj.search([('name', '=', data[0])])
             if not generaux_ids:
-                add_data_obj.create({'name': data})
+                add_data_obj.create({'name': data[0],'code': data[1]})
+            else:
+                for c in generaux_ids:
+                    c.write({'name': data[0],'code': data[1]})
         return True
 
 
@@ -78,9 +84,12 @@ class add_is_consequence_personnel(models.TransientModel):
             ['autre (y compris suicide ou tentative de suicide)', 3],
         ]
         for data in add_list:
-            generaux_ids = add_data_obj.search([('name', '=', data)])
+            generaux_ids = add_data_obj.search([('name', '=', data[0])])
             if not generaux_ids:
-                add_data_obj.create({'name': data})
+                add_data_obj.create({'name': data[0], 'code': data[1]})
+            else:
+                for c in generaux_ids:
+                    c.write({'name': data[0],'code': data[1]})
         return True
 
 
@@ -100,9 +109,12 @@ class add_is_consequence_fonctionnement_stucture(models.TransientModel):
             [u'autre (à préciser)', 6],
         ]
         for data in add_list:
-            generaux_ids = add_data_obj.search([('name', '=', data)])
+            generaux_ids = add_data_obj.search([('name', '=', data[0])])
             if not generaux_ids:
-                add_data_obj.create({'name': data})
+                add_data_obj.create({'name': data[0], 'code': data[1]})
+            else:
+                for c in generaux_ids:
+                    c.write({'name': data[0],'code': data[1]})
         return True
 
 
@@ -146,7 +158,8 @@ class add_is_type_evenement(models.TransientModel):
         type_data4 = self.env.ref('is_eig12.is_type_evenement_4', False)
         add_dict1 = {
                 'name': 'Situation exceptionnelle',
-                'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.'
+                'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.',
+                'code': 'SE',
             }
         add_dict2 = {
             'name': u'Information préoccupante',
@@ -261,37 +274,43 @@ class add_is_nature_evenement(models.TransientModel):
         ]
         if type_data1 and type_data2 and type_data3:
             for data in add_list:
-                nature_ids = add_data_obj.search([('name', '=', data)])
+                nature_ids = add_data_obj.search([('name', '=', data[0])])
                 if not nature_ids:
-                    create_id = add_data_obj.create({'name': data})
+                    create_id = add_data_obj.create({'name': data[0], 'code': data[1]})
                     type_data1.is_nature_ids = [(4,create_id.id)]
                     type_data2.is_nature_ids = [(4,create_id.id)]
                     type_data3.is_nature_ids = [(4,create_id.id)]
                 else:
+                    for n in nature_ids:
+                        n.write({'name': data[0], 'code': data[1]})
                     type_data1.is_nature_ids = [(4,nature_ids.ids[0])]
                     type_data2.is_nature_ids = [(4,nature_ids.ids[0])]
                     type_data3.is_nature_ids = [(4,nature_ids.ids[0])]
         if type_data1 and type_data2 and type_data3 and type_data4:
             for data in common_list:
-                nature_ids = add_data_obj.search([('name', '=', data)])
+                nature_ids = add_data_obj.search([('name', '=', data[0])])
                 if not nature_ids:
-                    create_id = add_data_obj.create({'name': data})
+                    create_id = add_data_obj.create({'name': data[0], 'code': data[1]})
                     type_data1.is_nature_ids = [(4,create_id.id)]
                     type_data2.is_nature_ids = [(4,create_id.id)]
                     type_data3.is_nature_ids = [(4,create_id.id)]
                     type_data4.is_nature_ids = [(4,create_id.id)]
                 else:
+                    for n in nature_ids:
+                        n.write({'name': data[0], 'code': data[1]})
                     type_data1.is_nature_ids = [(4,nature_ids.ids[0])]
                     type_data2.is_nature_ids = [(4,nature_ids.ids[0])]
                     type_data3.is_nature_ids = [(4,nature_ids.ids[0])]
                     type_data4.is_nature_ids = [(4,nature_ids.ids[0])]
         if type_data4:
             for data in chu_list:
-                nature_ids = add_data_obj.search([('name', '=', data)])
+                nature_ids = add_data_obj.search([('name', '=', data[0])])
                 if not nature_ids:
-                    create_id = add_data_obj.create({'name': data})
+                    create_id = add_data_obj.create({'name': data[0], 'code': data[1]})
                     type_data4.is_nature_ids = [(4,create_id.id)]
                 else:
+                    for n in nature_ids:
+                        n.write({'name': data[0], 'code': data[1]})
                     type_data4.is_nature_ids = [(4,nature_ids.ids[0])]
         return True
 

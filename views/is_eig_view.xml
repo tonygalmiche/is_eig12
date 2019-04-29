@@ -152,6 +152,7 @@
             <tree string="Type Evènement">
                 <field name="sequence" widget="handle" />
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>
@@ -1811,6 +1812,7 @@
             <field name="arch" type="xml">
             <tree string="Critères généraux">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>
@@ -1872,6 +1874,7 @@
             <field name="arch" type="xml">
             <tree string="Pour la ou les personnes prises en charge">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>
@@ -1903,6 +1906,7 @@
             <field name="arch" type="xml">
             <tree string="Pour les personnels">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>
@@ -1934,6 +1938,7 @@
             <field name="arch" type="xml">
             <tree string="Pour l’organisation et le fonctionnement de la structure">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
             </field>
         </record>

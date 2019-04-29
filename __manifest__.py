@@ -25,6 +25,7 @@ Modules Odoo 12 pour OVE pour la gestion des EIG et des EI
         'wizard/company_action_view.xml',
         'views/is_eig_view.xml',
         'views/is_ei_view.xml',
+        'views/login_template_view.xml',
         'views/menu.xml',
     ],
     'installable': True,
