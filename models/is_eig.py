@@ -1196,16 +1196,20 @@ class is_eig(models.Model):
     def generation_document(self, type="ODT"):
         v = {}
         for rec in self:
+            rec.attachment_ids.unlink()
+            v["o"] = rec
+            if rec.signalement_autorites:
+                company_obj = self.env['res.company']
+                company_ids = company_obj.search([('id', '=', 1)])
+                for company in company_ids:
+                    for attachment in company.attachment_ids:
+                        for l in attachment.read(['name','datas']):
+                            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+#             ** Recherche des modeles associés au département *****************
+            for attch in rec.etablissement_id.departement_id.input_attach_ids:
+                for l in attch.read(['name','datas']):
+                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
             if rec.type_event_id.code == "SE":
-                v["o"] = rec
-                if rec.signalement_autorites:
-                    company_obj = self.env['res.company']
-                    company_ids = company_obj.search([('id', '=', 1)])
-                    for company in company_ids:
-                        for attachment in company.attachment_ids:
-                            for l in attachment.read(['name','datas']):
-                                rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-    #             ** Recherche des modeles associés au département *****************
                 for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
                     for l in attch.read(['name','datas']):
                         rec.generation_document_par_nom(type, v, l["datas"], l["name"])
