@@ -1196,7 +1196,14 @@ class is_eig(models.Model):
     def generation_document(self, type="ODT"):
         v = {}
         for rec in self:
-            rec.attachment_ids.unlink()
+            for a in rec.attachment_ids:
+                if type == 'ODT':
+                    if a.name and a.name[-4:] and a.name[-4:] == '.odt':
+                        a.unlink()
+                if type == 'PDF':
+                    if a.name and a.name[-4:] and a.name[-4:] == '.pdf':
+                        a.unlink()
+#             rec.attachment_ids.unlink()
             v["o"] = rec
             if rec.signalement_autorites:
                 company_obj = self.env['res.company']
