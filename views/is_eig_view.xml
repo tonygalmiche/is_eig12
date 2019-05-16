@@ -601,7 +601,14 @@
                             <field name="related_rqr_start_date" invisible="1"  />
                             <field colspan="4" nolabel="1" name="start_date" attrs="{'invisible': [('related_vsb_start_date', '=', False)], 'required':[('related_rqr_start_date','=', True)]}"/>
                             </div>
-                            
+
+                            <label colspan="4" for="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)]}" />
+                            <div>
+                            <field name="related_vsb_end_date" invisible="1"  />
+                            <field name="related_rqr_end_date" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)], 'required':[('related_rqr_end_date','=', True)]}"/>
+                            </div>
+
                             <label colspan="4" for="date_heure_constatation_faits" attrs="{'invisible': [('related_vsb_date_heure_constatation_faits', '=', False)]}" />
                             <div>
                             <field name="related_vsb_date_heure_constatation_faits" invisible="1"  />
@@ -615,12 +622,9 @@
                             <field name="related_rqr_lieu_faits" invisible="1"  />
                             <field colspan="4" nolabel="1" name="lieu_faits" attrs="{'invisible': [('related_vsb_lieu_faits', '=', False)], 'required':[('related_rqr_lieu_faits','=', True)]}"/>
                             </div>
-                            <label colspan="4" for="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)]}" />
-                            <div>
-                            <field name="related_vsb_end_date" invisible="1"  />
-                            <field name="related_rqr_end_date" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="end_date" attrs="{'invisible': [('related_vsb_end_date', '=', False)], 'required':[('related_rqr_end_date','=', True)]}"/>
-                            </div>
+
+
+
                             <label colspan="4" for="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)]}" />
                             <div>
                             <field name="related_vsb_cause_faits" invisible="1"  />
@@ -1580,6 +1584,7 @@
             <field name="model">is.nature.evenement</field>
             <field name="arch" type="xml">
             <tree string="Nature Evènement">
+                <field name="ordre"/>
                 <field name="name"/>
                 <field name="code"/>
             </tree>
@@ -1594,6 +1599,7 @@
 	                <sheet>
 	                    <group>
 	                        <field name="name"/>
+                            <field name="ordre"/>
 	                        <field name="code"/>
 	                    </group>
 	                </sheet>
@@ -1899,12 +1905,12 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- Pour les personnels  -->
+        <!-- Conséquence pour les personnels  -->
         <record model="ir.ui.view" id="is_consequence_personnel_tree_view">
             <field name="name">is.consequence.personnel.tree</field>
             <field name="model">is.consequence.personnel</field>
             <field name="arch" type="xml">
-            <tree string="Pour les personnels">
+            <tree string="Conséquence pour les personnels">
                 <field name="name"/>
                 <field name="code"/>
             </tree>
@@ -1914,7 +1920,7 @@
             <field name="name">is.consequence.personnel.form</field>
             <field name="model">is.consequence.personnel</field>
             <field name="arch" type="xml">
-            <form string="Pour les personnels">
+            <form string="Conséquence pour les personnels">
                 <sheet>
                     <group>
                         <field name="name"/>
@@ -1925,7 +1931,7 @@
             </field>
         </record>
         <record id="is_consequence_personnel_action" model="ir.actions.act_window">
-            <field name="name">Pour les personnels</field>
+            <field name="name">Conséquence pour les personnels</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.consequence.personnel</field>
             <field name="view_mode">tree,form</field>

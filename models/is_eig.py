@@ -109,9 +109,12 @@ class is_manip_fields(models.Model):
 class is_nature_evenement(models.Model):
     _name = 'is.nature.evenement'
     _description = u"Nature d'événement"
+    _order = "ordre,name"
 
-    name = fields.Char('Nature', required=True)
-    code = fields.Char('Code')
+
+    name  = fields.Char('Nature', required=True)
+    code  = fields.Char('Code')
+    ordre = fields.Integer('Ordre',default=0)
 
 
 # class is_type_risque(models.Model):

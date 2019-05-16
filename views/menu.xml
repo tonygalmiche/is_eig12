@@ -50,7 +50,7 @@
         <menuitem name="Critères généraux"                                                    id="menu_is_criteres_generaux_action"                    sequence="9"  parent="menu_parametrage_tables" action="is_criteres_generaux_action" />
         <menuitem name="Demande d’intervention des secours"                                   id="menu_is_demande_intervention_secours_action"         sequence="10" parent="menu_parametrage_tables" action="is_demande_intervention_secours_action" />
         <menuitem name="Conséquence pour la ou les personnes prises en charge"                id="menu_is_consequence_personne_prise_en_charge_action" sequence="11" parent="menu_parametrage_tables" action="is_consequence_personne_prise_en_charge_action" />
-        <menuitem name="Conséquence pour le personnel'"                                       id="menu_is_consequence_personnel_action"                sequence="12" parent="menu_parametrage_tables" action="is_consequence_personnel_action" />
+        <menuitem name="Conséquence pour les personnels"                                      id="menu_is_consequence_personnel_action"                sequence="12" parent="menu_parametrage_tables" action="is_consequence_personnel_action" />
         <menuitem name="Conséquence pour l’organisation et le fonctionnement de la structure" id="menu_is_consequence_fonctionnement_stucture_action"  sequence="13" parent="menu_parametrage_tables" action="is_consequence_fonctionnement_stucture_action" />
         <menuitem name="Qualité (autre)"                                                      id="menu_is_qualite_autre"                               sequence="14" parent="menu_parametrage_tables" action="is_qualite_autre_action" />
 
