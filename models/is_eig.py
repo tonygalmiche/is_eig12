@@ -134,6 +134,7 @@ class is_nature_evenement(models.Model):
 class is_disposition_prise(models.Model):
     _name = 'is.disposition.prise'
     _description = 'disposition prises'
+    _order = "name"
 
     name = fields.Char('Nom de dispostion', required=True)
 
@@ -141,6 +142,7 @@ class is_disposition_prise(models.Model):
 class is_consequence(models.Model):
     _name = 'is.consequence'
     _description = u"Conséquences"
+    _order = "name"
 
     name = fields.Char(u'Conséquence', required=True)
 
@@ -148,6 +150,7 @@ class is_consequence(models.Model):
 class is_destinataire(models.Model):
     _name = 'is.destinataire'
     _description = u"Destinataire"
+    _order = "name"
 
     name = fields.Char('Nom' , required=True)
 
@@ -159,6 +162,7 @@ class is_destinataire(models.Model):
 class is_auteur(models.Model):
     _name = 'is.auteur'
     _description = u"Auteur"
+    _order = "name"
 
     name = fields.Char('Nom' , required=True)
 
