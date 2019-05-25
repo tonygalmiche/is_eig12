@@ -19,6 +19,16 @@ AutoriteControle = [
     ('ars', 'ARS'),
     ('cd', 'CD'),
     ('ars_cd', 'ARS+CD'),
+    ('drdjscs', 'DRDJSCS'),
+]
+
+MailDestination = [
+    ('ars'      , 'ARS'),
+    ('cd_se'    , 'CD pour SE'),
+    ('cd_ip'    , 'CD pour IP'),
+    ('ars_cd_se', 'ARS + CD pour SE'),
+    ('drdjscs'  , 'DRDJSCS'),
+
 ]
 
 OuiNon=[
@@ -34,12 +44,14 @@ class is_departement(models.Model):
 
     name     = fields.Char(string='Nom du département' , required=True)
     code     = fields.Char(string='Code du département', required=True)
-    mail_ars = fields.Char(string='Mail ARS')
-    mail_cg  = fields.Char(string='Mail CD', help="Mail du Conseil Départemental")
-    mail_ase = fields.Char(string='Mail ASE')
+
+    mail_ars     = fields.Char(string='Mail ARS')
+    mail_cd_se   = fields.Char(string='Mail CD pour les SE', help=u"Mail du Conseil Départemental pour Situation Exceptionnelle (SE)")
+    mail_cd_ip   = fields.Char(string='Mail CD pour les IP', help=u"Mail du Conseil Départemental pour Information préoccupante (IP)")
+    mail_drdjscs = fields.Char(string='Mail DRDJSCS')
+
 
     #input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
-
     trame_se_ars_id = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour ARS")
     trame_se_cd_id  = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour CD")
     trame_sea_id    = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle pour public Adulte AMI/CHU (SEA)")
@@ -83,7 +95,7 @@ class is_type_evenement_mail(models.Model):
     _description = 'is.type.evenement.mail'
 
     autorite_controle = fields.Selection(AutoriteControle  , u'Autorité de Contrôle')
-    mail_destination  = fields.Selection(AutoriteControle  , u'Mail de destination du département')
+    mail_destination  = fields.Selection(MailDestination  , u'Mail de destination du département')
     type_evenement_id = fields.Many2one('is.type.evenement', u'Type d’événement')
 
 
@@ -523,6 +535,18 @@ class is_eig_autre_personne(models.Model):
     related_vsb_auteur_victime = fields.Boolean(u'Champs related_vsb_auteur_victime - Visibilité')
     related_rqr_auteur_victime = fields.Boolean(u'Champs related_rqr_auteur_victime - Obligation')
     is_eig_id                   = fields.Many2one('is.eig', 'EIG')
+
+
+class is_eig_destinataire(models.Model):
+    _name = 'is.eig.destinataire'
+    _description = u"Destinataires des mails"
+
+    autorite_controle = fields.Selection(AutoriteControle, u'Autorité de Contrôle')
+    mail_destination  = fields.Char(u'Mail de destination')
+    trame_id          = fields.Many2one('is.trame', u'Modèle ODT')
+    mail_template_id  = fields.Many2one('mail.template', u'Modèle du mail')
+    attachment_ids    = fields.Many2many('ir.attachment', 'is_eig_destinataire_attachment_rel', 'eig_destinataire_id', 'attachment_id', u'Pièces jointes')
+    is_eig_id         = fields.Many2one('is.eig', 'EIG')
 
 
 class is_eig(models.Model):
@@ -1273,7 +1297,7 @@ class is_eig(models.Model):
         return txt.name
 
     @api.multi
-    def generation_document_par_nom(self, type="ODT", v=[], contenu="", nom=""):
+    def generation_document_par_nom(self, destinataire, type="ODT", v=[], contenu="", nom=""):
         for data in self:
             name=nom[:-4]
             name=name+".odt"
@@ -1305,25 +1329,19 @@ class is_eig(models.Model):
                 'name':        name,
                 'datas_fname': name,
                 'type':        'binary',
-                'res_model':   'is.eig',
-                'res_id':      data.id,
+                'res_model':   'is.eig.destinataire',
+                'res_id':      destinataire.id,
                 'datas':       r,
             }
-            obj = self.env['ir.attachment']
-            ids = obj.search([('res_model','=', 'is.eig'),('res_id','=', data.id),('name','=',name)])
-            if ids:
-                ids[0].write(vals)
-                vals1={
-                    'attachment_ids': [(4,ids[0].id)],
-                }
-                print ("Modification ir.attachment id="+str(ids[0]),ids)
-            else:
-                id = obj.create(vals)
-                print ("Création ir.attachment id="+str(id))
-                vals1={
-                    'attachment_ids': [(4, id.id)],
-                }
-            data.with_context(stop_write_recursion=1).write(vals1)
+            attachment = self.env['ir.attachment'].create(vals)
+            print ("Création ir.attachment id="+str(attachment.id))
+            vals1={
+                'attachment_ids': [(4, attachment.id)],
+            }
+            destinataire.write(vals1)
+
+
+
 
     def generation_pdf(self):
         self.generation_document("PDF")
@@ -1333,44 +1351,52 @@ class is_eig(models.Model):
     def generation_document(self, type="ODT"):
         v = {}
         for rec in self:
-            for a in rec.attachment_ids:
-                if type == 'ODT':
-                    if a.name and a.name[-4:] and a.name[-4:] == '.odt':
-                        a.unlink()
-                if type == 'PDF':
-                    if a.name and a.name[-4:] and a.name[-4:] == '.pdf':
-                        a.unlink()
-#             rec.attachment_ids.unlink()
+            rec.destinataire_ids.unlink()
+
             v["o"] = rec
-            if rec.signalement_autorites:
-                company_obj = self.env['res.company']
-                company_ids = company_obj.search([('id', '=', 1)])
-
-
-                #for company in company_ids:
-                #    for attachment in company.attachment_ids:
-                #        for l in attachment.read(['name','datas']):
-                #            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-
+            if rec.signalement_autorites or rec.type_event_id.code == 'SP':
+                company_ids = self.env['res.company'].search([('id', '=', 1)])
                 for company in company_ids:
+                    vals={
+                        'is_eig_id'        : rec.id,
+                        'trame_id'         : company.trame_id.id,
+                    }
+                    destinataire = self.env['is.eig.destinataire'].create(vals)
                     for attch in company.trame_id.attachment_ids:
                         for l in attch.read(['name','datas']):
-                            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+                            rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+
+
+            #** Recherche des destinataires des mails **************************
+            autorite_controle = 'ars'
+            mail_destination  = 'toto@free.fr'
+            trame_id          = 1
+            mail_template_id  = 14
+            vals={
+                'is_eig_id'        : rec.id,
+                'autorite_controle': autorite_controle,
+                'mail_destination' : mail_destination,
+                'trame_id'         : trame_id,
+                'mail_template_id' : mail_template_id,
+            }
+            destinataire = self.env['is.eig.destinataire'].create(vals)
+            print(vals,destinataire)
+            #*******************************************************************
 
 
             #** Recherche des modeles associés au département ******************
             for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:
                 for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
             for attch in rec.etablissement_id.departement_id.trame_se_cd_id.attachment_ids:
                 for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
             for attch in rec.etablissement_id.departement_id.trame_sea_id.attachment_ids:
                 for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
             for attch in rec.etablissement_id.departement_id.trame_ip_id.attachment_ids:
                 for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
             #*******************************************************************
 
 
@@ -1383,10 +1409,6 @@ class is_eig(models.Model):
 #                for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
 #                    for l in attch.read(['name','datas']):
 #                        rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-
-
-
-
 
         return True
 
@@ -1613,9 +1635,6 @@ class is_eig(models.Model):
     note                                  = fields.Text('Note')
     related_vsb_note                      = fields.Boolean(u'Champs related_vsb_note - Visibilité')
     related_rqr_note                      = fields.Boolean(u'Champs related_rqr_note - Obligation')
-    attachment_ids                        = fields.Many2many('ir.attachment', 'is_eig_attachment_rel', 'eig_id', 'attachment_id', u'Pièces jointes', help=u"Permet d'ajouter, si besoin, tout élément complémentaire susceptible d'aider à la compréhension de l'EIG (chrono, rapport éducatif,...). Pour rappel : il est inutile de surcharger l'information.")
-    related_vsb_attachment_ids            = fields.Boolean(u'Champs related_vsb_attachment_ids - Visibilité')
-    related_rqr_attachment_ids            = fields.Boolean(u'Champs related_rqr_attachment_ids - Obligation')
     auteur_ids                            = fields.One2many('is.eig.auteur', 'is_eig_id', 'Auteur')
     related_vsb_auteur_ids                = fields.Boolean(u'Champs related_vsb_auteur_ids - Visibilité')
     related_rqr_auteur_ids                = fields.Boolean(u'Champs related_rqr_auteur_ids - Obligation')
@@ -1775,7 +1794,14 @@ class is_eig(models.Model):
     related_autre_personne_vsb_auteur_victime  = fields.Boolean(u'Champs related_autre_personne_vsb_auteur_victime - Visibilité')
     related_autre_personne_rqr_auteur_victime  = fields.Boolean(u'Champs related_autre_personne_rqr_auteur_victime - Obligation')
     
-    attachment_ids = fields.Many2many('ir.attachment', string='Files')
+
+    attachment_ids             = fields.Many2many('ir.attachment', 'is_eig_attachment_rel', 'eig_id', 'attachment_id', u'Pièces jointes', help=u"Permet d'ajouter, si besoin, tout élément complémentaire susceptible d'aider à la compréhension de l'EIG (chrono, rapport éducatif,...). Pour rappel : il est inutile de surcharger l'information.")
+    related_vsb_attachment_ids = fields.Boolean(u'Champs related_vsb_attachment_ids - Visibilité')
+    related_rqr_attachment_ids = fields.Boolean(u'Champs related_rqr_attachment_ids - Obligation')
+
+    destinataire_ids = fields.One2many('is.eig.destinataire', 'is_eig_id', u"Destinataires des mails")
+
+    #attachment_ids = fields.Many2many('ir.attachment', string='Files')
 
 class Item(object):
     pass
