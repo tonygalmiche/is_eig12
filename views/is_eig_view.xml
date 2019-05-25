@@ -22,16 +22,44 @@
             <form string="Département">
                 <sheet>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="mail_ars"/>
-                            <field name="input_attach_ids" string="Modèle ODT" widget="many2many_binary" />
-                        </group>
-                        <group>
-                            <field name="code"/>
-                            <field name="mail_cg"/>
-                            <field name="trame_id" />
-                        </group>
+
+                        <label for="name" colspan="4" />
+                        <div>
+                            <field name="name" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="mail_ars" colspan="4" />
+                        <div>
+                            <field name="mail_ars" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="code" colspan="4" />
+                        <div>
+                            <field name="code" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="mail_cg" colspan="4" />
+                        <div>
+                            <field name="mail_cg" nolabel="1" colspan="4" />
+                        </div>
+                        <!--<field name="input_attach_ids" string="Modèle ODT" widget="many2many_binary" />-->
+                        <!--<field name="trame_id" />-->
+                    </group>
+                    <group string="Modèles ODT (Trames)">
+                        <label for="trame_se_ars_id" colspan="4" />
+                        <div>
+                            <field name="trame_se_ars_id" nolabel="1" colspan="4" />
+                        </div>
+
+                        <label for="trame_se_cd_id" colspan="4" />
+                        <div>
+                            <field name="trame_se_cd_id" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="trame_sea_id" colspan="4" />
+                        <div>
+                            <field name="trame_sea_id" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="trame_ip_id" colspan="4" />
+                        <div>
+                            <field name="trame_ip_id" nolabel="1" colspan="4" />
+                        </div>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
@@ -2337,7 +2365,8 @@
                     </header>
                 </xpath> -->
                 <xpath expr="//field[@name='parent_id']" position="after">
-                    <field name="attachment_ids" widget="many2many_binary" />
+                    <!--<field name="attachment_ids" widget="many2many_binary" />-->
+                    <field name="trame_id"/>
                 </xpath>
             </field>
         </record>

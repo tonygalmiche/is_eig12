@@ -157,22 +157,25 @@ class add_is_type_evenement(models.TransientModel):
         type_data3 = self.env.ref('is_eig12.is_type_evenement_3', False)
         type_data4 = self.env.ref('is_eig12.is_type_evenement_4', False)
         add_dict1 = {
-                'name': 'Situation exceptionnelle',
-                'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.',
-                'code': 'SE',
-            }
+            'name': 'Situation exceptionnelle',
+            'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.',
+            'code': 'SE',
+        }
         add_dict2 = {
             'name': u'Information préoccupante',
-            'description': u'Information à la cellule départementale sur la situation d’un mineur ou d’une personne vulnérable, bénéficiant ou non d’un accompagnement, pouvant laisser craindre que sa santé, sa sécurité ou sa moralité sont en danger ou risque de l’être ou que les conditions de son éducation ou développement sont gravement compromises ou en risque de l’être.'
+            'description': u'Information à la cellule départementale sur la situation d’un mineur ou d’une personne vulnérable, bénéficiant ou non d’un accompagnement, pouvant laisser craindre que sa santé, sa sécurité ou sa moralité sont en danger ou risque de l’être ou que les conditions de son éducation ou développement sont gravement compromises ou en risque de l’être.',
+            'code': 'IP',
         }
         add_dict3 = {
             'name': u'Signalement au Procureur',
             'description': u'Transmission à l’autorité judiciaire de l’ensemble des documents écrits concernant des faits graves, des éléments de danger avérés, compromettant le développement du mineur et sollicitant une mesure de protection judiciaire.',
             'information_speciale': u"Attention : l'applicatif n'envoie pas automatiquement un courrier aux autorités judiciaires. En cas de signalement aux autorités judiciaires, il est nécessaire d'imprimer le document pdf intitulé 'signalement' généré dans les 'pièces-jointes' de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante. Également, une information préoccupante est automatiquement envoyée au Conseil Départemental, par mail.",
+            'code': 'SP',
         }
         add_dict4 = {
             'name': u'Situation exceptionnelle pour public d’AMI ou de CHU',
-            'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.'
+            'description': u'Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.',
+            'code': 'SEA',
         }
         
         if type_data1:

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-
-        <!-- Type d’événement -->
         <record id="is_type_evenement_1" model="is.type.evenement">
             <field name="name">Situation exceptionnelle</field>
             <field name="description">Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.</field>
@@ -11,16 +9,18 @@
         <record id="is_type_evenement_2" model="is.type.evenement">
             <field name="name">Information préoccupante</field>
             <field name="description">Information à la cellule départementale sur la situation d’un mineur ou d’une personne vulnérable, bénéficiant ou non d’un accompagnement, pouvant laisser craindre que sa santé, sa sécurité ou sa moralité sont en danger ou risque de l’être ou que les conditions de son éducation ou développement sont gravement compromises ou en risque de l’être.</field>
+            <field name="code">IP</field>
         </record>
         <record id="is_type_evenement_3" model="is.type.evenement">
             <field name="name">Signalement au Procureur</field>
             <field name="description">Transmission à l’autorité judiciaire de l’ensemble des documents écrits concernant des faits graves, des éléments de danger avérés, compromettant le développement du mineur et sollicitant une mesure de protection judiciaire. </field>
             <field name="information_speciale">Attention : l'applicatif n'envoie pas automatiquement un courrier aux autorités judiciaires. En cas de signalement aux autorités judiciaires, il est nécessaire d'imprimer le document pdf intitulé "signalement" généré dans les "pièces-jointes" de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante. Également, une information préoccupante est automatiquement envoyée au Conseil Départemental, par mail.</field>
+            <field name="code">SP</field>
         </record>
         <record id="is_type_evenement_4" model="is.type.evenement">
             <field name="name">Situation exceptionnelle pour public d’AMI ou de CHU</field>
             <field name="description">Evènement ou dysfonctionnement grave pouvant affecter l’accompagnement des personnes accompagnées ou menacer leur santé, sécurité ou bien-être.</field>
+            <field name="code">SEA</field>
         </record>
-
     </data>
 </odoo>

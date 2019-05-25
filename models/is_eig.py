@@ -37,8 +37,13 @@ class is_departement(models.Model):
     mail_ars = fields.Char(string='Mail ARS')
     mail_cg  = fields.Char(string='Mail CD', help="Mail du Conseil Départemental")
     mail_ase = fields.Char(string='Mail ASE')
-    input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
-    trame_id         = fields.Many2one('is.trame', string=u'Modèle ODT Situation Exceptionnelle (SE)')
+
+    #input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
+
+    trame_se_ars_id = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour ARS")
+    trame_se_cd_id  = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour CD")
+    trame_sea_id    = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle pour public Adulte AMI/CHU (SEA)")
+    trame_ip_id     = fields.Many2one('is.trame', string=u"Modèle ODT Information préoccupante (IP)")
 
     _sql_constraints = [
         ('code_uniq', 'unique(code)', u"Le code du département doit être unique !"),
@@ -1340,18 +1345,49 @@ class is_eig(models.Model):
             if rec.signalement_autorites:
                 company_obj = self.env['res.company']
                 company_ids = company_obj.search([('id', '=', 1)])
+
+
+                #for company in company_ids:
+                #    for attachment in company.attachment_ids:
+                #        for l in attachment.read(['name','datas']):
+                #            rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+
                 for company in company_ids:
-                    for attachment in company.attachment_ids:
-                        for l in attachment.read(['name','datas']):
+                    for attch in company.trame_id.attachment_ids:
+                        for l in attch.read(['name','datas']):
                             rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-#             ** Recherche des modeles associés au département *****************
-            for attch in rec.etablissement_id.departement_id.input_attach_ids:
+
+
+            #** Recherche des modeles associés au département ******************
+            for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:
                 for l in attch.read(['name','datas']):
                     rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-            if rec.type_event_id.code == "SE":
-                for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
-                    for l in attch.read(['name','datas']):
-                        rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            for attch in rec.etablissement_id.departement_id.trame_se_cd_id.attachment_ids:
+                for l in attch.read(['name','datas']):
+                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            for attch in rec.etablissement_id.departement_id.trame_sea_id.attachment_ids:
+                for l in attch.read(['name','datas']):
+                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            for attch in rec.etablissement_id.departement_id.trame_ip_id.attachment_ids:
+                for l in attch.read(['name','datas']):
+                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+            #*******************************************************************
+
+
+
+#             ** Recherche des modeles associés au département *****************
+#            for attch in rec.etablissement_id.departement_id.input_attach_ids:
+#                for l in attch.read(['name','datas']):
+#                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+#            if rec.type_event_id.code == "SE":
+#                for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
+#                    for l in attch.read(['name','datas']):
+#                        rec.generation_document_par_nom(type, v, l["datas"], l["name"])
+
+
+
+
+
         return True
 
 
@@ -2565,7 +2601,8 @@ class is_type_evenement(models.Model):
 class res_company(models.Model):
     _inherit = 'res.company'
 
-    attachment_ids = fields.Many2many('ir.attachment', 'company_attach_rel', 'res_id', 'attachment_id', string='Files')
+    #attachment_ids = fields.Many2many('ir.attachment', 'company_attach_rel', 'res_id', 'attachment_id', string='Files')
+    trame_id = fields.Many2one('is.trame', string=u'Modèle ODT Signalement aux autorités judiciaires')
 
 
 class is_trame(models.Model):
