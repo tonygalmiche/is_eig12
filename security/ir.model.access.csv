@@ -22,7 +22,10 @@ access_is_auteur_user,is_auteur.user,model_is_auteur,base.group_user,1,1,1,1
 access_is_motif_retour_eig_user,is_motif_retour_eig.user,model_is_motif_retour_eig,base.group_user,1,1,1,1
 access_is_eig_auteur_user,is_eig_auteur.user,model_is_eig_auteur,base.group_user,1,1,1,1
 access_is_eig_temoin_user,is_eig_temoin.user,model_is_eig_temoin,base.group_user,1,1,1,1
+
 access_is_eig_victime_user,is_eig_victime.user,model_is_eig_victime,base.group_user,1,1,1,1
+access_is_eig_personne_user,is_eig_personne.user,model_is_eig_personne,base.group_user,1,1,1,1
+
 access_is_infos_communication_user,is_infos_communication.user,model_is_infos_communication,base.group_user,1,1,1,1
 access_is_eig_user,is_eig.user,model_is_eig,base.group_user,1,1,1,1
 access_is_default_type_event_user,is_default_type_event.user,model_is_default_type_event,base.group_user,1,1,1,1
