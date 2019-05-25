@@ -268,7 +268,7 @@ class is_eig_auteur(models.Model):
     birthdate                   = fields.Date('Date de naissance')
     related_vsb_birthdate       = fields.Boolean(u'Champs related_vsb_birthdate - Visibilité')
     related_rqr_birthdate       = fields.Boolean(u'Champs related_rqr_birthdate - Obligation')
-    qualite_id                  = fields.Many2one('is.qualite', u'Qualité')
+    qualite_id                  = fields.Many2one('is.qualite.autre', u'Qualité')
     related_vsb_qualite_id      = fields.Boolean(u'Champs related_vsb_qualite_id - Visibilité')
     related_rqr_qualite_id      = fields.Boolean(u'Champs related_rqr_qualite_id - Obligation')
     sexe_id                     = fields.Many2one('is.sexe', 'Sexe')
@@ -305,7 +305,7 @@ class is_eig_temoin(models.Model):
     birthdate                   = fields.Date('Date de naissance')
     related_vsb_birthdate       = fields.Boolean(u'Champs related_vsb_birthdate - Visibilité')
     related_rqr_birthdate       = fields.Boolean(u'Champs related_rqr_birthdate - Obligation')
-    qualite_id                  = fields.Many2one('is.qualite', u'Qualité')
+    qualite_id                  = fields.Many2one('is.qualite.autre', u'Qualité')
     related_vsb_qualite_id      = fields.Boolean(u'Champs related_vsb_qualite_id - Visibilité')
     related_rqr_qualite_id      = fields.Boolean(u'Champs related_rqr_qualite_id - Obligation')
     disposition_id              = fields.Many2one('is.disposition.prise', 'Disposition prises')
@@ -351,6 +351,7 @@ class is_eig_victime(models.Model):
     consequence_id             = fields.Many2one('is.consequence', u'Conséquences')
     related_vsb_consequence_id = fields.Boolean(u'Champs related_vsb_consequence_id - Visibilité')
     related_rqr_consequence_id = fields.Boolean(u'Champs related_rqr_consequence_id - Obligation')
+
     nom_pere                   = fields.Char(u'Nom Père')
     related_vsb_nom_pere       = fields.Boolean(u'Champs related_vsb_nom_pere - Visibilité')
     related_rqr_nom_pere       = fields.Boolean(u'Champs related_rqr_nom_pere - Obligation')
@@ -360,6 +361,10 @@ class is_eig_victime(models.Model):
     address_pere               = fields.Char(u'Adresse Père')
     related_vsb_address_pere   = fields.Boolean(u'Champs related_vsb_address_pere - Visibilité')
     related_rqr_address_pere   = fields.Boolean(u'Champs related_rqr_address_pere - Obligation')
+    autorite_parentale_pere             = fields.Boolean(u'Autorité parentale (Père)')
+    related_vsb_autorite_parentale_pere = fields.Boolean(u'Champs related_vsb_autorite_parentale_pere - Visibilité')
+    related_rqr_autorite_parentale_pere = fields.Boolean(u'Champs related_rqr_autorite_parentale_pere - Obligation')
+
     nom_mere                   = fields.Char(u'Nom Mère')
     related_vsb_nom_mere       = fields.Boolean(u'Champs related_vsb_nom_mere - Visibilité')
     related_rqr_nom_mere       = fields.Boolean(u'Champs related_rqr_nom_mere - Obligation')
@@ -369,13 +374,17 @@ class is_eig_victime(models.Model):
     address_mere               = fields.Char(u'Adresse Mère')
     related_vsb_address_mere   = fields.Boolean(u'Champs related_vsb_address_mere - Visibilité')
     related_rqr_address_mere   = fields.Boolean(u'Champs related_rqr_address_mere - Obligation')
-    tuteur_nom                 = fields.Char('Nom')
+    autorite_parentale_mere             = fields.Boolean(u'Autorité parentale (Mère)')
+    related_vsb_autorite_parentale_mere = fields.Boolean(u'Champs related_vsb_autorite_parentale_mere - Visibilité')
+    related_rqr_autorite_parentale_mere = fields.Boolean(u'Champs related_rqr_autorite_parentale_mere - Obligation')
+
+    tuteur_nom                 = fields.Char('Nom Tuteur')
     related_vsb_tuteur_nom     = fields.Boolean(u'Champs related_vsb_tuteur_nom - Visibilité')
     related_rqr_tuteur_nom     = fields.Boolean(u'Champs related_rqr_tuteur_nom - Obligation')
-    tuteur_prenom              = fields.Char(u"Prénom")
+    tuteur_prenom              = fields.Char(u"Prénom Tuteur")
     related_vsb_tuteur_prenom  = fields.Boolean(u'Champs related_vsb_tuteur_prenom - Visibilité')
     related_rqr_tuteur_prenom  = fields.Boolean(u'Champs related_rqr_tuteur_prenom - Obligation')
-    tuteur_adresse             = fields.Char('Adresse')
+    tuteur_adresse             = fields.Char('Adresse Tuteur')
     related_vsb_tuteur_adresse = fields.Boolean(u'Champs related_vsb_tuteur_adresse - Visibilité')
     related_rqr_tuteur_adresse = fields.Boolean(u'Champs related_rqr_tuteur_adresse - Obligation')
     is_eig_id                  = fields.Many2one('is.eig', 'EIG')
@@ -522,8 +531,8 @@ class is_eig(models.Model):
                 'related_rqr_en_case_suspectees':  False,
                 'related_vsb_en_case_lesquelles':  False,
                 'related_rqr_en_case_lesquelles':  False,
-                'related_vsb_nature_precision':  False,
-                'related_rqr_nature_precision':  False,
+                #'related_vsb_nature_precision':  False,
+                #'related_rqr_nature_precision':  False,
                 'related_vsb_start_date':  False,
                 'related_rqr_start_date':  False,
                 'related_vsb_consequence_personne_prise_en_charge_ids': False,
@@ -552,6 +561,25 @@ class is_eig(models.Model):
                 'related_rqr_evenement_semble_maitrise': False,
                 'related_vsb_si_non_maitrise_precisez': False,
                 'related_rqr_si_non_maitrise_precisez': False,
+
+                'related_vsb_maltraitance_fait_constate': False,
+                'related_rqr_maltraitance_fait_constate': False,
+
+                'related_vsb_sont_ils_frequent': False,
+                'related_rqr_sont_ils_frequent': False,
+
+                'related_vsb_problematique_familiale_reperee': False,
+                'related_rqr_problematique_familiale_reperee': False,
+
+                'related_vsb_objet_information_preoccupante': False,
+                'related_rqr_objet_information_preoccupante': False,
+
+                'related_vsb_objet_information_preoccupante': False,
+                'related_rqr_objet_information_preoccupante': False,
+
+                'related_vsb_objet_signalement_justice': False,
+                'related_rqr_objet_signalement_justice': False,
+
                 'related_vsb_date_heure_constatation_faits': False,
                 'related_rqr_date_heure_constatation_faits': False,
                 'related_vsb_end_date':  False,
@@ -577,8 +605,8 @@ class is_eig(models.Model):
                 'related_rqr_lieu_faits':  False,
                 'related_vsb_element_faits':  False,
                 'related_rqr_element_faits':  False,
-                'related_vsb_cause_faits':  False,
-                'related_rqr_cause_faits':  False,
+                #'related_vsb_cause_faits':  False,
+                #'related_rqr_cause_faits':  False,
                 'related_vsb_reunion_debriefing':  False,
                 'related_rqr_reunion_debriefing':  False,
                 'related_vsb_si_reunion_debriefing':  False,
@@ -679,18 +707,25 @@ class is_eig(models.Model):
                 'related_vict_rqr_disposition_id': False,
                 'related_vict_vsb_consequence_id': False,
                 'related_vict_rqr_consequence_id': False,
+
                 'related_vict_vsb_nom_pere': False,
                 'related_vict_rqr_nom_pere': False,
                 'related_vict_vsb_prenom_pere': False,
                 'related_vict_rqr_prenom_pere': False,
                 'related_vict_vsb_address_pere': False,
                 'related_vict_rqr_address_pere': False,
+                'related_vict_vsb_autorite_parentale_pere': False,
+                'related_vict_rqr_autorite_parentale_pere': False,
+
                 'related_vict_vsb_nom_mere': False,
                 'related_vict_rqr_nom_mere': False,
                 'related_vict_vsb_prenom_mere': False,
                 'related_vict_rqr_prenom_mere': False,
                 'related_vict_vsb_address_mere': False,
                 'related_vict_rqr_address_mere': False,
+                'related_vict_vsb_autorite_parentale_mere': False,
+                'related_vict_rqr_autorite_parentale_mere': False,
+
                 'related_vict_vsb_auteur_victime': False,
                 'related_vict_rqr_auteur_victime': False,
                 'related_vict_vsb_tuteur_nom': False,
@@ -989,14 +1024,15 @@ class is_eig(models.Model):
 
     @api.multi
     def nature(self, val):
-        r="□"
+        if type(val)==int:
+            val=[val]
+        r="☐"
         for data in self:
-            nature_ids = self.env['is.nature.evenement'].search([('id','in',data.nature_event_id.ids), ('code','=',str(val))])
-            for ne in nature_ids:
-                if ne.code == str(val):
-                    return "☑"
-                else:
-                    r="□"
+            for v in val:
+                nature_ids = self.env['is.nature.evenement'].search([('id','in',data.nature_event_id.ids), ('code','=',str(v))])
+                for ne in nature_ids:
+                    if ne.code == str(v):
+                        r="☑"
         return r
 
     @api.multi
@@ -1266,9 +1302,9 @@ class is_eig(models.Model):
     related_vsb_en_case_lesquelles        = fields.Boolean(u'Champs related_vsb_en_case_lesquelles - Visibilité')
     related_rqr_en_case_lesquelles        = fields.Boolean(u'Champs related_rqr_en_case_lesquelles - Obligation')
     en_case_lesquelles                    = fields.Char(u'En cas de défaillances techniques graves, lesquelles ? (en 1 ou 2 mots)')
-    nature_precision                      = fields.Char('Précision nature évènement')
-    related_vsb_nature_precision          = fields.Boolean(u'Champs related_vsb_nature_precision - Visibilité')
-    related_rqr_nature_precision          = fields.Boolean(u'Champs related_rqr_nature_precision - Obligation')
+#    nature_precision                      = fields.Char('Précision nature évènement')
+#    related_vsb_nature_precision          = fields.Boolean(u'Champs related_vsb_nature_precision - Visibilité')
+#    related_rqr_nature_precision          = fields.Boolean(u'Champs related_rqr_nature_precision - Obligation')
 #     type_risq_id                          = fields.Many2one('is.type.risque', "Type de risque", required=False, help=u"Permet de préciser sur quel temps du parcours de l'usager est apparu l'EIG.")
 #     nature_risq_id                        = fields.Many2one('is.nature.risque', "Nature de risque", required=True, help=u"Permet d'identifier la nature du risque afin d'alimenter la cartographie des risques de la fondation OVE")
     signalement_autorites                 = fields.Boolean(u'Signalement aux autorités judiciaires')
@@ -1313,6 +1349,31 @@ class is_eig(models.Model):
     si_non_maitrise_precisez                    = fields.Char(u"Si non maîtrisé, précisez pourquoi")
     related_vsb_si_non_maitrise_precisez             = fields.Boolean(u'Champs related_vsb_si_non_maitrise_precisez - Visibilité')
     related_rqr_si_non_maitrise_precisez             = fields.Boolean(u'Champs related_rqr_si_non_maitrise_precisez - Obligation')
+
+    maltraitance_fait_constate             = fields.Selection(OuiNon, u"En cas de maltraitance, les faits ont-ils été constatés ?")
+    related_vsb_maltraitance_fait_constate = fields.Boolean(u'Champs maltraitance_fait_constate - Visibilité')
+    related_rqr_maltraitance_fait_constate = fields.Boolean(u'Champs maltraitance_fait_constate - Obligation')
+
+    sont_ils_frequent             = fields.Selection(OuiNon, u"Sont-ils fréquents ?")
+    related_vsb_sont_ils_frequent = fields.Boolean(u'Champs sont_ils_frequent - Visibilité')
+    related_rqr_sont_ils_frequent = fields.Boolean(u'Champs sont_ils_frequent - Obligation')
+
+    problematique_familiale_reperee             = fields.Text(u"Problématique familiale repérée (éléments antérieurs et actions entreprises), et commentaires")
+    related_vsb_problematique_familiale_reperee = fields.Boolean(u'Champs problematique_familiale_reperee - Visibilité')
+    related_rqr_problematique_familiale_reperee = fields.Boolean(u'Champs problematique_familiale_reperee - Obligation')
+
+    objet_information_preoccupante             = fields.Selection(OuiNon, u"A votre connaissance la famille a-t-elle déjà fait l’objet d’une information préoccupante ?")
+    related_vsb_objet_information_preoccupante = fields.Boolean(u'Champs objet_information_preoccupante - Visibilité')
+    related_rqr_objet_information_preoccupante = fields.Boolean(u'Champs objet_information_preoccupante - Obligation')
+
+    objet_signalement_justice             = fields.Selection(OuiNon, u"A votre connaissance la famille a-t-elle déjà fait l’objet d’un signalement à la justice ?")
+    related_vsb_objet_signalement_justice = fields.Boolean(u'Champs objet_signalement_justice - Visibilité')
+    related_rqr_objet_signalement_justice = fields.Boolean(u'Champs objet_signalement_justice - Obligation')
+
+    mesure_protection_enfance             = fields.Selection(OuiNon, u"A votre connaissance la famille a-t-elle déjà fait l’objet d’une mesure au titre de la protection de l’enfance ?")
+    related_vsb_mesure_protection_enfance = fields.Boolean(u'Champs mesure_protection_enfance - Visibilité')
+    related_rqr_mesure_protection_enfance = fields.Boolean(u'Champs mesure_protection_enfance - Obligation')
+
     start_date                            = fields.Datetime(u'Date heure de début', help=u"Date connue de début de l'événement. En cas de maladie il s'agit de la date connue de déclaration des symptômes chez le premier malade.")
     related_vsb_start_date                = fields.Boolean(u'Champs related_vsb_start_date - Visibilité')
     related_rqr_start_date                = fields.Boolean(u'Champs related_rqr_start_date - Obligation')
@@ -1355,28 +1416,28 @@ class is_eig(models.Model):
     element_faits                         = fields.Text(u'Eléments préoccupants')
     related_vsb_element_faits             = fields.Boolean(u'Champs related_vsb_element_faits - Visibilité')
     related_rqr_element_faits             = fields.Boolean(u'Champs related_rqr_element_faits - Obligation')
-    cause_faits                           = fields.Boolean(u'Cause identifiée', help="Cet item est obligatoire en cas de « maladie » ou d'« atteinte à l'intégrité des usagers » dans la partie « Type de risque ».")
-    related_vsb_cause_faits               = fields.Boolean(u'Champs related_vsb_cause_faits - Visibilité')
-    related_rqr_cause_faits               = fields.Boolean(u'Champs related_rqr_cause_faits - Obligation')
-    reunion_debriefing                    = fields.Selection(OuiNon, "Une première réunion de débriefing a-t-elle été organisée")
+    #cause_faits                           = fields.Boolean(u'Cause identifiée', help="Cet item est obligatoire en cas de « maladie » ou d'« atteinte à l'intégrité des usagers » dans la partie « Type de risque ».")
+    #related_vsb_cause_faits               = fields.Boolean(u'Champs related_vsb_cause_faits - Visibilité')
+    #related_rqr_cause_faits               = fields.Boolean(u'Champs related_rqr_cause_faits - Obligation')
+    reunion_debriefing                    = fields.Selection(OuiNon, "Une première réunion de débriefing a-t-elle été organisée ?")
     related_vsb_reunion_debriefing        = fields.Boolean(u'Champs related_vsb_reunion_debriefing - Visibilité')
     related_rqr_reunion_debriefing        = fields.Boolean(u'Champs related_rqr_reunion_debriefing - Obligation')
-    si_reunion_debriefing                 = fields.Text("Si oui, quelles sont les premières conclusions")
+    si_reunion_debriefing                 = fields.Text("Si oui, quelles sont les premières conclusions ?")
     related_vsb_si_reunion_debriefing     = fields.Boolean(u'Champs related_vsb_si_reunion_debriefing - Visibilité')
     related_rqr_si_reunion_debriefing     = fields.Boolean(u'Champs related_rqr_si_reunion_debriefing - Obligation')
-    causes_profondes                      = fields.Selection(OuiNon, u"Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue")
+    causes_profondes                      = fields.Selection(OuiNon, u"Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue ?")
     related_vsb_causes_profondes          = fields.Boolean(u'Champs related_vsb_causes_profondes - Visibilité')
     related_rqr_causes_profondes          = fields.Boolean(u'Champs related_rqr_causes_profondes - Obligation')
     
     
-    premiere_cause_identifiee                    = fields.Boolean(u"1ere(s) cause(s) identifiée(s)")
+    premiere_cause_identifiee                    = fields.Boolean(u"1ere(s) cause(s) identifiée(s) ?")
     related_vsb_premiere_cause_identifiee        = fields.Boolean(u'Champs related_vsb_premiere_cause_identifiee - Visibilité')
     related_rqr_premiere_cause_identifiee        = fields.Boolean(u'Champs related_rqr_premiere_cause_identifiee - Obligation')
-    evolution_previsible                         = fields.Text(u"Evolutions prévisibles ou difficultés attendues")
+    evolution_previsible                         = fields.Text(u"Evolutions prévisibles ou difficultés attendues ?")
     related_vsb_evolution_previsible             = fields.Boolean(u'Champs related_vsb_evolution_previsible - Visibilité')
     related_rqr_evolution_previsible             = fields.Boolean(u'Champs related_rqr_evolution_previsible - Obligation')
     
-    enseignements_a_tirer                        = fields.Text(u"Y a-t-il des enseignements à tirer au niveau de l'établissement, ou au niveau régional, de l'évènement pour prévenir sa reproduction")
+    enseignements_a_tirer                        = fields.Text(u"Y a-t-il des enseignements à tirer au niveau de l'établissement, ou au niveau régional, de l'évènement pour prévenir sa reproduction ?")
     related_vsb_enseignements_a_tirer            = fields.Boolean(u'Champs related_vsb_enseignements_a_tirer - Visibilité')
     related_rqr_enseignements_a_tirer            = fields.Boolean(u'Champs related_rqr_enseignements_a_tirer - Obligation')
     mesure_pour_proteger_accompagner             = fields.Text(u"Pour protéger, accompagner ou soutenir les personnes victimes ou exposées")
@@ -1403,13 +1464,13 @@ class is_eig(models.Model):
     mesure_structure                             = fields.Text(u"Concernant la structure")
     related_vsb_mesure_structure                 = fields.Boolean(u'Champs related_vsb_mesure_structure - Visibilité')
     related_rqr_mesure_structure                 = fields.Boolean(u'Champs related_rqr_mesure_structure - Obligation')
-    si_causes_profondes                   = fields.Text("Si oui, quelle est la méthodologie utilisée")
+    si_causes_profondes                   = fields.Text("Si oui, quelle est la méthodologie utilisée ?")
     related_vsb_si_causes_profondes       = fields.Boolean(u'Champs related_vsb_si_causes_profondes - Visibilité')
     related_rqr_si_causes_profondes       = fields.Boolean(u'Champs related_rqr_si_causes_profondes - Obligation')
 #     enseignements_a_tirer                 = fields.Selection(OuiNon, "Enseignements à tirer", help="Y a-t-il des enseignements à tirer au niveau de l’établissement, ou au niveau régional, de l’événement pour prévenir sa reproduction")
 #     related_vsb_enseignements_a_tirer     = fields.Boolean(u'Champs related_vsb_enseignements_a_tirer - Visibilité')
 #     related_rqr_enseignements_a_tirer     = fields.Boolean(u'Champs related_rqr_enseignements_a_tirer - Obligation')
-    si_enseignements_a_tirer              = fields.Text("Si oui, lesquels")
+    si_enseignements_a_tirer              = fields.Text("Si oui, lesquels ?")
     related_vsb_si_enseignements_a_tirer  = fields.Boolean(u'Champs related_vsb_si_enseignements_a_tirer - Visibilité')
     related_rqr_si_enseignements_a_tirer  = fields.Boolean(u'Champs related_rqr_si_enseignements_a_tirer - Obligation')
 #     mesure_organisation                   = fields.Text('Organisationnelles', help=u"Permet d'indiquer les mesures prises au niveau du fonctionnement de l'établissement pour répondre à cet EIG")
@@ -1451,7 +1512,7 @@ class is_eig(models.Model):
     depot_plainte_famille                 = fields.Selection(OuiNon, u"Dépôt de plainte par la famille")
     related_vsb_depot_plainte_famille     = fields.Boolean(u'Champs related_vsb_depot_plainte_famille - Visibilité')
     related_rqr_depot_plainte_famille     = fields.Boolean(u'Champs related_rqr_depot_plainte_famille - Obligation')
-    communication_prevue                  = fields.Selection(OuiNon, u"Une communication par la Fondation est-elle prévue")
+    communication_prevue                  = fields.Selection(OuiNon, u"Une communication par la Fondation est-elle prévue ?")
     related_vsb_communication_prevue      = fields.Boolean(u'Champs related_vsb_communication_prevue - Visibilité')
     related_rqr_communication_prevue      = fields.Boolean(u'Champs related_rqr_communication_prevue - Obligation')
     communication_prevue_oui              = fields.Text(u"Si oui, précisez")
@@ -1513,18 +1574,25 @@ class is_eig(models.Model):
     related_vict_rqr_disposition_id       = fields.Boolean(u'Champs related_vict_rqr_disposition_id - Obligation')
     related_vict_vsb_consequence_id       = fields.Boolean(u'Champs related_vict_vsb_consequence_id - Visibilité')
     related_vict_rqr_consequence_id       = fields.Boolean(u'Champs related_vict_rqr_consequence_id - Obligation')
+
     related_vict_vsb_nom_pere             = fields.Boolean(u'Champs related_vict_vsb_nom_pere - Visibilité')
     related_vict_rqr_nom_pere             = fields.Boolean(u'Champs related_vict_rqr_nom_pere - Obligation')
     related_vict_vsb_prenom_pere          = fields.Boolean(u'Champs related_vict_vsb_prenom_pere - Visibilité')
     related_vict_rqr_prenom_pere          = fields.Boolean(u'Champs related_vict_rqr_prenom_pere - Obligation')
     related_vict_vsb_address_pere         = fields.Boolean(u'Champs related_vict_vsb_address_pere - Visibilité')
     related_vict_rqr_address_pere         = fields.Boolean(u'Champs related_vict_rqr_address_pere - Obligation')
+    related_vict_vsb_autorite_parentale_pere = fields.Boolean(u'Champs related_vict_vsb_autorite_parentale_pere - Visibilité')
+    related_vict_rqr_autorite_parentale_pere = fields.Boolean(u'Champs related_vict_rqr_autorite_parentale_pere - Obligation')
+
     related_vict_vsb_nom_mere             = fields.Boolean(u'Champs related_vict_vsb_nom_mere - Visibilité')
     related_vict_rqr_nom_mere             = fields.Boolean(u'Champs related_vict_rqr_nom_mere - Obligation')
     related_vict_vsb_prenom_mere          = fields.Boolean(u'Champs related_vict_vsb_prenom_mere - Visibilité')
     related_vict_rqr_prenom_mere          = fields.Boolean(u'Champs related_vict_rqr_prenom_mere - Obligation')
     related_vict_vsb_address_mere         = fields.Boolean(u'Champs related_vict_vsb_address_mere - Visibilité')
     related_vict_rqr_address_mere         = fields.Boolean(u'Champs related_vict_rqr_address_mere - Obligation')
+    related_vict_vsb_autorite_parentale_mere = fields.Boolean(u'Champs related_vict_vsb_autorite_parentale_mere - Visibilité')
+    related_vict_rqr_autorite_parentale_mere = fields.Boolean(u'Champs related_vict_rqr_autorite_parentale_mere - Obligation')
+
     related_vict_vsb_auteur_victime       = fields.Boolean(u'Champs related_vict_vsb_auteur_victime - Visibilité')
     related_vict_rqr_auteur_victime       = fields.Boolean(u'Champs related_vict_rqr_auteur_victime - Obligation')
     related_vict_vsb_tuteur_nom           = fields.Boolean(u'Champs related_vict_vsb_tuteur_nom - Visibilité')
@@ -1585,8 +1653,8 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig'),
-            ('name', 'in', ['start_date', 'date_heure_constatation_faits', 'end_date', 'nature_precision', 'description_faits',
-                           'lieu_faits', 'element_faits', 'cause_faits', 'criteres_generaux_ids', 'solution_prise_en_charge',
+            ('name', 'in', ['start_date', 'date_heure_constatation_faits', 'end_date', 'description_faits',
+                           'lieu_faits', 'element_faits', 'criteres_generaux_ids', 'solution_prise_en_charge',
                            'demande_intervention_secours_ids'
             ])])
         return field_ids
@@ -1600,7 +1668,7 @@ class is_default_type_event(models.Model):
             'date_heure_constatation_faits': 2,
             'lieu_faits': 3,
             'end_date': 4,
-            'cause_faits': 5,
+            #'cause_faits': 5,
             'description_faits': 6,
             'criteres_generaux_ids': 7,
             'solution_prise_en_charge': 8,
@@ -1693,7 +1761,14 @@ class is_default_type_event(models.Model):
             ('name', 'in', ['consequence_personne_prise_en_charge_ids', 'consequence_personnel_ids', 'consequence_fonctionnement_stucture_ids',
                             'si_autre_pour_personnel', 'si_autre_pour_organisation', 'nb_jours_interuption_travail',
                             'fait_deja_produit', 'eig_deja_declare', 'risque_reproductibilite', 'risque_extension',
-                            'risque_contentieux', 'evenement_semble_maitrise', 'si_non_maitrise_precisez',
+                            'risque_contentieux', 'evenement_semble_maitrise',
+                            'si_non_maitrise_precisez',
+                            'maltraitance_fait_constate',
+                            'sont_ils_frequent',
+                            'problematique_familiale_reperee',
+                            'objet_information_preoccupante',
+                            'objet_signalement_justice',
+                            'mesure_protection_enfance',
             ])])
         return field_ids
 
@@ -1775,7 +1850,7 @@ class is_default_type_event(models.Model):
             ('model', '=', 'is.eig.victime'),
             ('name','in', ('identifie','name','prenom','address','ecole','birthdate','sexe_id',
                            'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
-                            'address_pere','nom_mere','prenom_mere','address_mere', 'auteur_victime',
+                            'address_pere','autorite_parentale_pere','nom_mere','prenom_mere','address_mere','autorite_parentale_mere','auteur_victime',
                             'tuteur_nom','tuteur_prenom','tuteur_adresse',
             ))])
         return field_ids
@@ -1932,8 +2007,8 @@ class is_default_type_event(models.Model):
         eig_lst = []
         fields_eig_ids = self.get_eig_fields()
         for field in fields_eig_ids:
-            if field.name == 'nature_precision':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+            #if field.name == 'nature_precision':
+            #    eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
             if field.name == 'start_date':
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
             if field.name == 'end_date':
@@ -1944,8 +2019,8 @@ class is_default_type_event(models.Model):
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
             if field.name == 'element_faits':
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig': True}])
-            if field.name == 'cause_faits':
-                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+            #if field.name == 'cause_faits':
+            #    eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
         mesures_lst = []
         fields_mesures_ids = self.get_mesures_fields()
         for field in fields_mesures_ids:
@@ -2018,6 +2093,18 @@ class is_default_type_event(models.Model):
             if field.name == 'evenement_semble_maitrise':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'si_non_maitrise_precisez':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'maltraitance_fait_constate':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'sont_ils_frequent':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'problematique_familiale_reperee':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'objet_information_preoccupante':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'objet_signalement_justice':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'mesure_protection_enfance':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
         entete_lst = []
         fields_entete_ids = self.get_entete_fields()

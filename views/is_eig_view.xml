@@ -35,9 +35,9 @@
                     </group>
                 </sheet>
                 <div class="oe_chatter">
-				    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-				    <field name="message_ids" widget="mail_thread"/>
-				 </div>
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                 </div>
             </form>
             </field>
         </record>
@@ -573,13 +573,14 @@
                         <field name="related_vsb_en_case_lesquelles" invisible="1"  />
                         <field name="related_rqr_en_case_lesquelles" invisible="1"  />
                         <field colspan="4" nolabel="1" name="en_case_lesquelles" attrs="{'invisible': [('related_vsb_en_case_lesquelles', '=', False)], 'required':[('related_rqr_en_case_lesquelles','=', True)]}"/>
+                        <!--
                         </div>
-                        
                         <label colspan="4" for="nature_precision" attrs="{'invisible': [('related_vsb_nature_precision', '=', False)]}" />
                         <div>
                         <field name="related_vsb_nature_precision" invisible="1"  />
                         <field name="related_rqr_nature_precision" invisible="1"  />
                         <field colspan="4" nolabel="1" name="nature_precision" attrs="{'invisible': [('related_vsb_nature_precision', '=', False)], 'required':[('related_rqr_nature_precision','=', True)]}"/>
+                        -->
                         </div>
                     </group>
                     <group invisible="1">
@@ -624,13 +625,14 @@
                             </div>
 
 
-
+                            <!--
                             <label colspan="4" for="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)]}" />
                             <div>
                             <field name="related_vsb_cause_faits" invisible="1"  />
                             <field name="related_rqr_cause_faits" invisible="1"  />
                             <field colspan="4" nolabel="1" name="cause_faits" attrs="{'invisible': [('related_vsb_cause_faits', '=', False)], 'required':[('related_rqr_cause_faits','=', True)]}"/>
                             </div>
+                            -->
                             
                             <label colspan="4" for="description_faits" attrs="{'invisible': [('related_vsb_description_faits', '=', False)]}" />
                             <div>
@@ -667,19 +669,20 @@
                             <field colspan="4" nolabel="1" name="risque_reproductivite" attrs="{'invisible': [('related_vsb_risque_reproductivite', '=', False)], 'required':[('related_rqr_risque_reproductivite','=', True)]}"/>
                             </div>
 
+                            <!--
                             <label colspan="4" for="risque_extension" attrs="{'invisible': [('related_vsb_risque_extension', '=', False)]}" />
                             <div>
                             <field name="related_vsb_risque_extension" invisible="1"  />
                             <field name="related_rqr_risque_extension" invisible="1"  />
                             <field colspan="4" nolabel="1" name="risque_extension" attrs="{'invisible': [('related_vsb_risque_extension', '=', False)], 'required':[('related_rqr_risque_extension','=', True)]}"/>
                             </div>
-
                             <label colspan="4" for="risque_contentieux" attrs="{'invisible': [('related_vsb_risque_contentieux', '=', False)]}" />
                             <div>
                             <field name="related_vsb_risque_contentieux" invisible="1"  />
                             <field name="related_rqr_risque_contentieux" invisible="1"  />
                             <field colspan="4" nolabel="1" name="risque_contentieux" attrs="{'invisible': [('related_vsb_risque_contentieux', '=', False)], 'required':[('related_rqr_risque_contentieux','=', True)]}"/>
                             </div>
+                            -->
 
                             <label colspan="4" for="evenement_maitrise" attrs="{'invisible': [('related_vsb_evenement_maitrise', '=', False)]}" />
                             <div>
@@ -703,113 +706,157 @@
                             </div>
                         </group>
                         <group string="Au moment de la transmission de l’information, quelles sont les conséquences constatées" 
-	                        attrs="{'invisible': [
-	                            ('related_vsb_consequence_personne_prise_en_charge_ids','=',False),
-	                            ('related_vsb_consequence_personnel_ids','=',False),
-	                            ('related_vsb_consequence_fonctionnement_stucture_ids','=',False),
-	                            ('related_vsb_si_autre_pour_personnel','=',False),
-	                            ('related_vsb_si_autre_pour_organisation','=',False),
-	                            ('related_vsb_nb_jours_interuption_travail','=',False)]}">
-	                        <label for="consequence_personne_prise_en_charge_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_personne_prise_en_charge_ids','=',False)]}" />
-	                        <div>
-	                            <field name="related_vsb_consequence_personne_prise_en_charge_ids" invisible="1"  />
-	                            <field name="related_rqr_consequence_personne_prise_en_charge_ids" invisible="1"  />
-	                            <field name="consequence_personne_prise_en_charge_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_personne_prise_en_charge_ids', '=', False)], 'required':[('related_rqr_consequence_personne_prise_en_charge_ids','=', True)]}" />
-	                        </div>
-	
-	                        <label for="consequence_personnel_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_personnel_ids','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_consequence_personnel_ids" invisible="1"  />
-	                            <field name="related_rqr_consequence_personnel_ids" invisible="1"  />
-	                            <field name="consequence_personnel_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_personnel_ids', '=', False)], 'required':[('related_rqr_consequence_personnel_ids','=', True)]}"/>
-	                        </div>
-	
-	                        <label for="consequence_fonctionnement_stucture_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_fonctionnement_stucture_ids','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_consequence_fonctionnement_stucture_ids" invisible="1"  />
-	                            <field name="related_rqr_consequence_fonctionnement_stucture_ids" invisible="1"  />
-	                            <field name="consequence_fonctionnement_stucture_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_fonctionnement_stucture_ids', '=', False)], 'required':[('related_rqr_consequence_fonctionnement_stucture_ids','=', True)]}"/>
-	                        </div>
-	
-	                        <label for="si_autre_pour_personnel" colspan="4" attrs="{'invisible': [('related_vsb_si_autre_pour_personnel','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_si_autre_pour_personnel" invisible="1"  />
-	                            <field name="related_rqr_si_autre_pour_personnel" invisible="1"  />
-	                            <field name="si_autre_pour_personnel" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_autre_pour_personnel', '=', False)], 'required':[('related_rqr_si_autre_pour_personnel','=', True)]}" />
-	                        </div>
-	
-	                        <label for="si_autre_pour_organisation" colspan="4" attrs="{'invisible': [('related_vsb_si_autre_pour_organisation','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_si_autre_pour_organisation" invisible="1"  />
-	                            <field name="related_rqr_si_autre_pour_organisation" invisible="1"  />
-	                            <field name="si_autre_pour_organisation" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_autre_pour_organisation', '=', False)], 'required':[('related_rqr_si_autre_pour_organisation','=', True)]}" />
-	                        </div>
-	
-	                        <label for="nb_jours_interuption_travail" colspan="4" attrs="{'invisible': [('related_vsb_nb_jours_interuption_travail','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_nb_jours_interuption_travail" invisible="1"  />
-	                            <field name="related_rqr_nb_jours_interuption_travail" invisible="1"  />
-	                            <field name="nb_jours_interuption_travail" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_nb_jours_interuption_travail', '=', False)], 'required':[('related_rqr_nb_jours_interuption_travail','=', True)]}" />
-	                        </div>
-	                    </group>
-	                    
-	                    <group string="Autres informations" 
-	                        attrs="{'invisible': [
-	                            ('related_vsb_fait_deja_produit','=',False),
-	                            ('related_vsb_eig_deja_declare','=',False),
-	                            ('related_vsb_risque_reproductibilite','=',False),
-	                            ('related_vsb_risque_extension','=',False),
-	                            ('related_vsb_risque_contentieux','=',False),
-	                            ('related_vsb_evenement_semble_maitrise','=',False),
-	                            ('related_vsb_si_non_maitrise_precisez','=',False)]}">
-	                        <label for="fait_deja_produit" colspan="4" attrs="{'invisible': [('related_vsb_fait_deja_produit','=',False)]}" />
-	                        <div>
-	                            <field name="related_vsb_fait_deja_produit" invisible="1"  />
-	                            <field name="related_rqr_fait_deja_produit" invisible="1"  />
-	                            <field name="fait_deja_produit" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_fait_deja_produit', '=', False)], 'required':[('related_rqr_fait_deja_produit','=', True)]}" />
-	                        </div>
-	                        <label for="eig_deja_declare" colspan="4" attrs="{'invisible': [('related_vsb_eig_deja_declare','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_eig_deja_declare" invisible="1"  />
-	                            <field name="related_rqr_eig_deja_declare" invisible="1"  />
-	                            <field name="eig_deja_declare" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_eig_deja_declare', '=', False)], 'required':[('related_rqr_eig_deja_declare','=', True)]}"/>
-	                        </div>
-	
-	                        <label for="risque_reproductibilite" colspan="4" attrs="{'invisible': [('related_vsb_risque_reproductibilite','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_risque_reproductibilite" invisible="1"  />
-	                            <field name="related_rqr_risque_reproductibilite" invisible="1"  />
-	                            <field name="risque_reproductibilite" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_reproductibilite', '=', False)], 'required':[('related_rqr_risque_reproductibilite','=', True)]}"/>
-	                        </div>
-	
-	                        <label for="risque_extension" colspan="4" attrs="{'invisible': [('related_vsb_risque_extension','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_risque_extension" invisible="1"  />
-	                            <field name="related_rqr_risque_extension" invisible="1"  />
-	                            <field name="risque_extension" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_extension', '=', False)], 'required':[('related_rqr_risque_extension','=', True)]}" />
-	                        </div>
-	
-	                        <label for="risque_contentieux" colspan="4" attrs="{'invisible': [('related_vsb_risque_contentieux','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_risque_contentieux" invisible="1"  />
-	                            <field name="related_rqr_risque_contentieux" invisible="1"  />
-	                            <field name="risque_contentieux" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_contentieux', '=', False)], 'required':[('related_rqr_risque_contentieux','=', True)]}" />
-	                        </div>
-	
-	                        <label for="evenement_semble_maitrise" colspan="4" attrs="{'invisible': [('related_vsb_evenement_semble_maitrise','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_evenement_semble_maitrise" invisible="1"  />
-	                            <field name="related_rqr_evenement_semble_maitrise" invisible="1"  />
-	                            <field name="evenement_semble_maitrise" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_evenement_semble_maitrise', '=', False)], 'required':[('related_rqr_evenement_semble_maitrise','=', True)]}" />
-	                        </div>
-	
-	                        <label for="si_non_maitrise_precisez" colspan="4" attrs="{'invisible': [('related_vsb_si_non_maitrise_precisez','=',False)]}"/>
-	                        <div>
-	                            <field name="related_vsb_si_non_maitrise_precisez" invisible="1"  />
-	                            <field name="related_rqr_si_non_maitrise_precisez" invisible="1"  />
-	                            <field name="si_non_maitrise_precisez" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_non_maitrise_precisez', '=', False)], 'required':[('related_rqr_si_non_maitrise_precisez','=', True)]}" />
-	                        </div>
-	                    </group>
+                            attrs="{'invisible': [
+                                ('related_vsb_consequence_personne_prise_en_charge_ids','=',False),
+                                ('related_vsb_consequence_personnel_ids','=',False),
+                                ('related_vsb_consequence_fonctionnement_stucture_ids','=',False),
+                                ('related_vsb_si_autre_pour_personnel','=',False),
+                                ('related_vsb_si_autre_pour_organisation','=',False),
+                                ('related_vsb_nb_jours_interuption_travail','=',False)]}">
+                            <label for="consequence_personne_prise_en_charge_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_personne_prise_en_charge_ids','=',False)]}" />
+                            <div>
+                                <field name="related_vsb_consequence_personne_prise_en_charge_ids" invisible="1"  />
+                                <field name="related_rqr_consequence_personne_prise_en_charge_ids" invisible="1"  />
+                                <field name="consequence_personne_prise_en_charge_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_personne_prise_en_charge_ids', '=', False)], 'required':[('related_rqr_consequence_personne_prise_en_charge_ids','=', True)]}" />
+                            </div>
+    
+                            <label for="consequence_personnel_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_personnel_ids','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_consequence_personnel_ids" invisible="1"  />
+                                <field name="related_rqr_consequence_personnel_ids" invisible="1"  />
+                                <field name="consequence_personnel_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_personnel_ids', '=', False)], 'required':[('related_rqr_consequence_personnel_ids','=', True)]}"/>
+                            </div>
+    
+                            <label for="consequence_fonctionnement_stucture_ids" colspan="4" attrs="{'invisible': [('related_vsb_consequence_fonctionnement_stucture_ids','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_consequence_fonctionnement_stucture_ids" invisible="1"  />
+                                <field name="related_rqr_consequence_fonctionnement_stucture_ids" invisible="1"  />
+                                <field name="consequence_fonctionnement_stucture_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_consequence_fonctionnement_stucture_ids', '=', False)], 'required':[('related_rqr_consequence_fonctionnement_stucture_ids','=', True)]}"/>
+                            </div>
+    
+                            <label for="si_autre_pour_personnel" colspan="4" attrs="{'invisible': [('related_vsb_si_autre_pour_personnel','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_si_autre_pour_personnel" invisible="1"  />
+                                <field name="related_rqr_si_autre_pour_personnel" invisible="1"  />
+                                <field name="si_autre_pour_personnel" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_autre_pour_personnel', '=', False)], 'required':[('related_rqr_si_autre_pour_personnel','=', True)]}" />
+                            </div>
+    
+                            <label for="si_autre_pour_organisation" colspan="4" attrs="{'invisible': [('related_vsb_si_autre_pour_organisation','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_si_autre_pour_organisation" invisible="1"  />
+                                <field name="related_rqr_si_autre_pour_organisation" invisible="1"  />
+                                <field name="si_autre_pour_organisation" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_autre_pour_organisation', '=', False)], 'required':[('related_rqr_si_autre_pour_organisation','=', True)]}" />
+                            </div>
+    
+                            <label for="nb_jours_interuption_travail" colspan="4" attrs="{'invisible': [('related_vsb_nb_jours_interuption_travail','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_nb_jours_interuption_travail" invisible="1"  />
+                                <field name="related_rqr_nb_jours_interuption_travail" invisible="1"  />
+                                <field name="nb_jours_interuption_travail" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_nb_jours_interuption_travail', '=', False)], 'required':[('related_rqr_nb_jours_interuption_travail','=', True)]}" />
+                            </div>
+                        </group>
+                        
+                        <group string="Autres informations" 
+                            attrs="{'invisible': [
+                                ('related_vsb_fait_deja_produit','=',False),
+                                ('related_vsb_eig_deja_declare','=',False),
+                                ('related_vsb_risque_reproductibilite','=',False),
+                                ('related_vsb_risque_extension','=',False),
+                                ('related_vsb_risque_contentieux','=',False),
+                                ('related_vsb_evenement_semble_maitrise','=',False),
+                                ('related_vsb_si_non_maitrise_precisez','=',False),
+
+                                ('related_vsb_maltraitance_fait_constate','=',False),
+                                ('related_vsb_sont_ils_frequent','=',False),
+                                ('related_vsb_problematique_familiale_reperee','=',False),
+                                ('related_vsb_objet_information_preoccupante','=',False),
+                                ('related_vsb_objet_signalement_justice','=',False),
+                                ('related_vsb_mesure_protection_enfance','=',False)
+                            ]}">
+                            <label for="fait_deja_produit" colspan="4" attrs="{'invisible': [('related_vsb_fait_deja_produit','=',False)]}" />
+                            <div>
+                                <field name="related_vsb_fait_deja_produit" invisible="1"  />
+                                <field name="related_rqr_fait_deja_produit" invisible="1"  />
+                                <field name="fait_deja_produit" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_fait_deja_produit', '=', False)], 'required':[('related_rqr_fait_deja_produit','=', True)]}" />
+                            </div>
+                            <label for="eig_deja_declare" colspan="4" attrs="{'invisible': [('related_vsb_eig_deja_declare','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_eig_deja_declare" invisible="1"  />
+                                <field name="related_rqr_eig_deja_declare" invisible="1"  />
+                                <field name="eig_deja_declare" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_eig_deja_declare', '=', False)], 'required':[('related_rqr_eig_deja_declare','=', True)]}"/>
+                            </div>
+    
+                            <label for="risque_reproductibilite" colspan="4" attrs="{'invisible': [('related_vsb_risque_reproductibilite','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_risque_reproductibilite" invisible="1"  />
+                                <field name="related_rqr_risque_reproductibilite" invisible="1"  />
+                                <field name="risque_reproductibilite" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_reproductibilite', '=', False)], 'required':[('related_rqr_risque_reproductibilite','=', True)]}"/>
+                            </div>
+    
+                            <label for="risque_extension" colspan="4" attrs="{'invisible': [('related_vsb_risque_extension','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_risque_extension" invisible="1"  />
+                                <field name="related_rqr_risque_extension" invisible="1"  />
+                                <field name="risque_extension" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_extension', '=', False)], 'required':[('related_rqr_risque_extension','=', True)]}" />
+                            </div>
+    
+                            <label for="risque_contentieux" colspan="4" attrs="{'invisible': [('related_vsb_risque_contentieux','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_risque_contentieux" invisible="1"  />
+                                <field name="related_rqr_risque_contentieux" invisible="1"  />
+                                <field name="risque_contentieux" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_risque_contentieux', '=', False)], 'required':[('related_rqr_risque_contentieux','=', True)]}" />
+                            </div>
+    
+                            <label for="evenement_semble_maitrise" colspan="4" attrs="{'invisible': [('related_vsb_evenement_semble_maitrise','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_evenement_semble_maitrise" invisible="1"  />
+                                <field name="related_rqr_evenement_semble_maitrise" invisible="1"  />
+                                <field name="evenement_semble_maitrise" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_evenement_semble_maitrise', '=', False)], 'required':[('related_rqr_evenement_semble_maitrise','=', True)]}" />
+                            </div>
+    
+                            <label for="si_non_maitrise_precisez" colspan="4" attrs="{'invisible': [('related_vsb_si_non_maitrise_precisez','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_si_non_maitrise_precisez" invisible="1"  />
+                                <field name="related_rqr_si_non_maitrise_precisez" invisible="1"  />
+                                <field name="si_non_maitrise_precisez" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_si_non_maitrise_precisez', '=', False)], 'required':[('related_rqr_si_non_maitrise_precisez','=', True)]}" />
+                            </div>
+                            <label for="maltraitance_fait_constate" colspan="4" attrs="{'invisible': [('related_vsb_maltraitance_fait_constate','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_maltraitance_fait_constate" invisible="1"  />
+                                <field name="related_rqr_maltraitance_fait_constate" invisible="1"  />
+                                <field name="maltraitance_fait_constate" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_maltraitance_fait_constate', '=', False)], 'required':[('related_rqr_maltraitance_fait_constate','=', True)]}" />
+                            </div>
+                            <label for="sont_ils_frequent" colspan="4" attrs="{'invisible': [('related_vsb_sont_ils_frequent','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_sont_ils_frequent" invisible="1"  />
+                                <field name="related_rqr_sont_ils_frequent" invisible="1"  />
+                                <field name="sont_ils_frequent" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_sont_ils_frequent', '=', False)], 'required':[('related_rqr_sont_ils_frequent','=', True)]}" />
+                            </div>
+                            <label for="problematique_familiale_reperee" colspan="4" attrs="{'invisible': [('related_vsb_problematique_familiale_reperee','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_problematique_familiale_reperee" invisible="1"  />
+                                <field name="related_rqr_problematique_familiale_reperee" invisible="1"  />
+                                <field name="problematique_familiale_reperee" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_problematique_familiale_reperee', '=', False)], 'required':[('related_rqr_problematique_familiale_reperee','=', True)]}" />
+                            </div>
+                            <label for="objet_information_preoccupante" colspan="4" attrs="{'invisible': [('related_vsb_objet_information_preoccupante','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_objet_information_preoccupante" invisible="1"  />
+                                <field name="related_rqr_objet_information_preoccupante" invisible="1"  />
+                                <field name="objet_information_preoccupante" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_objet_information_preoccupante', '=', False)], 'required':[('related_rqr_objet_information_preoccupante','=', True)]}" />
+                            </div>
+                            <label for="objet_signalement_justice" colspan="4" attrs="{'invisible': [('related_vsb_objet_signalement_justice','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_objet_signalement_justice" invisible="1"  />
+                                <field name="related_rqr_objet_signalement_justice" invisible="1"  />
+                                <field name="objet_signalement_justice" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_objet_signalement_justice', '=', False)], 'required':[('related_rqr_objet_signalement_justice','=', True)]}" />
+                            </div>
+                            <label for="mesure_protection_enfance" colspan="4" attrs="{'invisible': [('related_vsb_mesure_protection_enfance','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_mesure_protection_enfance" invisible="1"  />
+                                <field name="related_rqr_mesure_protection_enfance" invisible="1"  />
+                                <field name="mesure_protection_enfance" colspan="4" nolabel="1" attrs="{'invisible': [('related_vsb_mesure_protection_enfance', '=', False)], 'required':[('related_rqr_mesure_protection_enfance','=', True)]}" />
+                            </div>
+                        </group>
                     </page>
                     <page string="Auteurs" attrs="{'invisible': [('related_onglet_auteurs','=',False)]}">
                         <field name="related_aut_vsb_identifie"  invisible="1"  />
@@ -986,18 +1033,25 @@
                             <field name="related_vict_rqr_disposition_id"   invisible="1" />
                             <field name="related_vict_vsb_consequence_id"  invisible="1" />
                             <field name="related_vict_rqr_consequence_id"  invisible="1"  />
+
                             <field name="related_vict_vsb_nom_pere"   invisible="1" />
                             <field name="related_vict_rqr_nom_pere"  invisible="1"  />
                             <field name="related_vict_vsb_prenom_pere"  invisible="1" />
                             <field name="related_vict_rqr_prenom_pere"  invisible="1"  />
                             <field name="related_vict_vsb_address_pere" invisible="1"  />
-                            <field name="related_vict_rqr_address_pere"  invisible="1" />
+                            <field name="related_vict_rqr_address_pere" invisible="1" />
+                            <field name="related_vict_vsb_autorite_parentale_pere" invisible="1"  />
+                            <field name="related_vict_rqr_autorite_parentale_pere" invisible="1" />
+
                             <field name="related_vict_vsb_nom_mere" invisible="1"  />
                             <field name="related_vict_rqr_nom_mere"  invisible="1"  />
                             <field name="related_vict_vsb_prenom_mere"  invisible="1" />
-                            <field name="related_vict_rqr_prenom_mere"   invisible="1" />
+                            <field name="related_vict_rqr_prenom_mere"  invisible="1" />
                             <field name="related_vict_vsb_address_mere" invisible="1"  />
-                            <field name="related_vict_rqr_address_mere"  invisible="1"  />
+                            <field name="related_vict_rqr_address_mere" invisible="1"  />
+                            <field name="related_vict_vsb_autorite_parentale_mere" invisible="1"  />
+                            <field name="related_vict_rqr_autorite_parentale_mere" invisible="1"  />
+
                             <field name="related_vict_vsb_auteur_victime" invisible="1"  />
                             <field name="related_vict_rqr_auteur_victime"  invisible="1"  />
                             <field name="related_vict_vsb_tuteur_nom" invisible="1"  />
@@ -1029,18 +1083,25 @@
                                     'default_related_rqr_qualite_id': related_vict_rqr_qualite_id,
                                     'default_related_vsb_consequence_id': related_vict_vsb_consequence_id, 
                                     'default_related_rqr_consequence_id': related_vict_rqr_consequence_id,
+
                                     'default_related_vsb_nom_pere': related_vict_vsb_nom_pere, 
                                     'default_related_rqr_nom_pere': related_vict_rqr_nom_pere,
-                                    'default_related_vsb_nom_mere': related_vict_vsb_nom_mere, 
-                                    'default_related_rqr_nom_mere': related_vict_rqr_nom_mere,
                                     'default_related_vsb_prenom_pere': related_vict_vsb_prenom_pere, 
                                     'default_related_rqr_prenom_pere': related_vict_rqr_prenom_pere,
-                                    'default_related_vsb_prenom_mere': related_vict_vsb_prenom_mere, 
-                                    'default_related_rqr_prenom_mere': related_vict_rqr_prenom_mere,
                                     'default_related_vsb_address_pere': related_vict_vsb_address_pere, 
                                     'default_related_rqr_address_pere': related_vict_rqr_address_pere,
+                                    'default_related_vsb_autorite_parentale_pere': related_vict_vsb_autorite_parentale_pere, 
+                                    'default_related_rqr_autorite_parentale_pere': related_vict_rqr_autorite_parentale_pere,
+
+                                    'default_related_vsb_nom_mere': related_vict_vsb_nom_mere, 
+                                    'default_related_rqr_nom_mere': related_vict_rqr_nom_mere,
+                                    'default_related_vsb_prenom_mere': related_vict_vsb_prenom_mere, 
+                                    'default_related_rqr_prenom_mere': related_vict_rqr_prenom_mere,
                                     'default_related_vsb_address_mere': related_vict_vsb_address_mere, 
                                     'default_related_rqr_address_mere': related_vict_rqr_address_mere,
+                                    'default_related_vsb_autorite_parentale_mere': related_vict_vsb_autorite_parentale_mere, 
+                                    'default_related_rqr_autorite_parentale_mere': related_vict_rqr_autorite_parentale_mere,
+
                                     'default_related_vsb_auteur_victime': related_vict_vsb_auteur_victime,
                                     'default_related_rqr_auteur_victime': related_vict_rqr_auteur_victime,
                                     'default_related_vsb_tuteur_nom': related_vict_vsb_tuteur_nom,
@@ -1096,6 +1157,9 @@
                                     <field name="related_vsb_address_pere" invisible="1"  />
                                     <field name="related_rqr_address_pere" invisible="1"  />
                                     <field name="address_pere" attrs="{'invisible': [('related_vsb_address_pere', '=', False)], 'required':[('related_rqr_address_pere','=', True)]}"/>
+                                    <field name="related_vsb_autorite_parentale_pere" invisible="1"  />
+                                    <field name="related_rqr_autorite_parentale_pere" invisible="1"  />
+                                    <field name="autorite_parentale_pere" attrs="{'invisible': [('related_vsb_autorite_parentale_pere', '=', False)], 'required':[('related_rqr_autorite_parentale_pere','=', True)]}"/>
                                 </group>
                                 <group string="Mère">
                                     <field name="related_vsb_nom_mere"  invisible="1" />
@@ -1107,6 +1171,9 @@
                                     <field name="related_vsb_address_mere"  invisible="1" />
                                     <field name="related_rqr_address_mere"  invisible="1" />
                                     <field name="address_mere" attrs="{'invisible': [('related_vsb_address_mere', '=', False)], 'required':[('related_rqr_address_mere','=', True)]}"/>
+                                    <field name="related_vsb_autorite_parentale_mere" invisible="1"  />
+                                    <field name="related_rqr_autorite_parentale_mere" invisible="1"  />
+                                    <field name="autorite_parentale_mere" attrs="{'invisible': [('related_vsb_autorite_parentale_mere', '=', False)], 'required':[('related_rqr_autorite_parentale_mere','=', True)]}"/>
                                     <field name="is_eig_id" invisible="1"/>
                                 </group>
                                 </group>
@@ -1534,49 +1601,49 @@
         </record>
 
         <!-- EIG Rédaction -->
-	    <record id="is_ove_eig_draft_action" model="ir.actions.act_window">
-	        <field name="name">Rédaction</field>
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">is.eig</field>
-	        <field name="domain">[('state', '=', 'draft')]</field>
-	        <field name="view_mode">tree,form</field>
-	    </record>
+        <record id="is_ove_eig_draft_action" model="ir.actions.act_window">
+            <field name="name">Rédaction</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-	    <!-- EIG Rédigé -->
-	    <record id="is_ove_eig_redige_action" model="ir.actions.act_window">
-	        <field name="name">Rédigé</field>
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">is.eig</field>
-	        <field name="domain">[('state', '=', 'redige')]</field>
-	        <field name="view_mode">tree,form</field>
-	    </record>
+        <!-- EIG Rédigé -->
+        <record id="is_ove_eig_redige_action" model="ir.actions.act_window">
+            <field name="name">Rédigé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="domain">[('state', '=', 'redige')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-	    <!-- EIG  -->
-	    <record id="is_ove_eig_valide_action" model="ir.actions.act_window">
-	        <field name="name">Validé</field>
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">is.eig</field>
-	        <field name="domain">[('state', '=', 'valide')]</field>
-	        <field name="view_mode">tree,form</field>
-	    </record>
+        <!-- EIG  -->
+        <record id="is_ove_eig_valide_action" model="ir.actions.act_window">
+            <field name="name">Validé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="domain">[('state', '=', 'valide')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-	    <!-- EIG A compléter -->
-	    <record id="is_ove_eig_complet_action" model="ir.actions.act_window">
-	        <field name="name">A compléter</field>
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">is.eig</field>
-	        <field name="domain">[('state', '=', 'complet')]</field>
-	        <field name="view_mode">tree,form</field>
-	    </record>
+        <!-- EIG A compléter -->
+        <record id="is_ove_eig_complet_action" model="ir.actions.act_window">
+            <field name="name">A compléter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="domain">[('state', '=', 'complet')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-	    <!-- EIG Traité -->
-	    <record id="is_ove_eig_done_action" model="ir.actions.act_window">
-	        <field name="name">Traité</field>
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">is.eig</field>
-	        <field name="domain">[('state', '=', 'done')]</field>
-	        <field name="view_mode">tree,form</field>
-	    </record>
+        <!-- EIG Traité -->
+        <record id="is_ove_eig_done_action" model="ir.actions.act_window">
+            <field name="name">Traité</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.eig</field>
+            <field name="domain">[('state', '=', 'done')]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <!--  Nature Evenement  -->
         <record model="ir.ui.view" id="is_nature_evenement_tree_view">
@@ -1595,15 +1662,15 @@
             <field name="name">is.nature.evenement.form</field>
             <field name="model">is.nature.evenement</field>
             <field name="arch" type="xml">
-	            <form string="Nature Evènement">
-	                <sheet>
-	                    <group>
-	                        <field name="name"/>
+                <form string="Nature Evènement">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
                             <field name="ordre"/>
-	                        <field name="code"/>
-	                    </group>
-	                </sheet>
-	            </form>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
         
@@ -1641,10 +1708,10 @@
             <field name="arch" type="xml">
             <form string="Destinataire">
                 <sheet>
-					<group>
-					   <field name="name"/>
-					</group>
-				</sheet>
+                    <group>
+                       <field name="name"/>
+                    </group>
+                </sheet>
             </form>
             </field>
         </record>
@@ -1734,10 +1801,10 @@
             <field name="arch" type="xml">
             <form string="Conséquence">
                 <sheet>
-	                <group>
-	                    <field name="name"/>
-	                </group>
-	            </sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
             </form>
             </field>
         </record>
