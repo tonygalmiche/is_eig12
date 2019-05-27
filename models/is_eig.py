@@ -1368,36 +1368,78 @@ class is_eig(models.Model):
 
 
             #** Recherche des destinataires des mails **************************
-            autorite_controle = 'ars'
-            mail_destination  = 'toto@free.fr'
-            trame_id          = 1
-            mail_template_id  = 14
-            vals={
-                'is_eig_id'        : rec.id,
-                'autorite_controle': autorite_controle,
-                'mail_destination' : mail_destination,
-                'trame_id'         : trame_id,
-                'mail_template_id' : mail_template_id,
-            }
-            destinataire = self.env['is.eig.destinataire'].create(vals)
-            print(vals,destinataire)
-            #*******************************************************************
+            autorite_controle = rec.etablissement_id.autorite_controle
+            if not autorite_controle:
+                raise UserError(u"Autorité de contrôle non trouvée pour cet établissement !")
+            destination = False
+            for line in rec.type_event_id.mail_destination_ids:
+                if line.autorite_controle == autorite_controle:
+                    destination = line.mail_destination
+            if not destination:
+                raise UserError(u"Mail de destination non renseigné pour l'autorité de contrôle "+autorite_controle+" et pour ce type d'événement !")
 
+            #    ('ars'      , 'ARS'),
+            #    ('cd_se'    , 'CD pour SE'),
+            #    ('cd_ip'    , 'CD pour IP'),
+            #    ('ars_cd_se', 'ARS + CD pour SE'),
+            #    ('drdjscs'  , 'DRDJSCS'),
+            departement = rec.etablissement_id.departement_id
+            mails  = []
+            if destination == 'ars':
+                mails.append(departement.mail_ars)
+            if destination == 'cd_se':
+                mails.append(departement.mail_cd_se)
+            if destination == 'cd_ip':
+                mails.append(departement.mail_cd_ip)
+            if destination == 'ars_cd_se':
+                mails.append(departement.mail_ars)
+                mails.append(departement.mail_cd_se)
+            if destination == 'drdjscs':
+                mails.append(departement.mail_drdjscs)
 
-            #** Recherche des modeles associés au département ******************
-            for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:
-                for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-            for attch in rec.etablissement_id.departement_id.trame_se_cd_id.attachment_ids:
-                for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-            for attch in rec.etablissement_id.departement_id.trame_sea_id.attachment_ids:
-                for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-            for attch in rec.etablissement_id.departement_id.trame_ip_id.attachment_ids:
-                for l in attch.read(['name','datas']):
-                    rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-            #*******************************************************************
+            #    trame_se_ars_id = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour ARS")
+            #    trame_se_cd_id  = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour CD")
+            #    trame_sea_id    = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle pour public Adulte AMI/CHU (SEA)")
+            #    trame_ip_id     = fields.Many2one('is.trame', string=u"Modèle ODT Information préoccupante (IP)")
+
+            trame_id = False
+            if rec.type_event_id.code == "SE" and (destination == 'ars' or destination == 'ars_cd_se'):
+                trame_id = departement.trame_se_ars_id
+            if rec.type_event_id.code == "SE" and destination == 'cd_se':
+                trame_id = departement.trame_se_cd_id
+            if rec.type_event_id.code == "SEA":
+                trame_id = departement.trame_sea_id
+            if rec.type_event_id.code == "IP":
+                trame_id = departement.trame_ip_id
+
+            for mail_destination in mails:
+                mail_template_id  = False # TODO : Reste à faire
+                vals={
+                    'is_eig_id'        : rec.id,
+                    'autorite_controle': autorite_controle,
+                    'mail_destination' : mail_destination,
+                    'trame_id'         : trame_id.id,
+                    'mail_template_id' : mail_template_id,
+                }
+                destinataire = self.env['is.eig.destinataire'].create(vals)
+                for attch in trame_id.attachment_ids:
+                    for l in attch.read(['name','datas']):
+                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+
+#                #** Recherche des modeles associés au département ******************
+#                for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:
+#                    for l in attch.read(['name','datas']):
+#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+#                for attch in rec.etablissement_id.departement_id.trame_se_cd_id.attachment_ids:
+#                    for l in attch.read(['name','datas']):
+#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+#                for attch in rec.etablissement_id.departement_id.trame_sea_id.attachment_ids:
+#                    for l in attch.read(['name','datas']):
+#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+#                for attch in rec.etablissement_id.departement_id.trame_ip_id.attachment_ids:
+#                    for l in attch.read(['name','datas']):
+#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+#                #*******************************************************************
 
 
 
