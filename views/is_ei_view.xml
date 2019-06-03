@@ -30,7 +30,7 @@
                         </group>
                         <group>
                             <group string="Evènement">
-                                <field name="type_event_id"  />
+                                <!--<field name="type_event_id"/>-->
                                 <field name="nature_event_id" />
                             </group>
                         </group>
@@ -39,7 +39,7 @@
                                 <group col="2" colspan="4">
                                     <field name="date_faits"/>
                                     <field name="date_constatation_faits"/>
-                                    <field name="consequence_faits"/>
+                                    <!--<field name="consequence_faits"/>-->
                                     <field name="lieu_faits" />
                                     <field name="description_faits"/>
                                     <field name="evenement_survenu"/>
@@ -72,6 +72,7 @@
                                     </tree>
                                 </field>
                             </page>
+                            <!--
                             <page string="Mesures d'accompagnement" >
                                 <group col="2" colspan="4">
                                     <field name="mesure_immediat" />
@@ -79,6 +80,7 @@
                                     <field name="mesure_amelioration" />
                                 </group>
                             </page>
+                            -->
                             <!-- <page string="Information communication">
                                 <group col="2" colspan="4">
                                     <field name="info_date" />
@@ -86,6 +88,37 @@
                                     <field name="auteur_id" />
                                 </group>
                             </page> -->
+                            <page string="Analyse - Mesures prises et envisagées" >
+                                <group col="2" colspan="4" string="Action(s) immédiate(s) entreprise(s)">
+                                    <label string="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" for="pour_proteger" colspan="4" />
+                                    <field name="pour_proteger" placeholder="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" colspan="4" nolabel="1" />
+                                    <label string="Pour assurer la continuité de la prise en charge, le cas échéant" for="pour_assurer" colspan="4" />
+                                    <field name="pour_assurer" placeholder="Pour assurer la continuité de la prise en charge, le cas échéant" colspan="4" nolabel="1" />
+                                    <label string="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" for="legard" colspan="4" />
+                                    <field name="legard" placeholder="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" colspan="4" nolabel="1" />
+                                    <label string="Autre (à préciser)" for="autre_preciser" colspan="4" />
+                                    <field name="autre_preciser" placeholder="Autre (à préciser)" colspan="4" nolabel="1" />
+                                </group>
+                                <group col="2" colspan="4" string="Analyse">
+                                    <label string="Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue ?" for="une_recherche" colspan="4" />
+                                    <field name="une_recherche" colspan="4" nolabel="1" />
+                                    <label string="Cause(s) identifiée(s)" for="cause_identifiee" colspan="4" />
+                                    <field name="cause_identifiee" placeholder="Cause(s) identifiée(s)" colspan="4" nolabel="1" />
+                                    <label string="Proposition d’actions d’amélioration" for="proposition" colspan="4" />
+                                    <field name="proposition" placeholder="Proposition d’actions d’amélioration" colspan="4" nolabel="1" />
+                                </group>
+                                <group col="2" colspan="4" string="Action(s) d’amélioration planifiée(s)">
+                                    <label string="Concernant les usagers ou les résidents" for="concernant_les" colspan="4" />
+                                    <field name="concernant_les" placeholder="Concernant les usagers ou les résidents " colspan="4" nolabel="1" />
+                                    <label string="Concernant le personnel" for="concernant_personnel" colspan="4" />
+                                    <field name="concernant_personnel" placeholder="Concernant le personnel" colspan="4" nolabel="1" />
+                                    <label string="Concernant l’organisation du travail" for="concernant_travail" colspan="4" />
+                                    <field name="concernant_travail" placeholder="Concernant l’organisation du travail" colspan="4" nolabel="1" />
+                                    <label string="Concernant la structure" for="concernant_structure" colspan="4" />
+                                    <field name="concernant_structure" placeholder="Concernant la structure" colspan="4" nolabel="1" />
+                                </group>
+                            </page>
+
                             <page string="Eléments complémentaire">
                                 <group string="Motifs de retour">
                                     <field name="motif_ids" nolabel="1">
@@ -101,36 +134,9 @@
                                     <field name="attachment_ids" widget="many2many_binary" />
                                 </group>
                             </page>
-                            <page string="Analyse - Mesures prises et envisagées" >
-                                <group col="2" colspan="4" string="Action(s) immédiate(s) entreprise(s)">
-                                    <label string="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" for="pour_proteger" colspan="4" />
-                                    <field name="pour_proteger" placeholder="Pour protéger, accompagner ou soutenir les personnes victimes ou exposées" colspan="4" nolabel="1" />
-                                    <label string="Pour assurer la continuité de la prise en charge, le cas échéant" for="pour_assurer" colspan="4" />
-                                    <field name="pour_assurer" placeholder="Pour assurer la continuité de la prise en charge, le cas échéant" colspan="4" nolabel="1" />
-                                    <label string="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" for="legard" colspan="4" />
-                                    <field name="legard" placeholder="A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)" colspan="4" nolabel="1" />
-                                    <label string="Autre (à préciser)" for="autre_preciser" colspan="4" />
-                                    <field name="autre_preciser" placeholder="Autre (à préciser)" colspan="4" nolabel="1" />
-                                </group>
-                                <group col="2" colspan="4" string="Proposition d’actions d’amélioration">
-                                    <label string="Proposition d’actions d’amélioration" for="proposition" colspan="4" />
-                                    <field name="proposition" placeholder="Proposition d’actions d’amélioration" colspan="4" nolabel="1" />
-                                    <label string="Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue ?" for="une_recherche" colspan="4" />
-                                    <field name="une_recherche" colspan="4" nolabel="1" />
-                                    <label string="Cause(s) identifiée(s)" for="cause_identifiee" colspan="4" />
-                                    <field name="cause_identifiee" placeholder="Cause(s) identifiée(s)" colspan="4" nolabel="1" />
-                                </group>
-                                <group col="2" colspan="4" string="Action(s) d’amélioration planifiée(s)">
-                                    <label string="Concernant les usagers ou les résidents" for="concernant_les" colspan="4" />
-                                    <field name="concernant_les" placeholder="Concernant les usagers ou les résidents " colspan="4" nolabel="1" />
-                                    <label string="Concernant le personnel" for="concernant_personnel" colspan="4" />
-                                    <field name="concernant_personnel" placeholder="Concernant le personnel" colspan="4" nolabel="1" />
-                                    <label string="Concernant l’organisation du travail" for="concernant_travail" colspan="4" />
-                                    <field name="concernant_travail" placeholder="Concernant l’organisation du travail" colspan="4" nolabel="1" />
-                                    <label string="Concernant la structure" for="concernant_structure" colspan="4" />
-                                    <field name="concernant_structure" placeholder="Concernant la structure" colspan="4" nolabel="1" />
-                                </group>
-                            </page>
+
+
+
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">
@@ -150,10 +156,10 @@
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
                     <field name="valideur_id"/>
-                    <field name="type_event_id"/>
+                    <!--<field name="type_event_id"/>-->
                     <field name="nature_event_id"/>
                     <field name="description_faits"/>
-                    <field name="consequence_faits"/>
+                    <!--<field name="consequence_faits"/>-->
                     <field name="lieu_faits"/>
                     <field name="state"/>
                 </search>
@@ -170,17 +176,17 @@
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
                     <field name="valideur_id"/>
-                    <field name="type_event_id"/>
+                    <!--<field name="type_event_id"/>-->
                     <field name="nature_event_id"/>
                     <field name="date_faits"/>
-                    <field name="consequence_faits"/>
+                    <!--<field name="consequence_faits"/>-->
                     <field name="lieu_faits"/>
                     <field name="state"/>
                 </tree>
             </field>
         </record>
         <record id="is_ei_tous_action" model="ir.actions.act_window">
-            <field name="name">Tous les Incidents</field>
+            <field name="name">Tous les Évènements Indésirables</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.ei</field>
             <field name="view_id" ref="is_ei_tous_tree_view"/>
@@ -197,10 +203,10 @@
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
                     <field name="valideur_id"/>
-                    <field name="type_event_id"/>
+                    <!--<field name="type_event_id"/>-->
                     <field name="nature_event_id"/>
                     <field name="date_faits"/>
-                    <field name="consequence_faits"/>
+                    <!--<field name="consequence_faits"/>-->
                     <field name="lieu_faits"/>
                     <field name="state"/>
                 </tree>
@@ -225,10 +231,10 @@
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
                     <field name="valideur_id"/>
-                    <field name="type_event_id"/>
+                    <!--<field name="type_event_id"/>-->
                     <field name="nature_event_id"/>
                     <field name="date_faits"/>
-                    <field name="consequence_faits"/>
+                    <!--<field name="consequence_faits"/>-->
                     <field name="lieu_faits"/>
                     <field name="state"/>
                 </tree>
@@ -253,10 +259,10 @@
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
                     <field name="valideur_id"/>
-                    <field name="type_event_id"/>
+                    <!--<field name="type_event_id"/>-->
                     <field name="nature_event_id"/>
                     <field name="date_faits"/>
-                    <field name="consequence_faits"/>
+                    <!--<field name="consequence_faits"/>-->
                     <field name="lieu_faits"/>
                 </tree>
             </field>
@@ -271,6 +277,7 @@
         </record>
 
         <!--  TYPE EVENEMENT -->
+        <!--
         <record model="ir.ui.view" id="is_type_evenemen_ei_tree_view">
             <field name="name">is.type.evenemen.ei.tree</field>
             <field name="model">is.type.evenement.ei</field>
@@ -299,6 +306,7 @@
             <field name="res_model">is.type.evenement.ei</field>
             <field name="view_mode">tree,form</field>
         </record>
+        -->
 
         <!--  Nature Evenement  -->
         <record model="ir.ui.view" id="is_nature_evenement_ei_tree_view">

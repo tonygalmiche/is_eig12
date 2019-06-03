@@ -13,21 +13,22 @@ class is_ei(models.Model):
     etablissement_id        = fields.Many2one('is.etablissement', u'Établissement', required=True)
     redacteur_id            = fields.Many2one('res.users', u'Rédacteur', readonly=True, required=True, default=lambda self: self.env.uid)
     valideur_id             = fields.Many2one('res.users', 'Valideur')
-    type_event_id           = fields.Many2one('is.type.evenement.ei', u"Type d'événement", required=True)
+    #type_event_id           = fields.Many2one('is.type.evenement.ei', u"Type d'événement", required=True)
     nature_event_id         = fields.Many2one('is.nature.evenement.ei', u"Nature d'événement", required=True)
     date_faits              = fields.Datetime('Date/heure', required=True)
     date_constatation_faits = fields.Datetime('Date / Heure de la constatation des faits')
     description_faits       = fields.Text('Description des faits', required=True)
-    evenement_survenu       = fields.Selection([('oui', 'oui'),
-                              ('non', 'non'),
-                              ('ne_sait', 'ne sait')], u'Evénement déjà survenu')
+    evenement_survenu       = fields.Selection([
+            ('oui', 'oui'),
+            ('non', 'non'),
+            ('ne_sait_pas', 'ne sait pas')], u'Evénement déjà survenu')
     consequences            = fields.Text(u'Conséquences')
-    consequence_faits       = fields.Text(u'Conséquences Faits', required=True)
+#    consequence_faits       = fields.Text(u'Conséquences Faits', required=True)
     lieu_faits              = fields.Char('Lieu', required=True)
     victime_ids             = fields.One2many('is.victime.ei', 'ei_id', 'Victime')
-    mesure_immediat         = fields.Text(u'Mesures immédiates', required=True)
-    mesure_amelioration     = fields.Text(u"mesures d'amélioration éventuelles", required=True)
-    mesure_autre            = fields.Text('Autres', required=True)
+#    mesure_immediat         = fields.Text(u'Mesures immédiates', required=True)
+#    mesure_amelioration     = fields.Text(u"mesures d'amélioration éventuelles", required=True)
+#    mesure_autre            = fields.Text('Autres', required=True)
 #     info_date = fields.Datetime('Date/heure')
 #     destinataire_id = fields.Many2one('is.destinataire', 'Destinataire', required=True)
 #     auteur_id = fields.Many2one('res.users', 'Auteur (responsable de la diffusion)')
@@ -150,11 +151,11 @@ class is_ei(models.Model):
          }
 
 
-class is_type_evenement_ei(models.Model):
-    _name = 'is.type.evenement.ei'
-    _description = u"Type d'évènement"
+#class is_type_evenement_ei(models.Model):
+#    _name = 'is.type.evenement.ei'
+#    _description = u"Type d'évènement"
 
-    name = fields.Char(u"Type d'évènement", required=True)
+#    name = fields.Char(u"Type d'évènement", required=True)
 
 
 class is_nature_evenement_ei(models.Model):
