@@ -1158,6 +1158,18 @@ class is_eig(models.Model):
             data.generation_document("ODT")
         return True
 
+
+    @api.multi
+    def victime_identifiee(self):
+        r="☐"
+        for obj in self:
+            for v in obj.victim_ids:
+                if v.name:
+                    print('name=',obj.name)
+                    r="☑"
+        return r
+
+
     @api.multi
     def nature(self, val):
         if type(val)==int:

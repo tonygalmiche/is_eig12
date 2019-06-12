@@ -982,9 +982,11 @@
                                     'default_related_rqr_qualite_id': related_aut_rqr_qualite_id}" >
                             <form string="Auteurs">
                                 <group col="2" colspan="4">
+                                    <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
                                     <field name="related_rqr_identifie" invisible="1"  />
                                     <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    -->
                                     <field name="related_vsb_name" invisible="1"  />
                                     <field name="related_rqr_name" invisible="1"  />
                                     <field name="name"  attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
@@ -1010,7 +1012,6 @@
                                 </group>
                             </form>
                             <tree string="Auteurs">
-                                <field name="identifie"/>
                                 <field name="name" />
                                 <field name="prenom"  />
                                 <field name="sexe_id"  />
@@ -1058,9 +1059,11 @@
                                 'default_related_rqr_qualite_id': related_tem_rqr_qualite_id }">
                             <form string="Témoins">
                                 <group col="2" colspan="4">
+                                    <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
                                     <field name="related_rqr_identifie" invisible="1"  />
                                     <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    -->
                                     <field name="related_vsb_name" invisible="1"  />
                                     <field name="related_rqr_name" invisible="1"  />
                                     <field name="name"  attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
@@ -1086,7 +1089,6 @@
                                 </group>
                             </form>
                             <tree string="Témoins">
-                                <field name="identifie"/>
                                 <field name="name"/>
                                 <field name="prenom" />
                                 <field name="sexe_id" />
@@ -1196,9 +1198,11 @@
                                 }" >
                             <form string="Victimes">
                                 <group col="2" colspan="4">
+                                    <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
                                     <field name="related_rqr_identifie" invisible="1"  />
                                     <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    -->
                                     <field name="related_vsb_name" invisible="1"  />
                                     <field name="related_rqr_name" invisible="1"  />
                                     <field name="name" attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
@@ -1286,7 +1290,6 @@
                                 -->
                             </form>
                             <tree string="Victimes">
-                                <field name="identifie"/>
                                 <field name="name"/>
                                 <field name="prenom"/>
                                 <field name="sexe_id"/>
@@ -1404,9 +1407,11 @@
                                     'default_related_rqr_tuteur_adresse': related_vict_rqr_tuteur_adresse,}" >
                             <form string="Personne(s) faisant l’objet de l’IP">
                                 <group col="2" colspan="4">
+                                    <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
                                     <field name="related_rqr_identifie" invisible="1"  />
                                     <field name="identifie"  attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}" />
+                                    -->
                                     <field name="related_vsb_name" invisible="1"  />
                                     <field name="related_rqr_name" invisible="1"  />
                                     <field name="name" attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
@@ -1486,7 +1491,6 @@
                                 </group>
                             </form>
                             <tree string="Personne(s) faisant l’objet de l’IP">
-                                <field name="identifie"/>
                                 <field name="name"/>
                                 <field name="prenom"/>
                                 <field name="sexe_id"/>
@@ -1535,9 +1539,11 @@
                                     }" >
                             <form string="Autre(s) personne(s) concernée(s) par l’IP">
                                 <group col="2" colspan="4">
+                                    <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
                                     <field name="related_rqr_identifie" invisible="1"  />
                                     <field name="identifie" attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}"/>
+                                    -->
                                     <field name="related_vsb_nom" invisible="1"  />
                                     <field name="related_rqr_nom" invisible="1"  />
                                     <field name="nom" attrs="{'invisible': [('related_vsb_nom', '=', False)], 'required':[('related_rqr_nom','=', True)]}"/>
@@ -1559,7 +1565,6 @@
                                 </group>
                             </form>
                             <tree string="Autre(s) personne(s) concernée(s) par l’IP">
-                                <field name="identifie"/>
                                 <field name="nom"/>
                                 <field name="prenom"/>
                                 <field name="qualite_id"/>
