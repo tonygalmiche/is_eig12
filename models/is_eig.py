@@ -1290,6 +1290,16 @@ class is_eig(models.Model):
                 return lig.support or ''
         return ""
 
+
+    @api.multi
+    def f6(self,val):
+        r=0
+        for lig in self.infos_ids:
+            if lig.responsible_id.id == val:
+                r=1
+        return r
+
+
     @api.multi
     def attach_length(self,val):
         return len(val)
