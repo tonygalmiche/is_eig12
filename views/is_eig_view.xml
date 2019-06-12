@@ -1877,6 +1877,14 @@
                                 </tree>
                             </field>
                         </group>
+
+
+                        <group string="Variables pour modèles ODT" groups="is_eig12.group_is_gestionnaire">
+                            <field name="autorite_administrative_informee"/>
+                        </group>
+
+
+
                     </page>
             </notebook>
         </sheet>

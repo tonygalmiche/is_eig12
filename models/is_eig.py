@@ -555,6 +555,24 @@ class is_eig(models.Model):
     _description = u"Événements Indésirables Graves"
     _order = "name desc"
 
+
+    @api.depends('state')
+    def _autorite_administrative_informee(self):
+        for obj in self:
+            print(obj.etablissement_id.autorite_controle)
+            x=[]
+            if obj.signalement_autorites:
+                x.append(u'Signalement au procureur')
+            autorite = obj.etablissement_id.autorite_controle
+            if autorite=='ars' or autorite=='ars_cd':
+                x.append(u'ARS')
+            if autorite=='cd' or autorite=='ars_cd':
+                x.append(u'Président Conseil Départemental')
+            x=u' - '.join(x)
+            obj.autorite_administrative_informee=x
+
+
+
     @api.depends('state','etablissement_id','redacteur_id')
     def _btn_rediger_eig(self):
         for obj in self:
@@ -1844,6 +1862,15 @@ class is_eig(models.Model):
     destinataire_ids = fields.One2many('is.eig.destinataire', 'is_eig_id', u"Destinataires des mails")
 
     #attachment_ids = fields.Many2many('ir.attachment', string='Files')
+
+
+
+    #Variables calculées pour modèles ODT
+    autorite_administrative_informee = fields.Char(u'Autorités administratives informées', compute='_autorite_administrative_informee')
+
+    
+
+
 
 class Item(object):
     pass
