@@ -1301,6 +1301,15 @@ class is_eig(models.Model):
 
 
     @api.multi
+    def f7(self):
+        r=0
+        for lig in self.infos_ids:
+            if lig.impact:
+                r=1
+        return r
+
+
+    @api.multi
     def attach_length(self,val):
         return len(val)
 
