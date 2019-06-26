@@ -509,6 +509,14 @@ class is_infos_communication(models.Model):
     is_eig_id                  = fields.Many2one('is.eig', 'EIG')
 
 
+    @api.multi
+    def f10(self,val):
+        r=0
+        if self.user_id.id == val:
+            r=1
+        return r
+
+
 class is_eig_autre_personne(models.Model):
     _name = 'is.eig.autre.personne'
     _description = u"Autre(s) personne(s) concernée(s) par l’IP"
@@ -1315,6 +1323,15 @@ class is_eig(models.Model):
         for lig in self.infos_ids:
             if lig.responsible_id.id == responsible_id and lig.user_id.id == user_id:
                 r=1
+        return r
+
+
+    #Signalement au procureur
+    @api.multi
+    def f9(self):
+        r=0
+        if self.type_event_id.code=='SE' or self.signalement_autorites:
+            r=1
         return r
 
 
