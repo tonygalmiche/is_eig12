@@ -1310,6 +1310,15 @@ class is_eig(models.Model):
 
 
     @api.multi
+    def f8(self,responsible_id,user_id):
+        r=0
+        for lig in self.infos_ids:
+            if lig.responsible_id.id == responsible_id and lig.user_id.id == user_id:
+                r=1
+        return r
+
+
+    @api.multi
     def attach_length(self,val):
         return len(val)
 
