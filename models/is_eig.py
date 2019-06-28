@@ -550,7 +550,8 @@ class is_eig_destinataire(models.Model):
     _description = u"Destinataires des mails"
 
     autorite_controle = fields.Selection(AutoriteControle, u'Autorité de Contrôle')
-    mail_destination  = fields.Char(u'Mail de destination')
+    destinataire      = fields.Selection(MailDestination, u'Destinataire')
+    mail_destination  = fields.Char(u'Mail de destinataire')
     trame_id          = fields.Many2one('is.trame', u'Modèle ODT')
     mail_template_id  = fields.Many2one('mail.template', u'Modèle du mail')
     attachment_ids    = fields.Many2many('ir.attachment', 'is_eig_destinataire_attachment_rel', 'eig_destinataire_id', 'attachment_id', u'Pièces jointes')
@@ -999,7 +1000,7 @@ class is_eig(models.Model):
     def get_signup_url(self):
         url = False
         for data in self:
-            url = "https://eig.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.eig"
+            url = "https://eig2.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.eig"
         return url
 
     @api.multi
@@ -1099,13 +1100,15 @@ class is_eig(models.Model):
                 # Ajout des pieces jointes de l'onglet 'Elements complémentaire'
                 if doc.attachment_ids:
                     for x in doc.attachment_ids:
-                        attachment_ids.append(x.id)
+                        print('x=',x)
+
+                        #attachment_ids.append(x.id)
                 #Ajout des pièces jointes au modèle
-                template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
+                #template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
                 # Envoi du mail (avec les pièces jointes)
                 template_id.send_mail(doc.id, force_send=True, raise_exception=True)
                 # Suppression des pièces jointes du modèle
-                template_id.write({'attachment_ids': [(6, 0, [])]})
+                #template_id.write({'attachment_ids': [(6, 0, [])]})
             doc.write({
                 'state': 'valide',
             })
@@ -1460,22 +1463,30 @@ class is_eig(models.Model):
             #    ('drdjscs'  , 'DRDJSCS'),
             departement = rec.etablissement_id.departement_id
             mails  = []
-            if destination == 'ars':
-                mails.append(departement.mail_ars)
-            if destination == 'cd_se':
-                mails.append(departement.mail_cd_se)
+            if destination == 'ars' or destination == 'ars_cd_se':
+                if departement.mail_ars:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
+                    mails.append(['ars', departement.mail_ars, mail_template_id])
+                else:
+                    raise UserError(u"Mail ARS non renseigné pour ce département !")
+            if destination == 'cd_se' or destination == 'ars_cd_se':
+                if departement.mail_cd_se:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_cd_se', False)
+                    mails.append(['cd_se', departement.mail_cd_se, mail_template_id])
+                else:
+                    raise UserError(u"Mail CD pour les SE non renseigné pour ce département !")
             if destination == 'cd_ip':
-                mails.append(departement.mail_cd_ip)
-            if destination == 'ars_cd_se':
-                mails.append(departement.mail_ars)
-                mails.append(departement.mail_cd_se)
+                if departement.mail_cd_ip:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_cd_ip', False)
+                    mails.append(['cd_ip', departement.mail_cd_ip, mail_template_id])
+                else:
+                    raise UserError(u"Mail CD pour les IP non renseigné pour ce département !")
             if destination == 'drdjscs':
-                mails.append(departement.mail_drdjscs)
-
-            #    trame_se_ars_id = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour ARS")
-            #    trame_se_cd_id  = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour CD")
-            #    trame_sea_id    = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle pour public Adulte AMI/CHU (SEA)")
-            #    trame_ip_id     = fields.Many2one('is.trame', string=u"Modèle ODT Information préoccupante (IP)")
+                if departement.mail_drdjscs:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_drdjscs', False)
+                    mails.append(['drdjscs', departement.mail_drdjscs, mail_template_id])
+                else:
+                    raise UserError(u"Mail DRDJSCS non renseigné pour ce département !")
 
             trame_id = False
             if rec.type_event_id.code == "SE" and (destination == 'ars' or destination == 'ars_cd_se'):
@@ -1487,19 +1498,27 @@ class is_eig(models.Model):
             if rec.type_event_id.code == "IP":
                 trame_id = departement.trame_ip_id
 
-            for mail_destination in mails:
-                mail_template_id  = False # TODO : Reste à faire
+            if not trame_id:
+                raise UserError(u"Trame non identifée pour ce type d'évènement et ce destinataire !")
+
+            for mail in mails:
                 vals={
                     'is_eig_id'        : rec.id,
                     'autorite_controle': autorite_controle,
-                    'mail_destination' : mail_destination,
-                    'trame_id'         : trame_id.id,
-                    'mail_template_id' : mail_template_id,
+                    'destinataire'     : mail[0],
+                    'mail_destination' : mail[1],
+                    'mail_template_id' : mail[2] and mail[2].id,
+                    'trame_id'         : trame_id and trame_id.id,
                 }
+
+
+                print(vals)
+
                 destinataire = self.env['is.eig.destinataire'].create(vals)
-                for attch in trame_id.attachment_ids:
-                    for l in attch.read(['name','datas']):
-                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
+                if trame_id:
+                    for attch in trame_id.attachment_ids:
+                        for l in attch.read(['name','datas']):
+                            rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
 
 #                #** Recherche des modeles associés au département ******************
 #                for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:

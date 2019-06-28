@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+
+    <!-- Etablissement -->
+   <record id="is_etablissement_access_complet_gestionnaire" model="ir.rule">
+        <field name="name">Établissement - Accès complet au groupe Gestionnaire EIG</field>
+        <field name="model_id" ref="model_is_etablissement"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_is_gestionnaire'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+    <!--
+   <record id="is_etablissement_access_traiteur" model="ir.rule">
+        <field name="name">Établissement - Accès en lecture aux traiteurs</field>
+        <field name="model_id" ref="model_is_etablissement"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_is_traiteur'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+    -->
+    <record id="is_etablissement_access_consultation_membre" model="ir.rule">
+        <field name="name">Établissement - Accès en consultation aux membres de l'établissement</field>
+        <field name="model_id" ref="model_is_etablissement"/>
+        <field name="domain_force">['|', '|', '|',  ( 'director_id', '=', user.id), ( 'responsible_id', '=', user.id), ( 'responsable_ids', 'in', user.id), ( 'membre_ids', 'in', user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+    <!-- EIG -->
+    <record id="is_eig_model_access_read" model="ir.rule">
+        <field name="name">EIG - Accès en consultation au créateur, au valideur, au directeur et au responsable de l'établissement</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">
+            [   '|','|','|',
+                ('redacteur_id', '=', user.id),
+                ('valideur_id', '=', user.id),
+                ('etablissement_id.responsible_id','=',user.id),
+                ('etablissement_id.director_id','=',user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+    <record id="is_eig_model_access_write_redaction" model="ir.rule">
+        <field name="name">EIG[Rédaction] - Accès en modification au créateur, au valideur, au directeur et au responsable de l'établissement</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">
+            [   '&amp;', ('state','=','draft'),
+                '|','|','|',
+                ('redacteur_id', '=', user.id),
+                ('valideur_id', '=', user.id),
+                ('etablissement_id.responsible_id','=',user.id),
+                ('etablissement_id.director_id','=',user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+    <record id="is_eig_model_access_write_redige" model="ir.rule">
+        <field name="name">EIG[Rédigé] - Accès en modification au valideur</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">['&amp;', ('state','=','redige'), ( 'valideur_id', '=', user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+    <record id="is_eig_model_access_write_valide" model="ir.rule">
+        <field name="name">EIG[Validé] - Accès en modification au groupe 'Traiteur des EIG'</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_is_traiteur'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+    <record id="is_eig_model_access_write_complet" model="ir.rule">
+        <field name="name">EIG[A compléter] - Accès en modification au valideur</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">['&amp;', ('state','=','complet'), ( 'valideur_id', '=', user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+
+<!--
+
+
+        'state': fields.selection([('draft', u'Rédaction'),
+                                  ('redige', u'Rédigé'),
+                                  ('valide', u'Validé'),
+                                  ('complet', u'A compléter'),
+                                  ('done', u'Traité')], 'Status', readonly=True, select=True),
+
+
+
+['&', ('state','=','draft'), '|', '|', '|', 
+            ('redacteur_id', '=', user.id), 
+            ('valideur_id', '=', user.id), 
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id) ]
+
+-->
+
+    <!--
+
+
+
+
+
+    <record id="is_ei_model_access_redaction_write_user" model="ir.rule">
+        <field name="name">EI[Rédaction]-Accès en modification aux rédacteur, valideur, directeur et responsable établissement</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">['&amp;', ('state','=','draft'), '|', '|', '|', 
+            ('redacteur_id', '=', user.id), 
+            ('valideur_id', '=', user.id), 
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+     -->
+
+
+    </data>
+</openerp>

@@ -20,6 +20,7 @@ Modules Odoo 12 pour OVE pour la gestion des EIG et des EI
         'data/type_evenement_data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
+        'security/is_access_data.xml',
         'wizard/is_motif_retour_view.xml',
         'wizard/is_motif_retour_view_eig.xml',
         'wizard/company_action_view.xml',
