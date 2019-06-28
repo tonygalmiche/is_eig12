@@ -78,7 +78,7 @@
     <record id="email_template_redige_vers_valide_ars" model="mail.template">
         <field name="name">EIG - rédigé vers validé pour ARS</field>
         <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Validé</field>
+        <field name="subject">[${object.name}][ARS] ${object.etablissement_id.name} - Validé</field>
         <field name="email_to">${object.etablissement_id.departement_id.mail_ars}</field>
         <field name="email_cc">${user.email}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
@@ -109,7 +109,7 @@
     <record id="email_template_redige_vers_valide_cd_se" model="mail.template">
         <field name="name">EIG - rédigé vers validé pour CD (SE)</field>
         <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Validé</field>
+        <field name="subject">[${object.name}][CD-SE] ${object.etablissement_id.name} - Validé</field>
         <field name="email_to">${object.etablissement_id.departement_id.mail_cd_se}</field>
         <field name="email_cc">${user.email}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
@@ -134,7 +134,7 @@
     <record id="email_template_redige_vers_valide_cd_ip" model="mail.template">
         <field name="name">EIG - rédigé vers validé pour CD (IP)</field>
         <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Validé</field>
+        <field name="subject">[${object.name}][CD-IP] ${object.etablissement_id.name} - Validé</field>
         <field name="email_to">${object.etablissement_id.departement_id.mail_cd_ip}</field>
         <field name="email_cc">${user.email}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
@@ -158,7 +158,7 @@
     <record id="email_template_redige_vers_valide_drdjscs" model="mail.template">
         <field name="name">EIG - rédigé vers validé pour DRDJSCS</field>
         <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Validé</field>
+        <field name="subject">[${object.name}][DRDJSCS] ${object.etablissement_id.name} - Validé</field>
         <field name="email_to">${object.etablissement_id.departement_id.mail_drdjscs}</field>
         <field name="email_cc">${user.email}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>

@@ -1052,66 +1052,100 @@ class is_eig(models.Model):
         for doc in self:
 #             if not doc.type_risq_id:
 #                 raise UserError(_("Champ 'Type de risque' obligatoire !"))
-            autorite_controle = doc.etablissement_id.autorite_controle
-            if not autorite_controle:
-                raise UserError(_("Autorité de contôle non renseigné pour cet établissement !"))
-            mail_destination_ids = doc.type_event_id.mail_destination_ids
-            if not mail_destination_ids:
-                raise UserError(_("Destinataires des mails (ARS ou CD) non renseignés pour ce type d'évènement !"))
-            test = False
-            mail = []
-            for lig in doc.type_event_id.mail_destination_ids:
-                if lig.autorite_controle == autorite_controle:
-                    if not lig.mail_destination:
-                        val = self.key2val(autorite_controle, AutoriteControle)
-                        raise UserError(_("Mail de destination non renseigné pour ce type d'évènement et pour l'autorité de contrôle %s !") % str(val))
-                    if lig.mail_destination == "ars" or lig.mail_destination == "ars_cd":
-                        mail.append(self.get_mail(doc, "ars"))
-                    if lig.mail_destination == "cd" or lig.mail_destination == "ars_cd":
-                        mail.append(self.get_mail(doc, "cd"))
-                    test = True
-                    break
-            if not test:
-                val = self.key2val(autorite_controle, AutoriteControle)
-                raise UserError(_("Autorité de contrôle de l'établissement ( %s ) non trouvée pour ce type d'évènement !") % str(val))
-            mail_ars_cd = ",".join(mail)
+#            autorite_controle = doc.etablissement_id.autorite_controle
+#            if not autorite_controle:
+#                raise UserError(_("Autorité de contôle non renseigné pour cet établissement !"))
+#            mail_destination_ids = doc.type_event_id.mail_destination_ids
+#            if not mail_destination_ids:
+#                raise UserError(_("Destinataires des mails (ARS ou CD) non renseignés pour ce type d'évènement !"))
+#            test = False
+#            mail = []
+#            for lig in doc.type_event_id.mail_destination_ids:
+#                if lig.autorite_controle == autorite_controle:
+#                    if not lig.mail_destination:
+#                        val = self.key2val(autorite_controle, AutoriteControle)
+#                        raise UserError(_("Mail de destination non renseigné pour ce type d'évènement et pour l'autorité de contrôle %s !") % str(val))
+#                    if lig.mail_destination == "ars" or lig.mail_destination == "ars_cd":
+#                        mail.append(self.get_mail(doc, "ars"))
+#                    if lig.mail_destination == "cd" or lig.mail_destination == "ars_cd":
+#                        mail.append(self.get_mail(doc, "cd"))
+#                    test = True
+#                    break
+#            if not test:
+#                val = self.key2val(autorite_controle, AutoriteControle)
+#                raise UserError(_("Autorité de contrôle de l'établissement ( %s ) non trouvée pour ce type d'évènement !") % str(val))
+#            mail_ars_cd = ",".join(mail)
+
+
             # Enregistrement de la date de validation car celle-ci est utilisée dans le modèle
             vals = {
                 'date_validation': fields.datetime.now(),
+                'state': 'valide',
             }
             doc.write(vals)
             
-#             # Generation du PDF
-#             self.generation_pdf(cr, uid, ids)
+            # Generation du PDF
+            doc.generation_pdf()
             
             # Mail au traiteur
             template = self.env.ref('is_eig12.email_template_redige_vers_valide_traiteur', False)
             if template:
                 template.send_mail(doc.id, force_send=True, raise_exception=True)
-            # Mais ARS avec pièce jointe
-            template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
-            if template_id:
-                obj = self.env['ir.attachment']
-                # Recherche des fichiers PDF attachés à l'EIG
-                attachment_ids = obj.search([('res_model', '=', 'is.eig'),('res_id', '=', doc.id),('name','like','%pdf'),('name','not ilike','%signalement%')])
-                #print "Pieces jointes à envoyer par mail", attachment_ids
-                #Enregistrement des destinataires du mail
-                template_id.email_to = mail_ars_cd
-                # Ajout des pieces jointes de l'onglet 'Elements complémentaire'
-                if doc.attachment_ids:
-                    for x in doc.attachment_ids:
-                        print('x=',x)
 
-                        #attachment_ids.append(x.id)
-                #Ajout des pièces jointes au modèle
-                #template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
-                # Envoi du mail (avec les pièces jointes)
-                template_id.send_mail(doc.id, force_send=True, raise_exception=True)
-                # Suppression des pièces jointes du modèle
-                #template_id.write({'attachment_ids': [(6, 0, [])]})
-            doc.write({
-                'state': 'valide',
-            })
+            # Mails aux destinataires (ARS, CD..) avec pièce jointe ************
+            for destinataire in doc.destinataire_ids:
+                print('destinataire=',destinataire)
+                if destinataire.mail_destination and destinataire.mail_template_id and destinataire.attachment_ids:
+                    template_id = destinataire.mail_template_id
+                    template_id.email_to = destinataire.mail_destination
+                    attachment_ids=[]
+                    for attachment in destinataire.attachment_ids:
+                        print(attachment)
+                        attachment_ids.append(attachment.id)
+                    #Ajout des pièces jointes au modèle
+                    template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
+                    # Envoi du mail (avec les pièces jointes)
+                    template_id.send_mail(doc.id, force_send=True, raise_exception=True)
+                    # Suppression des pièces jointes du modèle
+                    template_id.write({'attachment_ids': [(6, 0, [])]})
+                    print('template_id=',template_id, template_id.name, template_id.attachment_ids,destinataire.mail_destination)
+
+
+#                    'is_eig_id'        : rec.id,
+#                    'autorite_controle': autorite_controle,
+#                    'destinataire'     : mail[0],
+#                    'mail_destination' : mail[1],
+#                    'mail_template_id' : mail[2] and mail[2].id,
+#                    'trame_id'         : trame_id and trame_id.id,
+
+
+
+
+#            template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
+#            if template_id:
+#                obj = self.env['ir.attachment']
+#                # Recherche des fichiers PDF attachés à l'EIG
+#                attachment_ids = obj.search([('res_model', '=', 'is.eig'),('res_id', '=', doc.id),('name','like','%pdf'),('name','not ilike','%signalement%')])
+#                #print "Pieces jointes à envoyer par mail", attachment_ids
+#                #Enregistrement des destinataires du mail
+#                template_id.email_to = mail_ars_cd
+#                # Ajout des pieces jointes de l'onglet 'Elements complémentaire'
+#                if doc.attachment_ids:
+#                    for x in doc.attachment_ids:
+#                        print('x=',x)
+
+#                        #attachment_ids.append(x.id)
+#                #Ajout des pièces jointes au modèle
+#                #template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
+#                # Envoi du mail (avec les pièces jointes)
+#                template_id.send_mail(doc.id, force_send=True, raise_exception=True)
+#                # Suppression des pièces jointes du modèle
+#                #template_id.write({'attachment_ids': [(6, 0, [])]})
+
+
+
+
+
 
     @api.multi
     def action_non_declarable(self):
