@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+
+    <record id="is_ei_model_access_read_user" model="ir.rule">
+        <field name="name">EI - Accès en consultation aux membres de l'établissement</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">[( 'etablissement_id.membre_ids', 'in', user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+    <record id="is_ei_model_access_redaction_write_user" model="ir.rule">
+        <field name="name">EI[Rédaction] - Accès en modification aux rédacteur, valideur, directeur et responsable établissement</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">['&amp;', ('state','=','draft'), '|', '|', '|', 
+            ('redacteur_id', '=', user.id), 
+            ('valideur_id', '=', user.id), 
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+
+
+
+    <record id="is_ei_model_access_redaction_complet_gestionnaire" model="ir.rule">
+        <field name="name">EI[Rédaction] - Accès complet au groupe Gestionnaire EI</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">[('state','=','draft')]</field>
+        <field name="groups" eval="[(4, ref('group_is_gestionnaire_ei'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+    <record id="is_ei_model_access_redige_complet_gestionnaire" model="ir.rule">
+        <field name="name">EI[Rédigé] - Accès complet au groupe Gestionnaire EI</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">[('state','=','redige')]</field>
+        <field name="groups" eval="[(4, ref('group_is_gestionnaire_ei'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="1" name="perm_create"/>
+    </record>
+
+
+    <record id="is_ei_model_access_redige_write_gestionnaire" model="ir.rule">
+        <field name="name">EI[Rédigé] - Accès en modification aux valideur, directeur et responsable établissement</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">['&amp;', ('state','=','redige'), '|', '|',
+            ('valideur_id', '=', user.id), 
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id) ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="0" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+
+    <record id="is_ei_model_access_valide_consultation_gestionnaire" model="ir.rule">
+        <field name="name">EI[Validé] - Accès consultation au groupe Gestionnaire EI</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">[('state','=','valide')]</field>
+        <field name="groups" eval="[(4, ref('group_is_gestionnaire_ei'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="0" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+    </data>
+</openerp>

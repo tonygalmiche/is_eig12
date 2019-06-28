@@ -6,7 +6,7 @@ from odoo import api, exceptions, fields, models, _
 class is_ei(models.Model):
     _name = 'is.ei'
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
-    _description = u"Gestion des Événements Indésirables"
+    _description = u"Événements Indésirables"
     _order = "name desc"
 
     name                    = fields.Char('N°')
