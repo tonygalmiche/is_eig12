@@ -1209,11 +1209,11 @@ class is_eig(models.Model):
 
     @api.multi
     def victime_identifiee(self):
+        #r="☐"
         r="☐"
         for obj in self:
             for v in obj.victim_ids:
                 if v.name:
-                    print('name=',obj.name)
                     r="☑"
         return r
 
@@ -1222,6 +1222,7 @@ class is_eig(models.Model):
     def nature(self, val):
         if type(val)==int:
             val=[val]
+        #r="☐"
         r="☐"
         for data in self:
             for v in val:
@@ -1233,60 +1234,70 @@ class is_eig(models.Model):
 
     @api.multi
     def type_event(self, val):
-        r="□"
+        #r="□"
+        r="☐"
         for data in self:
             if data.type_event_id.code == str(val):
                 return "☑"
             else:
-                r="□"
+                #r="□"
+                r="☐"
         return r
 
     @api.multi
     def consequence(self, val):
-        r="□"
+        #r="□"
+        r="☐"
         for data in self:
             data_ids = self.env['is.consequence.fonctionnement.stucture'].search([('id','in',data.consequence_fonctionnement_stucture_ids.ids), ('code','=',str(val))])
             for ne in data_ids:
                 if ne.code == str(val):
                     return "☑"
                 else:
-                    r="□"
+                    #r="□"
+                    r="☐"
         return r
 
     @api.multi
     def criteres(self, val):
-        r="□"
+        #r="□"
+        r="☐"
         for data in self:
             data_ids = self.env['is.criteres.generaux'].search([('id','in',data.criteres_generaux_ids.ids), ('code','=',str(val))])
             for ne in data_ids:
                 if ne.code == str(val):
                     return "☑"
                 else:
-                    r="□"
+                    #r="□"
+                    r="☐"
         return r
 
     @api.multi
     def prise(self, val):
-        r="□"
+        #r="□"
+        r="☐"
         for data in self:
             data_ids = self.env['is.consequence.personne.prise.en.charge'].search([('id','in',data.consequence_personne_prise_en_charge_ids.ids), ('code','=',str(val))])
             for ne in data_ids:
                 if ne.code == str(val):
                     return "☑"
                 else:
-                    r="□"
+                    #r="□"
+                    r="☐"
         return r
 
     @api.multi
     def personnel(self, val):
-        r="□"
+        #r="□"
+        r="☐"
         for data in self:
             data_ids = self.env['is.consequence.personnel'].search([('id','in',data.consequence_personnel_ids.ids), ('code','=',str(val))])
             for ne in data_ids:
                 if ne.code == str(val):
                     return "☑"
                 else:
-                    r="□"
+                    #r="□"
+                    r="☐"
         return r
 
     @api.multi
@@ -1295,7 +1306,8 @@ class is_eig(models.Model):
         if val=="oui":
             r="☑"
         else:
-            r="□"
+            #r="□"
+            r="☐"
         return r
 
     @api.multi
@@ -1304,7 +1316,8 @@ class is_eig(models.Model):
         if (val=="1" or val=="t" or val=="True" or val=="true"):
             r="☑"
         else:
-            r="□"
+            #r="□"
+            r="☐"
         return r
 
     @api.multi
@@ -1312,7 +1325,8 @@ class is_eig(models.Model):
         if (self.nature_event_id.id == val):
             r="☑"
         else:
-            r="□"
+            #r="□"
+            r="☐"
         return r
 
     @api.multi
@@ -1372,6 +1386,13 @@ class is_eig(models.Model):
         if self.type_event_id.code=='SE' or self.signalement_autorites:
             r=1
         return r
+
+
+    #Inverse un boolean
+    @api.multi
+    def n(self,val):
+        val = not val
+        return val
 
 
     @api.multi
@@ -1546,10 +1567,6 @@ class is_eig(models.Model):
                     'mail_template_id' : mail[2] and mail[2].id,
                     'trame_id'         : trame_id and trame_id.id,
                 }
-
-
-                print(vals)
-
                 destinataire = self.env['is.eig.destinataire'].create(vals)
                 if trame_id:
                     for attch in trame_id.attachment_ids:
