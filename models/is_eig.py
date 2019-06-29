@@ -1323,8 +1323,7 @@ class is_eig(models.Model):
     @api.multi
     def f4(self,val):
         for lig in self.infos_ids:
-            if(lig.user_id.id == val):
-                #print "=> date=",lig.date
+            if(lig.user_id.id == val and lig.date):
                 return str(lig.date)
         return False
 
@@ -1601,7 +1600,7 @@ class is_eig(models.Model):
     etablissement_id                      = fields.Many2one('is.etablissement', u'Établissement', required=True, help=u'ESMS concerné par un EIG. Ce choix détermine le formulaire départemental qui sera généré et envoyé aux autorités de tutelles.')
     redacteur_id                          = fields.Many2one('res.users', u'Rédacteur', readonly=True, default=lambda self: self.env.uid)
     valideur_id                           = fields.Many2one('res.users', 'Valideur', readonly=True)
-    date_validation                       = fields.Datetime(u'Date de validation')
+    date_validation                       = fields.Datetime(u'Date de validation',copy=False)
     type_event_id                         = fields.Many2one('is.type.evenement', u"Type d'événement", required=True, help=u"Grandes catégories d'EIG. Pour tout EIG concernant un ou plusieurs mineurs relevant de l'ASE, il est nécessaire de sélectionner « Mineur relevant de l'ASE ». Ce choix détermine également le formulaire départemental qui sera généré et envoyé aux autorités de tutelles.")
     event_description                     = fields.Text('Description', related='type_event_id.description')
     event_information_speciale            = fields.Text(u'Information spéciale', related='type_event_id.information_speciale')
