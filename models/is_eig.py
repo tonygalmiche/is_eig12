@@ -714,6 +714,9 @@ class is_eig(models.Model):
                 'related_vsb_objet_signalement_justice': False,
                 'related_rqr_objet_signalement_justice': False,
 
+                'related_vsb_mesure_protection_enfance': False,
+                'related_rqr_mesure_protection_enfance': False,
+
                 'related_vsb_date_heure_constatation_faits': False,
                 'related_rqr_date_heure_constatation_faits': False,
                 'related_vsb_end_date':  False,
