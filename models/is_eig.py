@@ -1488,8 +1488,12 @@ class is_eig(models.Model):
                 trame_id = departement.trame_ip_id
 
 
-            if not trame_id and autorite_controle!='drdjscs':
-                raise UserError(u"Trame non identifée pour ce type d'évènement et ce destinataire !")
+
+            #print(trame_id,autorite_controle)
+
+
+            #if not trame_id and autorite_controle!='drdjscs':
+            #    raise UserError(u"Trame non identifée pour ce type d'évènement et ce destinataire !")
 
             for mail in mails:
                 vals={
