@@ -1367,6 +1367,10 @@ class is_eig(models.Model):
     @api.multi
     def generation_document_par_nom(self, destinataire, type="ODT", v=[], contenu="", nom=""):
         for data in self:
+
+            print(data,nom)
+
+
             name=nom[:-4]
             name=name+".odt"
             path = "/tmp/py3o_template.odt"
@@ -1484,12 +1488,12 @@ class is_eig(models.Model):
                 trame_id = departement.trame_se_cd_id
             if rec.type_event_id.code == "SEA":
                 trame_id = departement.trame_sea_id
-            if rec.type_event_id.code == "IP":
+            if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
                 trame_id = departement.trame_ip_id
 
 
 
-            #print(trame_id,autorite_controle)
+            print(trame_id,autorite_controle)
 
 
             #if not trame_id and autorite_controle!='drdjscs':
