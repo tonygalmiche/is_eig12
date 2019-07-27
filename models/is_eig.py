@@ -1321,6 +1321,20 @@ class is_eig(models.Model):
         return r
 
 
+    @api.multi
+    def f10(self,autorite_parentale):
+        """autorite_parentale = pere, mere ou tuteur"""
+        r=0
+        for lig in self.personne_ids:
+            if autorite_parentale=='pere'   and lig.autorite_parentale_pere:
+                r=1
+            if autorite_parentale=='mere'   and lig.autorite_parentale_mere:
+                r=1
+            if autorite_parentale=='tuteur' and lig.tuteur_nom:
+                r=1
+        return r
+
+
     #Inverse un boolean
     @api.multi
     def n(self,val):
