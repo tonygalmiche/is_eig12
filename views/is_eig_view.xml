@@ -227,6 +227,7 @@
                             <field name="onglet_temoins"  />
                             <field name="onglet_victimes" />
                             <field name="onglet_personnes" />
+                            <field name="onglet_autres_personnes" />
                             <field name="onglet_mesures"  />
                             <field name="onglet_infos"    />
                             <field name="onglet_element_complementaire" />
@@ -679,6 +680,7 @@
                         <field name="related_onglet_temoins"                invisible="1"/>
                         <field name="related_onglet_victimes"               invisible="1"/>
                         <field name="related_onglet_personnes"              invisible="1"/>
+                        <field name="related_onglet_autres_personnes"       invisible="1"/>
                         <field name="related_onglet_mesures"                invisible="1"/>
                         <field name="related_onglet_infos"                  invisible="1"/>
                         <field name="related_onglet_element_complementaire" invisible="1"/>
@@ -1507,7 +1509,7 @@
                         </field>
                     </page>
 
-                    <page string="Autre(s) personne(s) concernée(s) par l’IP" >
+                    <page string="Autre(s) personne(s) concernée(s) par l’IP" attrs="{'invisible': [('related_onglet_autres_personnes','=',False)]}">
                         <group invisible="1">
                             <field name="related_autre_personne_vsb_identifie"  invisible="1"  />
                             <field name="related_autre_personne_rqr_identifie"   invisible="1" />

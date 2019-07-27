@@ -652,6 +652,7 @@ class is_eig(models.Model):
                 'related_onglet_temoins':  False,
                 'related_onglet_victimes':  False,
                 'related_onglet_personnes':  False,
+                'related_onglet_autres_personnes':  False,
                 'related_onglet_mesures':  False,
                 'related_onglet_infos':  False,
                 'related_onglet_element_complementaire':  False,
@@ -905,6 +906,7 @@ class is_eig(models.Model):
                 'related_onglet_temoins': self.type_event_id.onglet_temoins,
                 'related_onglet_victimes': self.type_event_id.onglet_victimes,
                 'related_onglet_personnes': self.type_event_id.onglet_personnes,
+                'related_onglet_autres_personnes': self.type_event_id.onglet_autres_personnes,
                 'related_onglet_mesures': self.type_event_id.onglet_mesures,
                 'related_onglet_infos': self.type_event_id.onglet_infos,
                 'related_onglet_element_complementaire': self.type_event_id.onglet_element_complementaire,
@@ -1680,7 +1682,7 @@ class is_eig(models.Model):
     criteres_generaux_ids                 = fields.Many2many('is.criteres.generaux', 'is_type_event_generaux_rel', 'type_event_id', 'generaux_id', string=u'Critères généraux')
     related_vsb_criteres_generaux_ids     = fields.Boolean(u'Champs related_vsb_criteres_generaux_ids - Visibilité')
     related_rqr_criteres_generaux_ids     = fields.Boolean(u'Champs related_rqr_criteres_generaux_ids - Obligation')
-    solution_prise_en_charge              = fields.Selection(OuiNon, u'En cas d’évènement ayant pour conséquence une exclusion temporaire ou définitive, y a-t-il des solutions de prises en charges ?')
+    solution_prise_en_charge              = fields.Selection(OuiNon, u"En cas d’évènement ayant pour conséquence une exclusion temporaire ou définitive, y a-t-il des solutions d'accompagnement ?")
     related_vsb_solution_prise_en_charge  = fields.Boolean(u'Champs related_vsb_solution_prise_en_charge - Visibilité')
     related_rqr_solution_prise_en_charge  = fields.Boolean(u'Champs related_rqr_solution_prise_en_charge - Obligation')
     demande_intervention_secours_ids             = fields.Many2many('is.demande.intervention.secours', 'is_type_event_secours_rel', 'type_event_id', 'secours_id', string=u'Demande d’intervention des secours')
@@ -1734,10 +1736,10 @@ class is_eig(models.Model):
     mesure_pour_proteger_accompagner             = fields.Text(u"Pour protéger, accompagner ou soutenir les personnes victimes ou exposées")
     related_vsb_mesure_pour_proteger_accompagner = fields.Boolean(u'Champs related_vsb_mesure_pour_proteger_accompagner - Visibilité')
     related_rqr_mesure_pour_proteger_accompagner = fields.Boolean(u'Champs related_rqr_mesure_pour_proteger_accompagner - Obligation')
-    mesure_pour_assurer_continuite               = fields.Text(u"Pour assurer la continuité de la prise en charge, le cas échéant")
+    mesure_pour_assurer_continuite               = fields.Text(u"Pour assurer la continuité de l'accompagnement, le cas échéant")
     related_vsb_mesure_pour_assurer_continuite   = fields.Boolean(u'Champs related_vsb_mesure_pour_assurer_continuite - Visibilité')
     related_rqr_mesure_pour_assurer_continuite   = fields.Boolean(u'Champs related_rqr_mesure_pour_assurer_continuite - Obligation')
-    mesure_egard_autres_personnes                = fields.Text(u"A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)")
+    mesure_egard_autres_personnes                = fields.Text(u"A l’égard des autres personnes accompagnées ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)")
     related_vsb_mesure_egard_autres_personnes    = fields.Boolean(u'Champs related_vsb_mesure_egard_autres_personnes - Visibilité')
     related_rqr_mesure_egard_autres_personnes    = fields.Boolean(u'Champs related_rqr_mesure_egard_autres_personnes - Obligation')
     mesure_autre                                 = fields.Text(u"Autre (à préciser)")
@@ -1914,6 +1916,8 @@ class is_eig(models.Model):
 
     related_onglet_victimes               = fields.Boolean(u"Champs related_onglet_victimes - Onglet Victimes")
     related_onglet_personnes              = fields.Boolean(u"Champs related_onglet_personnes - Onglet Personne(s) faisant l’objet de l’IP")
+
+    related_onglet_autres_personnes       = fields.Boolean(u"Champs related_onglet_autres_personnes - Onglet Autre(s) Personne(s) faisant l’objet de l’IP")
 
     related_onglet_mesures                = fields.Boolean(u'Champs related_onglet_mesures - Onglet Mesures')
     related_onglet_infos                  = fields.Boolean(u'Champs related_onglet_infos - Onglet Infos')
@@ -2755,6 +2759,7 @@ class is_type_evenement(models.Model):
     onglet_temoins                = fields.Boolean(u'Afficher onglet Témoins', default=True)
     onglet_victimes               = fields.Boolean(u'Afficher onglet Victimes', default=True)
     onglet_personnes              = fields.Boolean(u'Afficher onglet Personnes', default=True)
+    onglet_autres_personnes       = fields.Boolean(u'Afficher onglet Autres Personnes', default=True)
     onglet_mesures                = fields.Boolean(u'Afficher onglet Mesures', default=True)
     onglet_infos                  = fields.Boolean(u'Afficher onglet Infos', default=True)
     onglet_element_complementaire = fields.Boolean(u'Afficher onglet Eléments complémentaires', default=True)
