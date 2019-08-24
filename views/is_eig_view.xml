@@ -351,7 +351,7 @@
                 </page>
 
 
-                <page string="Personne(s) faisant l’objet de l’IP">
+                <page string="Personne(s) faisant l'objet de la déclaration du signalement">
                    <field name="fields_personne_id" nolabel="1"  context="{'default_is_eig_personne': True}">
                        <tree string="Caractéristiques des champs de Personne" editable="bottom">
                            <field name="sequence" widget="handle" />
@@ -1261,7 +1261,7 @@
 
 
 
-                    <page string="Personne(s) faisant l’objet de l’IP" attrs="{'invisible': [('related_onglet_personnes','=',False)]}">
+                    <page string="Personne(s) faisant l'objet de la déclaration du signalement" attrs="{'invisible': [('related_onglet_personnes','=',False)]}">
                         <group invisible="1">
                             <field name="related_pers_vsb_identifie"  invisible="1"  />
                             <field name="related_pers_rqr_identifie"  invisible="1"  />
@@ -1354,7 +1354,7 @@
                                     'default_related_rqr_tuteur_prenom': related_pers_rqr_tuteur_prenom,
                                     'default_related_vsb_tuteur_adresse': related_pers_vsb_tuteur_adresse,
                                     'default_related_rqr_tuteur_adresse': related_pers_rqr_tuteur_adresse,}" >
-                            <form string="Personne(s) faisant l’objet de l’IP">
+                            <form string="Personne(s) faisant l'objet de la déclaration du signalement">
                                 <group col="2" colspan="4">
                                     <field name="related_vsb_name" invisible="1"  />
                                     <field name="related_rqr_name" invisible="1"  />
@@ -1434,7 +1434,7 @@
                                     </group>
                                 </group>
                             </form>
-                            <tree string="Personne(s) faisant l’objet de l’IP">
+                            <tree string="Personne(s) faisant l'objet de la déclaration du signalement">
                                 <field name="name"/>
                                 <field name="prenom"/>
                                 <field name="sexe_id"/>
