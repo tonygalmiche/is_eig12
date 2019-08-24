@@ -377,9 +377,9 @@
 
 
 
-                <page string="Autre(s) personne(s) concernée(s) par l’IP">
+                <page string="Autre(s) personne(s) concernée(s)">
                    <field name="fields_autre_personne_id" nolabel="1" context="{'default_is_eig_autre_personne': True}">
-                       <tree string="Autre(s) personne(s) concernée(s) par l’IP" editable="bottom">
+                       <tree string="Autre(s) personne(s) concernée(s)" editable="bottom">
                            <field name="sequence" widget="handle" />
                            <field name="fields_id" domain="[('model', '=', 'is.eig.autre.personne')]"/>
                            <field name="field_visible"/>
@@ -1453,7 +1453,7 @@
 
 
 
-                    <page string="Autre(s) personne(s) concernée(s) par l’IP" attrs="{'invisible': [('related_onglet_autres_personnes','=',False)]}">
+                    <page string="Autre(s) personne(s) concernée(s)" attrs="{'invisible': [('related_onglet_autres_personnes','=',False)]}">
                         <group invisible="1">
                             <field name="related_autre_personne_vsb_identifie"  invisible="1"  />
                             <field name="related_autre_personne_rqr_identifie"   invisible="1" />
@@ -1487,7 +1487,7 @@
                                     'default_related_vsb_auteur_victime': related_autre_personne_vsb_auteur_victime, 
                                     'default_related_rqr_auteur_victime': related_autre_personne_rqr_auteur_victime, 
                                     }" >
-                            <form string="Autre(s) personne(s) concernée(s) par l’IP">
+                            <form string="Autre(s) personne(s) concernée(s)">
                                 <group col="2" colspan="4">
                                     <!--
                                     <field name="related_vsb_identifie" invisible="1"  />
@@ -1514,7 +1514,7 @@
                                     <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
                                 </group>
                             </form>
-                            <tree string="Autre(s) personne(s) concernée(s) par l’IP">
+                            <tree string="Autre(s) personne(s) concernée(s)">
                                 <field name="nom"/>
                                 <field name="prenom"/>
                                 <field name="qualite_id"/>
