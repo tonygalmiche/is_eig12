@@ -1085,13 +1085,9 @@ class is_eig(models.Model):
             url = "https://eig2.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.eig"
         return url
 
-    @api.multi
-    def action_rediger_eig(self):
-        for data in self:
-            data.write({'state': 'redige'})
-            template = self.env.ref('is_eig12.email_template_redaction_vers_redige', False)
-            if template:
-                template.send_mail(data.id, force_send=True, raise_exception=True)
+
+
+
 
     @api.multi
     def key2val(self, key, liste):
@@ -1114,20 +1110,110 @@ class is_eig(models.Model):
     @api.multi
     def get_traiteurs(self):
         obj = self.env['ir.model.data']
-        data_ids = obj.search([('module', '=', 'is_eig'), ('name', '=', 'group_is_traiteur')])
+        data_ids = obj.search([('module', '=', 'is_eig12'), ('name', '=', 'group_is_traiteur')])
         mail = ""
         resid = 0
         for data in data_ids:
-            for o in data.read(['res_id','name']):
-                resid = o["res_id"]
+            resid = data.res_id
         if resid:
             ctx = self.env['res.groups']
             for g in ctx.browse(resid):
                 l = []
                 for u in g.users:
-                    l.append(u.email)
+                    if u.email:
+                        l.append(u.email)
                 mail = ",".join(l)
         return mail
+
+    @api.multi
+    def get_directeur(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.etablissement_id.director_id.email)
+        mail=','.join(mails)
+        return mail
+
+    @api.multi
+    def get_directeur_responsable(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.etablissement_id.director_id.email)
+            for line in obj.etablissement_id.responsable_ids:
+                mails.append(line.email)
+        mail=','.join(mails)
+        return mail
+
+    @api.multi
+    def get_redacteur_responsable_autre(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.redacteur_id.email)
+            mails.append(obj.etablissement_id.responsible_id.email)
+            for line in obj.etablissement_id.responsable_ids:
+                mails.append(line.email)
+        mail=','.join(mails)
+        return mail
+
+    @api.multi
+    def get_redacteur_directeur_responsable_autre(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.redacteur_id.email)
+            mails.append(obj.etablissement_id.director_id.email)
+            mails.append(obj.etablissement_id.responsible_id.email)
+            for line in obj.etablissement_id.responsable_ids:
+                mails.append(line.email)
+        mail=','.join(mails)
+        return mail
+
+
+
+    @api.multi
+    def liste_mails(self, subject):
+        for obj in self:
+            return {
+                'name': "Historique des mails",
+                'view_mode': 'tree,form',
+                'view_type': 'form',
+                'res_model': 'mail.mail',
+                'type': 'ir.actions.act_window',
+                'domain': [
+                    ('model' ,'=','is.eig'),
+                    ('res_id','=',obj.id),
+                ],
+            }
+
+
+
+
+
+    @api.multi
+    def creer_notification(self, subject):
+        for obj in self:
+            vals={
+                'subject'       : subject,
+                'body'          : subject, 
+                'body_html'     : subject, 
+                'model'         : self._name,
+                'res_id'        : obj.id,
+                'notification'  : True,
+                'message_type'  : 'comment',
+                'state'         : 'sent',
+            }
+            email=self.env['mail.mail'].create(vals)
+
+
+
+    @api.multi
+    def action_rediger_eig(self):
+        for data in self:
+            data.write({'state': 'redige'})
+            template = self.env.ref('is_eig12.email_template_redaction_vers_redige', False)
+            if template:
+                self.creer_notification(u'Rédaction vers rédigé')
+                template.send_mail(data.id, force_send=True, raise_exception=True)
+
+
 
     @api.multi
     def action_valider_eig(self):
@@ -1145,6 +1231,7 @@ class is_eig(models.Model):
             # Mail au traiteur
             template = self.env.ref('is_eig12.email_template_redige_vers_valide_traiteur', False)
             if template:
+                self.creer_notification(u'vers Validé')
                 template.send_mail(doc.id, force_send=True, raise_exception=True)
 
             # Mails aux destinataires (ARS, CD..) avec pièce jointe ************
@@ -1167,6 +1254,7 @@ class is_eig(models.Model):
     def action_non_declarable(self):
         for obj in self:
             obj.write({'state': 'non_declarable'})
+            self.creer_notification(u'vers Non déclarable')
             vals = {
                 'etablissement_id'   : obj.etablissement_id.id,
                 'type_event_id'      : 15,
@@ -1194,6 +1282,7 @@ class is_eig(models.Model):
     @api.multi
     def action_terminer_eig(self):
         for data in self:
+            self.creer_notification(u'vers Traité')
             data.write({'state': 'done'})
 
     @api.multi
@@ -1202,6 +1291,7 @@ class is_eig(models.Model):
             data.write({'state': 'valide', 'date_validation': fields.Datetime.now()})
             template = self.env.ref('is_eig12.email_template_a_completer_vers_valide', False)
             if template:
+                self.creer_notification(u'de Complété vers Validé')
                 template.send_mail(data.id, force_send=True, raise_exception=True)
 
     @api.model

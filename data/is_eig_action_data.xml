@@ -1,38 +1,15 @@
 <?xml version="1.0" ?>
 <odoo>
-
-    <!--Email template -->
     <data>
-    <record id="email_template_redaction_vers_redige" model="mail.template">
-        <field name="name">EIG à valider</field>
-        <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Déclaration à valider</field>
-        <field name="email_to">${object.valideur_id.email}</field>
-        <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Bonjour,</p>
-<p>Vous avez reçu une déclaration d'EIG à valider :
-<ul>
-    <li>N° : <a href="${object.get_signup_url()}">${object.name}</a></li>
-    <li>Rédacteur : ${object.redacteur_id.name}</li>
-    <li>Établissement : ${object.etablissement_id.name}</li>
-    <li>Type d'événement : ${object.type_event_id.name}</li>
-</ul>
-<p>Vous pouvez valider cette déclaration en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
-<p>Cordialement.</p>
-        ]]></field>
-    </record>
-    </data>
 
-    <data>
     <record id="email_template_redige_vers_redaction" model="mail.template">
         <field name="name">EIG - rédigé vers rédaction</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] ${object.etablissement_id.name} - Retour rédaction</field>
         <field name="email_to">${object.redacteur_id.email}</field>
+        <field name="email_cc">${object.get_directeur_responsable()}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
 <p>Bonjour,</p>
 <p>La déclaration d'EIG suivante vient de repasser à l'état 'Rédaction' :
@@ -48,16 +25,104 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
 
-    <data>
+
+    <record id="email_template_redige_vers_valide_ars" model="mail.template">
+        <field name="name">EIG - rédigé vers validé pour ARS</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}][ARS] ${object.etablissement_id.name} - Validé</field>
+        <field name="email_to">${object.etablissement_id.departement_id.mail_ars}</field>
+        <field name="email_cc">${object.get_redacteur_directeur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_eig"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
+<ul>
+    <li>N° : ${object.name}</li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
+    <record id="email_template_redige_vers_valide_cd_ip" model="mail.template">
+        <field name="name">EIG - rédigé vers validé pour CD (IP)</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}][CD-IP] ${object.etablissement_id.name} - Validé</field>
+        <field name="email_to">${object.etablissement_id.departement_id.mail_cd_ip}</field>
+        <field name="email_cc">${object.get_redacteur_directeur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_eig"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
+<ul>
+    <li>N° : ${object.name}</li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
+    <record id="email_template_redige_vers_valide_cd_se" model="mail.template">
+        <field name="name">EIG - rédigé vers validé pour CD (SE)</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}][CD-SE] ${object.etablissement_id.name} - Validé</field>
+        <field name="email_to">${object.etablissement_id.departement_id.mail_cd_se}</field>
+        <field name="email_cc">${object.get_redacteur_directeur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_eig"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
+<ul>
+    <li>N° : ${object.name}</li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
+    <record id="email_template_redige_vers_valide_drdjscs" model="mail.template">
+        <field name="name">EIG - rédigé vers validé pour DRDJSCS</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}][DRDJSCS] ${object.etablissement_id.name} - Validé</field>
+        <field name="email_to">${object.etablissement_id.departement_id.mail_drdjscs}</field>
+        <field name="email_cc">${object.get_redacteur_directeur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_eig"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
+<ul>
+    <li>N° : ${object.name}</li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
     <record id="email_template_redige_vers_valide_traiteur" model="mail.template">
         <field name="name">EIG - rédigé vers validé pour traiteur</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] ${object.etablissement_id.name} - EIG à traiter</field>
         <field name="email_to">${object.get_traiteurs()}</field>
+        <field name="email_cc">${object.get_directeur()}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
 <p>Bonjour,</p>
 <p>Vous avez reçu une déclaration d'EIG à traiter :
@@ -71,122 +136,16 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
 
 
-    <data>
-    <record id="email_template_redige_vers_valide_ars" model="mail.template">
-        <field name="name">EIG - rédigé vers validé pour ARS</field>
-        <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}][ARS] ${object.etablissement_id.name} - Validé</field>
-        <field name="email_to">${object.etablissement_id.departement_id.mail_ars}</field>
-        <field name="email_cc">${user.email}</field>
-        <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Bonjour,</p>
-<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
-<ul>
-    <li>N° : ${object.name}</li>
-    <li>Rédacteur : ${object.redacteur_id.name}</li>
-    <li>Établissement : ${object.etablissement_id.name}</li>
-    <li>Type d'événement : ${object.type_event_id.name}</li>
-</ul>
-<p>Cordialement.</p>
-        ]]></field>
-    </record>
-    </data>
-
-
-
-
-
-
-
-
-
-    <data>
-    <record id="email_template_redige_vers_valide_cd_se" model="mail.template">
-        <field name="name">EIG - rédigé vers validé pour CD (SE)</field>
-        <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}][CD-SE] ${object.etablissement_id.name} - Validé</field>
-        <field name="email_to">${object.etablissement_id.departement_id.mail_cd_se}</field>
-        <field name="email_cc">${user.email}</field>
-        <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Bonjour,</p>
-<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
-<ul>
-    <li>N° : ${object.name}</li>
-    <li>Rédacteur : ${object.redacteur_id.name}</li>
-    <li>Établissement : ${object.etablissement_id.name}</li>
-    <li>Type d'événement : ${object.type_event_id.name}</li>
-</ul>
-<p>Cordialement.</p>
-        ]]></field>
-    </record>
-    </data>
-
-
-
-    <data>
-    <record id="email_template_redige_vers_valide_cd_ip" model="mail.template">
-        <field name="name">EIG - rédigé vers validé pour CD (IP)</field>
-        <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}][CD-IP] ${object.etablissement_id.name} - Validé</field>
-        <field name="email_to">${object.etablissement_id.departement_id.mail_cd_ip}</field>
-        <field name="email_cc">${user.email}</field>
-        <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Bonjour,</p>
-<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
-<ul>
-    <li>N° : ${object.name}</li>
-    <li>Rédacteur : ${object.redacteur_id.name}</li>
-    <li>Établissement : ${object.etablissement_id.name}</li>
-    <li>Type d'événement : ${object.type_event_id.name}</li>
-</ul>
-<p>Cordialement.</p>
-        ]]></field>
-    </record>
-    </data>
-
-
-    <data>
-    <record id="email_template_redige_vers_valide_drdjscs" model="mail.template">
-        <field name="name">EIG - rédigé vers validé pour DRDJSCS</field>
-        <field name="email_from">${user.email}</field>
-        <field name="subject">[${object.name}][DRDJSCS] ${object.etablissement_id.name} - Validé</field>
-        <field name="email_to">${object.etablissement_id.departement_id.mail_drdjscs}</field>
-        <field name="email_cc">${user.email}</field>
-        <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Bonjour,</p>
-<p>Veuillez trouver ci-joint une nouvelle déclaration d'EIG :
-<ul>
-    <li>N° : ${object.name}</li>
-    <li>Rédacteur : ${object.redacteur_id.name}</li>
-    <li>Établissement : ${object.etablissement_id.name}</li>
-    <li>Type d'événement : ${object.type_event_id.name}</li>
-</ul>
-<p>Cordialement.</p>
-        ]]></field>
-    </record>
-    </data>
-
-
-
-    <data>
     <record id="email_template_valide_vers_a_completer" model="mail.template">
         <field name="name">EIG - validé vers à compléter</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] ${object.etablissement_id.name} - Nouvel EIG à compléter</field>
-        <field name="email_to">${object.valideur_id.email}</field>
+        <field name="email_to">${object.get_directeur_responsable()}</field>
+        <field name="email_cc">${object.get_traiteurs()}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
 <p>Bonjour,</p>
 <p>La déclaration d'EIG suivante doit être complétée :
@@ -203,17 +162,16 @@
 
         ]]></field>
     </record>
-    </data>
 
 
-    <data>
     <record id="email_template_a_completer_vers_valide" model="mail.template">
         <field name="name">EIG - à compléter vers validé</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] ${object.etablissement_id.name} - EIG à traiter (avec complément)</field>
         <field name="email_to">${object.get_traiteurs()}</field>
+        <field name="email_cc">${object.get_directeur()}</field>
         <field name="model_id" ref="is_eig12.model_is_eig"/>
-        <field name="auto_delete" eval="True"/>
+        <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
 <p>Bonjour,</p>
 <p>Vous avez reçu une déclaration d'EIG à traiter :
@@ -227,6 +185,30 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
 
+
+    <record id="email_template_redaction_vers_redige" model="mail.template">
+        <field name="name">EIG à valider</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}] ${object.etablissement_id.name} - Déclaration à valider</field>
+        <field name="email_to">${object.valideur_id.email}</field>
+        <field name="email_cc">${object.get_redacteur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_eig"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Vous avez reçu une déclaration d'EIG à valider :
+<ul>
+    <li>N° : <a href="${object.get_signup_url()}">${object.name}</a></li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+    <li>Type d'événement : ${object.type_event_id.name}</li>
+</ul>
+<p>Vous pouvez valider cette déclaration en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
+    </data>
 </odoo>

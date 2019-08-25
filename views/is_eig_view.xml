@@ -583,6 +583,7 @@
                     <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
                         <button class="oe_inline oe_stat_button" string="Génération ODT " name= "generation_odt" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="base.group_system"/>
                         <button class="oe_inline oe_stat_button" string="Génération PDF " name= "generation_pdf" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig12.group_is_gestionnaire"/>
+                        <button class="oe_inline oe_stat_button" string="Mails "          name= "liste_mails"    type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig12.group_is_gestionnaire"/>
                     </div>
                     <group>
                         <group>
@@ -1958,16 +1959,32 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+
         <!-- Modèles de courriels -->
+        <record model="ir.ui.view" id="is_email_template_tree">
+            <field name="name">is_email_template_tree</field>
+            <field name="model">mail.template</field>
+            <field name="arch" type="xml">
+                <tree string="Templates">
+                    <field name="mail_server_id" invisible="1"/>
+                    <field name="name"/>
+                    <field name="subject"/>
+                    <field name="email_from"/>
+                    <field name="email_to"/>
+                    <field name="email_cc"/>
+                </tree>
+            </field>
+        </record>
         <record model="ir.actions.act_window" id="is_eig_action_email_template_tree_all">
             <field name="name">Modèles de courriels</field>
             <field name="res_model">mail.template</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
-            <field name="view_id" ref="mail.email_template_tree" />
+            <field name="view_id" ref="is_email_template_tree" />
             <field name="search_view_id" ref="mail.view_email_template_search"/>
             <field name="context" eval="{'search_default_model_id': ref('is_eig12.model_is_eig')}" />
         </record>
+
 
         <!--  Destinataire -->
         <record model="ir.ui.view" id="is_destinataire_tree_view">
@@ -2400,6 +2417,12 @@
             <field name="res_model">is.trame</field>
             <field name="view_mode">tree,form</field>
         </record>
+
+
+
+
+
+
 
     </data>
 </odoo>
