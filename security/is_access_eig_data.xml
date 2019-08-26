@@ -42,11 +42,12 @@
     <record id="is_eig_model_access_read" model="ir.rule">
         <field name="name">EIG - Accès en consultation au créateur, au valideur, au directeur et au responsable de l'établissement</field>
         <field name="model_id" ref="model_is_eig"/>
-        <field name="domain_force">
-            [   '|','|','|',
+        <field name="domain_force">[
+               '|','|','|','|',
                 ('redacteur_id', '=', user.id),
                 ('valideur_id', '=', user.id),
                 ('etablissement_id.responsible_id','=',user.id),
+                ('etablissement_id.responsable_ids','in',user.id),
                 ('etablissement_id.director_id','=',user.id)
             ]
         </field>

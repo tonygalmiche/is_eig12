@@ -1219,11 +1219,7 @@ class is_eig(models.Model):
     def action_valider_eig(self):
         for doc in self:
             # Enregistrement de la date de validation car celle-ci est utilisée dans le modèle
-            vals = {
-                'date_validation': fields.datetime.now(),
-                'state': 'valide',
-            }
-            doc.write(vals)
+            doc.date_validation = fields.datetime.now()
             
             # Generation du PDF
             doc.generation_pdf()
@@ -1248,6 +1244,16 @@ class is_eig(models.Model):
                     template_id.send_mail(doc.id, force_send=True, raise_exception=True)
                     # Suppression des pièces jointes du modèle
                     template_id.write({'attachment_ids': [(6, 0, [])]})
+
+            vals = {
+                'date_validation': fields.datetime.now(),
+                #'state': 'valide',
+            }
+            doc.state = 'valide'
+
+
+
+
 
 
     @api.multi
