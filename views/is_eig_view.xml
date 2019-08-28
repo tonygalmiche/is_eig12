@@ -1509,7 +1509,13 @@
                                     <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
                                 </group>
                                 <group>
-                                <group string="Père">
+                                <group string="Père"
+                                    attrs="{'invisible': [
+                                        ('related_vsb_nom_pere','=',False),
+                                        ('related_vsb_prenom_pere','=',False),
+                                        ('related_vsb_address_pere','=',False),
+                                        ('related_vsb_autorite_parentale_pere','=',False)
+                                ]}">
                                     <field name="related_vsb_nom_pere" invisible="1"  />
                                     <field name="related_rqr_nom_pere" invisible="1"  />
                                     <field name="nom_pere" attrs="{'invisible': [('related_vsb_nom_pere', '=', False)], 'required':[('related_rqr_nom_pere','=', True)]}"/>
@@ -1523,7 +1529,13 @@
                                     <field name="related_rqr_autorite_parentale_pere" invisible="1"  />
                                     <field name="autorite_parentale_pere" attrs="{'invisible': [('related_vsb_autorite_parentale_pere', '=', False)], 'required':[('related_rqr_autorite_parentale_pere','=', True)]}"/>
                                 </group>
-                                <group string="Mère">
+                                <group string="Mère"
+                                    attrs="{'invisible': [
+                                        ('related_vsb_nom_mere','=',False),
+                                        ('related_vsb_prenom_mere','=',False),
+                                        ('related_vsb_address_mere','=',False),
+                                        ('related_vsb_autorite_parentale_mere','=',False)
+                                ]}">
                                     <field name="related_vsb_nom_mere"  invisible="1" />
                                     <field name="related_rqr_nom_mere" invisible="1"  />
                                     <field name="nom_mere" attrs="{'invisible': [('related_vsb_nom_mere', '=', False)], 'required':[('related_rqr_nom_mere','=', True)]}"/>
@@ -1540,7 +1552,12 @@
                                 </group>
                                 </group>
                                 <group>
-                                    <group string="Tuteur">
+                                    <group string="Tuteur"
+                                        attrs="{'invisible': [
+                                            ('related_vsb_tuteur_nom','=',False),
+                                            ('related_vsb_tuteur_prenom','=',False),
+                                            ('related_vsb_tuteur_adresse','=',False)
+                                    ]}">
                                         <field name="related_vsb_tuteur_nom"  invisible="1" />
                                         <field name="related_rqr_tuteur_nom" invisible="1"  />
                                         <field name="tuteur_nom" attrs="{'invisible': [('related_vsb_tuteur_nom', '=', False)], 'required':[('related_rqr_tuteur_nom','=', True)]}"/>
