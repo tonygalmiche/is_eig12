@@ -1207,12 +1207,11 @@ class is_eig(models.Model):
     @api.multi
     def action_rediger_eig(self):
         for data in self:
-            data.write({'state': 'redige'})
             template = self.env.ref('is_eig12.email_template_redaction_vers_redige', False)
             if template:
                 self.creer_notification(u'Rédaction vers rédigé')
                 template.send_mail(data.id, force_send=True, raise_exception=True)
-
+            data.write({'state': 'redige'})
 
 
     @api.multi
