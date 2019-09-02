@@ -554,7 +554,7 @@ class is_eig_destinataire(models.Model):
     mail_destination  = fields.Char(u'Mail de destinataire')
     trame_id          = fields.Many2one('is.trame', u'Modèle ODT')
     mail_template_id  = fields.Many2one('mail.template', u'Modèle du mail')
-    attachment_ids    = fields.Many2many('ir.attachment', 'is_eig_destinataire_attachment_rel', 'eig_destinataire_id', 'attachment_id', u'Pièces jointes')
+    attachment_ids    = fields.Many2many('ir.attachment', 'is_eig_destinataire_attachment_rel', 'eig_destinataire_id', 'attachment_id', u'Formulaire EIG')
     is_eig_id         = fields.Many2one('is.eig', 'EIG')
 
 
@@ -1138,8 +1138,9 @@ class is_eig(models.Model):
         mails=[]
         for obj in self:
             mails.append(obj.etablissement_id.director_id.email)
-            for line in obj.etablissement_id.responsable_ids:
-                mails.append(line.email)
+            mails.append(obj.etablissement_id.responsible_id.email)
+            #for line in obj.etablissement_id.responsable_ids:
+            #    mails.append(line.email)
         mail=','.join(mails)
         return mail
 

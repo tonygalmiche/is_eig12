@@ -588,7 +588,7 @@
                     <group>
                         <group>
                               <field name="name" readonly="1"/>
-                              <field name="etablissement_id"  attrs="{'readonly': [('state','=','done')]}" />
+                              <field name="etablissement_id"  attrs="{'readonly': [('state','in',['valide','done'])]}" />
                         </group>
                         <group>
                               <field name="redacteur_id" attrs="{'invisible': [('etablissement_id','=',False)]}"/>
@@ -599,7 +599,7 @@
                     <group>
                         <group string="Evènement" attrs="{'invisible': [('etablissement_id','=',False)]}">
                             <field name="type_event_id" attrs="{
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }" />
                             <field 
                                 name="event_description" style="background-color:yellow;" 
@@ -610,7 +610,7 @@
                         </group>
                         <group attrs="{
                                 'invisible': [('type_event_id','=',False)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }">
                             <!-- <field name="type_risq_id" attrs="{'invisible': [('state','=','draft')]}  " />
                             <field name="nature_risq_id" /> -->
@@ -618,7 +618,7 @@
                             <field name="related_vsb_signalement_autorites" invisible="1" />
                             <field name="signalement_autorites" attrs="{
                                 'invisible': [('related_vsb_signalement_autorites', '=', False)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             <field name="related_vsb_auteur_ids" invisible="1" />
                             <field name="related_rqr_auteur_ids" invisible="1" />
@@ -644,12 +644,12 @@
                             "signalement" généré dans les "pièces-jointes" de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante".
                         </div>
                     </group>
-                    <group attrs="{'readonly': [('state','=','done')]}">
+                    <group attrs="{'readonly': [('state','in',['valide','done'])]}">
                         <label colspan="4" for="nature_event_id" attrs="{'invisible': [('type_event_id','=',False)]}" />
                         <div>
                         <field colspan="4" nolabel="1" name="nature_event_id" widget="many2many_tags" domain="[('id', 'in', type_nature_event_ids)]" attrs="{
                             'invisible': [('type_event_id','=',False)],
-                            'readonly': [('state','=','done')]
+                            'readonly': [('state','in',['valide','done'])]
                         }"/>
                         </div>
                         
@@ -660,7 +660,7 @@
                         <field colspan="4" nolabel="1" name="si_autre_presumees" attrs="{
                             'invisible': [('related_vsb_si_autre_presumees', '=', False)], 
                             'required':[('related_rqr_si_autre_presumees','=', True)],
-                            'readonly': [('state','=','done')]
+                            'readonly': [('state','in',['valide','done'])]
                         }"/>
                         </div>
                         
@@ -717,7 +717,7 @@
                             <field colspan="4" nolabel="1" name="start_date" attrs="{
                                 'invisible': [('related_vsb_start_date', '=', False)],
                                 'required':[('related_rqr_start_date','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -728,7 +728,7 @@
                             <field colspan="4" nolabel="1" name="end_date" attrs="{
                                 'invisible': [('related_vsb_end_date', '=', False)],
                                 'required':[('related_rqr_end_date','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -739,7 +739,7 @@
                             <field colspan="4" nolabel="1" name="date_heure_constatation_faits" attrs="{
                                 'invisible': [('related_vsb_date_heure_constatation_faits', '=', False)],
                                 'required':[('related_rqr_date_heure_constatation_faits','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -750,7 +750,7 @@
                             <field colspan="4" nolabel="1" name="lieu_faits" attrs="{
                                 'invisible': [('related_vsb_lieu_faits', '=', False)],
                                 'required':[('related_rqr_lieu_faits','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -761,7 +761,7 @@
                             <field colspan="4" nolabel="1" name="description_faits" attrs="{
                                 'invisible': [('related_vsb_description_faits', '=', False)],
                                 'required':[('related_rqr_description_faits','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -772,7 +772,7 @@
                             <field colspan="4" nolabel="1" name="criteres_generaux_ids" widget="many2many_tags" attrs="{
                                 'invisible': [('related_vsb_criteres_generaux_ids', '=', False)],
                                 'required':[('related_rqr_criteres_generaux_ids','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -783,7 +783,7 @@
                             <field name="solution_prise_en_charge" colspan="4" nolabel="1" attrs="{
                                 'invisible': [('related_vsb_solution_prise_en_charge', '=', False)],
                                 'required':[('related_rqr_solution_prise_en_charge','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -794,7 +794,7 @@
                             <field colspan="4" nolabel="1" name="demande_intervention_secours_ids" widget="many2many_tags" attrs="{
                                 'invisible': [('related_vsb_demande_intervention_secours_ids', '=', False)], 
                                 'required':[('related_rqr_demande_intervention_secours_ids','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }" />
                             </div>
 
@@ -805,7 +805,7 @@
                             <field colspan="4" nolabel="1" name="risque_reproductivite" attrs="{
                                 'invisible': [('related_vsb_risque_reproductivite', '=', False)], 
                                 'required':[('related_rqr_risque_reproductivite','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -817,7 +817,7 @@
                             <field colspan="4" nolabel="1" name="evenement_maitrise" attrs="{
                                 'invisible': [('related_vsb_evenement_maitrise', '=', False)], 
                                 'required':[('related_rqr_evenement_maitrise','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -828,7 +828,7 @@
                             <field colspan="4" nolabel="1" name="si_non_maitrise" attrs="{
                                 'invisible': [('related_vsb_si_non_maitrise', '=', False)], 
                                 'required':[('related_rqr_si_non_maitrise','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
 
@@ -839,7 +839,7 @@
                             <field colspan="4" nolabel="1" name="element_faits" attrs="{
                                 'invisible': [('related_vsb_element_faits', '=', False)],
                                 'required':[('related_rqr_element_faits','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                         </group>
@@ -859,7 +859,7 @@
                                 <field name="consequence_personne_prise_en_charge_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_consequence_personne_prise_en_charge_ids', '=', False)], 
                                     'required':[('related_rqr_consequence_personne_prise_en_charge_ids','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
     
@@ -870,7 +870,7 @@
                                 <field name="consequence_personnel_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_consequence_personnel_ids', '=', False)],
                                     'required':[('related_rqr_consequence_personnel_ids','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -881,7 +881,7 @@
                                 <field name="consequence_fonctionnement_stucture_ids" widget="many2many_tags" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_consequence_fonctionnement_stucture_ids', '=', False)],
                                     'required':[('related_rqr_consequence_fonctionnement_stucture_ids','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -892,7 +892,7 @@
                                 <field name="si_autre_pour_personnel" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_si_autre_pour_personnel', '=', False)],
                                     'required':[('related_rqr_si_autre_pour_personnel','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
     
@@ -903,7 +903,7 @@
                                 <field name="si_autre_pour_organisation" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_si_autre_pour_organisation', '=', False)],
                                     'required':[('related_rqr_si_autre_pour_organisation','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -914,7 +914,7 @@
                                 <field name="nb_jours_interuption_travail" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_nb_jours_interuption_travail', '=', False)],
                                     'required':[('related_rqr_nb_jours_interuption_travail','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
                         </group>
@@ -943,7 +943,7 @@
                                 <field name="fait_deja_produit" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_fait_deja_produit', '=', False)],
                                     'required':[('related_rqr_fait_deja_produit','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
                             <label for="eig_deja_declare" colspan="4" attrs="{'invisible': [('related_vsb_eig_deja_declare','=',False)]}"/>
@@ -953,7 +953,7 @@
                                 <field name="eig_deja_declare" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_eig_deja_declare', '=', False)],
                                     'required':[('related_rqr_eig_deja_declare','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -964,7 +964,7 @@
                                 <field name="risque_reproductibilite" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_risque_reproductibilite', '=', False)],
                                     'required':[('related_rqr_risque_reproductibilite','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -975,7 +975,7 @@
                                 <field name="risque_extension" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_risque_extension', '=', False)],
                                     'required':[('related_rqr_risque_extension','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -986,7 +986,7 @@
                                 <field name="risque_contentieux" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_risque_contentieux', '=', False)],
                                     'required':[('related_rqr_risque_contentieux','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -997,7 +997,7 @@
                                 <field name="evenement_semble_maitrise" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_evenement_semble_maitrise', '=', False)],
                                     'required':[('related_rqr_evenement_semble_maitrise','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
     
@@ -1008,7 +1008,7 @@
                                 <field name="si_non_maitrise_precisez" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_si_non_maitrise_precisez', '=', False)],
                                     'required':[('related_rqr_si_non_maitrise_precisez','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
                             <label for="maltraitance_fait_constate" colspan="4" attrs="{'invisible': [('related_vsb_maltraitance_fait_constate','=',False)]}"/>
@@ -1018,7 +1018,7 @@
                                 <field name="maltraitance_fait_constate" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_maltraitance_fait_constate', '=', False)],
                                     'required':[('related_rqr_maltraitance_fait_constate','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
                             <label for="sont_ils_frequent" colspan="4" attrs="{'invisible': [('related_vsb_sont_ils_frequent','=',False)]}"/>
@@ -1028,7 +1028,7 @@
                                 <field name="sont_ils_frequent" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_sont_ils_frequent', '=', False)],
                                     'required':[('related_rqr_sont_ils_frequent','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
                             <label for="problematique_familiale_reperee" colspan="4" attrs="{'invisible': [('related_vsb_problematique_familiale_reperee','=',False)]}"/>
@@ -1038,7 +1038,7 @@
                                 <field name="problematique_familiale_reperee" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_problematique_familiale_reperee', '=', False)],
                                     'required':[('related_rqr_problematique_familiale_reperee','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
                             <label for="objet_information_preoccupante" colspan="4" attrs="{'invisible': [('related_vsb_objet_information_preoccupante','=',False)]}"/>
@@ -1048,7 +1048,7 @@
                                 <field name="objet_information_preoccupante" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_objet_information_preoccupante', '=', False)],
                                     'required':[('related_rqr_objet_information_preoccupante','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
                             <label for="objet_signalement_justice" colspan="4" attrs="{'invisible': [('related_vsb_objet_signalement_justice','=',False)]}"/>
@@ -1058,7 +1058,7 @@
                                 <field name="objet_signalement_justice" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_objet_signalement_justice', '=', False)],
                                     'required':[('related_rqr_objet_signalement_justice','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             <label for="mesure_protection_enfance" colspan="4" attrs="{'invisible': [('related_vsb_mesure_protection_enfance','=',False)]}"/>
@@ -1068,7 +1068,7 @@
                                 <field name="mesure_protection_enfance" colspan="4" nolabel="1" attrs="{
                                     'invisible': [('related_vsb_mesure_protection_enfance', '=', False)],
                                     'required':[('related_rqr_mesure_protection_enfance','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
                         </group>
@@ -1091,7 +1091,7 @@
                         <field name="related_aut_vsb_adresse" invisible="1"  />
                         <field name="related_aut_rqr_adresse" invisible="1"   />
                         <field  name="auteur_ids" 
-                                attrs="{'readonly': [('state','=','done')]}"
+                                attrs="{'readonly': [('state','in',['valide','done'])]}"
                                 context="{
                                     'default_related_vsb_identifie': related_aut_vsb_identifie, 
                                     'default_related_rqr_identifie': related_aut_rqr_identifie, 
@@ -1169,7 +1169,7 @@
                         <field name="related_tem_vsb_qualite_id" invisible="1"  />
                         <field name="related_tem_rqr_qualite_id" invisible="1"   />
                         <field name="temoin_ids" 
-                            attrs="{'readonly': [('state','=','done')]}"
+                            attrs="{'readonly': [('state','in',['valide','done'])]}"
                             context="{
                                 'default_related_vsb_identifie': related_tem_vsb_identifie, 
                                 'default_related_rqr_identifie': related_tem_rqr_identifie, 
@@ -1268,7 +1268,7 @@
                             <field name="related_vict_rqr_address_mere" invisible="1"  />
                         </group> 
                         <field name="victim_ids"
-                            attrs="{'readonly': [('state','=','done')]}"
+                            attrs="{'readonly': [('state','in',['valide','done'])]}"
                             context="{
                                     'default_related_vsb_identifie': related_vict_vsb_identifie, 
                                     'default_related_rqr_identifie': related_vict_rqr_identifie, 
@@ -1439,7 +1439,7 @@
                             <field name="related_pers_rqr_tuteur_adresse"  invisible="1"  />
                         </group> 
                         <field name="personne_ids"
-                            attrs="{'readonly': [('state','=','done')]}"
+                            attrs="{'readonly': [('state','in',['valide','done'])]}"
                             context="{
                                     'default_related_vsb_identifie': related_pers_vsb_identifie, 
                                     'default_related_rqr_identifie': related_pers_rqr_identifie, 
@@ -1619,7 +1619,7 @@
                             <field name="related_autre_personne_rqr_auteur_victime"   invisible="1" />
                         </group> 
                         <field name="autre_personne_ids"
-                            attrs="{'readonly': [('state','=','done')]}"
+                            attrs="{'readonly': [('state','in',['valide','done'])]}"
                             context="{
                                     'default_related_vsb_identifie': related_autre_personne_vsb_identifie, 
                                     'default_related_rqr_identifie': related_autre_personne_rqr_identifie,
@@ -1682,7 +1682,7 @@
                             <field colspan="4" nolabel="1" name="si_causes_profondes" attrs="{
                                 'invisible': [('related_vsb_si_causes_profondes', '=', False)],
                                 'required':[('related_rqr_si_causes_profondes','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1693,7 +1693,7 @@
                             <field colspan="4" nolabel="1" name="si_reunion_debriefing" attrs="{
                                 'invisible': [('related_vsb_si_reunion_debriefing', '=', False)],
                                 'required':[('related_rqr_si_reunion_debriefing','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1704,7 +1704,7 @@
                             <field colspan="4" nolabel="1" name="reunion_debriefing" attrs="{
                                 'invisible': [('related_vsb_reunion_debriefing', '=', False)],
                                 'required':[('related_rqr_reunion_debriefing','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1715,7 +1715,7 @@
                             <field colspan="4" nolabel="1" name="causes_profondes" attrs="{
                                 'invisible': [('related_vsb_causes_profondes', '=', False)], 
                                 'required':[('related_rqr_causes_profondes','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1726,7 +1726,7 @@
                             <field colspan="4" nolabel="1" name="premiere_cause_identifiee" attrs="{
                                 'invisible': [('related_vsb_premiere_cause_identifiee', '=', False)],
                                 'required':[('related_rqr_premiere_cause_identifiee','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1737,7 +1737,7 @@
                             <field colspan="4" nolabel="1" name="evolution_previsible" attrs="{
                                 'invisible': [('related_vsb_evolution_previsible', '=', False)],
                                 'required':[('related_rqr_evolution_previsible','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1748,7 +1748,7 @@
                             <field colspan="4" nolabel="1" name="enseignements_a_tirer" attrs="{
                                 'invisible': [('related_vsb_enseignements_a_tirer', '=', False)],
                                 'required':[('related_rqr_enseignements_a_tirer','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                         </group>
@@ -1765,7 +1765,7 @@
                             <field colspan="4" nolabel="1" name="mesure_pour_proteger_accompagner" attrs="{
                                 'invisible': [('related_vsb_mesure_pour_proteger_accompagner', '=', False)],
                                 'required':[('related_rqr_mesure_pour_proteger_accompagner','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1776,7 +1776,7 @@
                             <field colspan="4" nolabel="1" name="mesure_pour_assurer_continuite" attrs="{
                                 'invisible': [('related_vsb_mesure_pour_assurer_continuite', '=', False)],
                                 'required':[('related_rqr_mesure_pour_assurer_continuite','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1787,7 +1787,7 @@
                             <field colspan="4" nolabel="1" name="mesure_egard_autres_personnes" attrs="{
                                 'invisible': [('related_vsb_mesure_egard_autres_personnes', '=', False)],
                                 'required':[('related_rqr_mesure_egard_autres_personnes','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1798,7 +1798,7 @@
                             <field colspan="4" nolabel="1" name="mesure_autre" attrs="{
                                 'invisible': [('related_vsb_mesure_autre', '=', False)],
                                 'required':[('related_rqr_mesure_autre','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                         </group>
@@ -1815,7 +1815,7 @@
                             <field colspan="4" nolabel="1" name="mesure_usagers" attrs="{
                                 'invisible': [('related_vsb_mesure_usagers', '=', False)],
                                 'required':[('related_rqr_mesure_usagers','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1826,7 +1826,7 @@
                             <field colspan="4" nolabel="1" name="mesure_personnel" attrs="{
                                 'invisible': [('related_vsb_mesure_personnel', '=', False)],
                                 'required':[('related_rqr_mesure_personnel','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1837,7 +1837,7 @@
                             <field colspan="4" nolabel="1" name="mesure_organisation" attrs="{
                                 'invisible': [('related_vsb_mesure_organisation', '=', False)],
                                 'required':[('related_rqr_mesure_organisation','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1848,7 +1848,7 @@
                             <field colspan="4" nolabel="1" name="mesure_structure" attrs="{
                                 'invisible': [('related_vsb_mesure_structure', '=', False)],
                                 'required':[('related_rqr_mesure_structure','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1863,7 +1863,7 @@
                                 <field colspan="4" nolabel="1" name="intervention_police" attrs="{
                                     'invisible': [('related_vsb_intervention_police', '=', False)],
                                     'required':[('related_rqr_intervention_police','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                                 </div>
                                 
@@ -1874,7 +1874,7 @@
                                 <field colspan="4" nolabel="1" name="depot_plainte" attrs="{
                                     'invisible': [('related_vsb_depot_plainte', '=', False)],
                                     'required':[('related_rqr_depot_plainte','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                                 </div>
                                 
@@ -1885,7 +1885,7 @@
                                 <field colspan="4" nolabel="1" name="enquete_police" attrs="{
                                     'invisible': [('related_vsb_enquete_police', '=', False)],
                                     'required':[('related_rqr_enquete_police','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                                 </div>
                                 
@@ -1896,7 +1896,7 @@
                                 <field colspan="4" nolabel="1" name="depot_plainte_famille" attrs="{
                                     'invisible': [('related_vsb_depot_plainte_famille', '=', False)],
                                     'required':[('related_rqr_depot_plainte_famille','=', True)],
-                                    'readonly': [('state','=','done')]
+                                    'readonly': [('state','in',['valide','done'])]
                                 }"/>
                                 </div>
                         </group>
@@ -1915,7 +1915,7 @@
                             <field name="related_inf_rqr_impact" invisible="1"  />
                         </group>
                         <field name="infos_ids"
-                            attrs="{'readonly': [('state','=','done')]}"
+                            attrs="{'readonly': [('state','in',['valide','done'])]}"
                             context="{'default_related_vsb_date': related_inf_vsb_date, 'default_related_rqr_date': related_inf_rqr_date, 
                             'default_related_vsb_user_id': related_inf_vsb_user_id, 'default_related_rqr_user_id': related_inf_rqr_user_id, 
                             'default_related_vsb_responsible_id': related_inf_vsb_responsible_id, 'default_related_rqr_responsible_id': related_inf_rqr_responsible_id,
@@ -1968,7 +1968,7 @@
                             <field colspan="4" nolabel="1" name="communication_prevue" attrs="{
                                 'invisible': [('related_vsb_communication_prevue', '=', False)],
                                 'required':[('related_rqr_communication_prevue','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                             
@@ -1979,7 +1979,7 @@
                             <field colspan="4" nolabel="1" name="communication_prevue_oui" attrs="{
                                 'invisible': [('related_vsb_communication_prevue_oui', '=', False)],
                                 'required':[('related_rqr_communication_prevue_oui','=', True)],
-                                'readonly': [('state','=','done')]
+                                'readonly': [('state','in',['valide','done'])]
                             }"/>
                             </div>
                         </group>
@@ -1999,10 +1999,18 @@
                         <group string="Pièces jointes">
                             <field name="related_vsb_note" invisible="1"  />
                             <field name="related_rqr_note" invisible="1"  />
-                            <field name="note" placeholder="Note ... " attrs="{'invisible': [('related_vsb_note', '=', False)], 'required':[('related_rqr_note','=', True)]}"/>    
+                            <field name="note" placeholder="Note ... " attrs="{
+                                'invisible': [('related_vsb_note', '=', False)],
+                                'required':[('related_rqr_note','=', True)],
+                                'readonly': [('state','in',['valide','done'])]
+                            }"/>    
                             <field name="related_vsb_attachment_ids" invisible="1"  />
                             <field name="related_rqr_attachment_ids" invisible="1"  />
-                            <field name="attachment_ids" widget="many2many_binary" attrs="{'invisible': [('related_vsb_attachment_ids', '=', False)], 'required':[('related_rqr_attachment_ids','=', True)]}"/>
+                            <field name="attachment_ids" widget="many2many_binary" attrs="{
+                                'invisible': [('related_vsb_attachment_ids', '=', False)],
+                                'required':[('related_rqr_attachment_ids','=', True)],
+                                'readonly': [('state','in',['valide','done'])]
+                            }"/>
                         </group>
                         <group string="Destinataires des mails">
                             <field name="destinataire_ids" nolabel="1" readonly="1">
