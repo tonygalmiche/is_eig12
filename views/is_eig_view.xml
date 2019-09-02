@@ -1334,7 +1334,12 @@
                                     <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
                                 </group>
                                 <group>
-                                <group string="Père">
+                                <group string="Père"
+                                    attrs="{'invisible': [
+                                        ('related_vsb_nom_pere','=',False),
+                                        ('related_vsb_prenom_pere','=',False),
+                                        ('related_vsb_address_pere','=',False)
+                                ]}">
                                     <field name="related_vsb_nom_pere" invisible="1"  />
                                     <field name="related_rqr_nom_pere" invisible="1"  />
                                     <field name="nom_pere" attrs="{'invisible': [('related_vsb_nom_pere', '=', False)], 'required':[('related_rqr_nom_pere','=', True)]}"/>
@@ -1345,7 +1350,12 @@
                                     <field name="related_rqr_address_pere" invisible="1"  />
                                     <field name="address_pere" attrs="{'invisible': [('related_vsb_address_pere', '=', False)], 'required':[('related_rqr_address_pere','=', True)]}"/>
                                 </group>
-                                <group string="Mère">
+                                <group string="Mère"
+                                    attrs="{'invisible': [
+                                        ('related_vsb_nom_mere','=',False),
+                                        ('related_vsb_prenom_mere','=',False),
+                                        ('related_vsb_address_mere','=',False)
+                                ]}">
                                     <field name="related_vsb_nom_mere"  invisible="1" />
                                     <field name="related_rqr_nom_mere" invisible="1"  />
                                     <field name="nom_mere" attrs="{'invisible': [('related_vsb_nom_mere', '=', False)], 'required':[('related_rqr_nom_mere','=', True)]}"/>

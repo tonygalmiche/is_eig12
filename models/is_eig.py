@@ -1556,10 +1556,6 @@ class is_eig(models.Model):
     @api.multi
     def generation_document_par_nom(self, destinataire, type="ODT", v=[], contenu="", nom=""):
         for data in self:
-
-            print(data,nom)
-
-
             name=nom[:-4]
             name=name+".odt"
             path = "/tmp/py3o_template.odt"
@@ -1635,8 +1631,9 @@ class is_eig(models.Model):
             for line in rec.type_event_id.mail_destination_ids:
                 if line.autorite_controle == autorite_controle:
                     destination = line.mail_destination
-            if not destination:
-                raise UserError(u"Mail de destination non renseigné pour l'autorité de contrôle "+autorite_controle+" et pour ce type d'événement !")
+            if rec.signalement_autorites==False and rec.type_event_id.code != 'SP':
+                if not destination:
+                    raise UserError(u"Mail de destination non renseigné pour l'autorité de contrôle "+autorite_controle+" et pour ce type d'événement !")
 
             #    ('ars'      , 'ARS'),
             #    ('cd_se'    , 'CD pour SE'),
@@ -1679,11 +1676,6 @@ class is_eig(models.Model):
                 trame_id = departement.trame_sea_id
             if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
                 trame_id = departement.trame_ip_id
-
-
-
-            print(trame_id,autorite_controle)
-
 
             #if not trame_id and autorite_controle!='drdjscs':
             #    raise UserError(u"Trame non identifée pour ce type d'évènement et ce destinataire !")
