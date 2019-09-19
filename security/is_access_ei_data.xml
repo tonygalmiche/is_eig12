@@ -3,9 +3,17 @@
 <data>
 
     <record id="is_ei_model_access_read_user" model="ir.rule">
-        <field name="name">EI - Accès en consultation aux membres de l'établissement</field>
+        <field name="name">EI - Accès en consultation aux rédacteur, valideur, directeur et responsable établissement</field>
         <field name="model_id" ref="model_is_ei"/>
-        <field name="domain_force">[( 'etablissement_id.membre_ids', 'in', user.id) ]</field>
+        <field name="domain_force">['|','|','|','|',
+            ('redacteur_id', '=', user.id),
+            ('valideur_id', '=', user.id),
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id),
+            ('etablissement_id.responsable_ids','in',user.id)
+        ]</field>
+
+
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field eval="0" name="perm_unlink"/>
         <field eval="0" name="perm_write"/>
