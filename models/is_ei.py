@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, exceptions, fields, models, _
-
+from odoo import api, exceptions, fields, models, _, SUPERUSER_ID
 
 class is_ei(models.Model):
     _name = 'is.ei'
@@ -12,7 +11,7 @@ class is_ei(models.Model):
     name                    = fields.Char('N°')
     etablissement_id        = fields.Many2one('is.etablissement', u'Établissement', required=True)
     redacteur_id            = fields.Many2one('res.users', u'Rédacteur', readonly=True, required=True, default=lambda self: self.env.uid)
-    valideur_id             = fields.Many2one('res.users', 'Valideur')
+    valideur_id             = fields.Many2one('res.users', 'Valideur', readonly=True)
     #type_event_id           = fields.Many2one('is.type.evenement.ei', u"Type d'événement", required=True)
     nature_event_id         = fields.Many2one('is.nature.evenement.ei', u"Nature d'événement", required=True)
     date_faits              = fields.Datetime('Date/heure', required=True)
@@ -50,6 +49,143 @@ class is_ei(models.Model):
     concernant_travail      = fields.Text(u'Concernant l’organisation du travail')
     concernant_structure    = fields.Text('Concernant la structure ')
     
+    btn_redaction_ei        = fields.Boolean('Bouton vers Rédaction'   , compute='_btn_redaction_ei')
+    btn_valider_ei          = fields.Boolean('Bouton vers Valider'     , compute='_btn_valider_ei')
+    btn_rediger_ei          = fields.Boolean('Bouton vers Rédiger'     , compute='_btn_rediger_ei')
+    btn_send_mail_ei        = fields.Boolean('Bouton envoyer mail'     , compute='_btn_send_mail_ei')
+    btn_convertir_en_eig    = fields.Boolean('Bouton convertir en EIG' , compute='_btn_convertir_en_eig')
+    partner_id              = fields.Many2one('res.partner', u'Partner', compute='_partner_id')
+
+
+    @api.multi
+    def liste_mails(self, subject):
+        for obj in self:
+            return {
+                'name': "Historique des mails",
+                'view_mode': 'tree,form',
+                'view_type': 'form',
+                'res_model': 'mail.mail',
+                'type': 'ir.actions.act_window',
+                'domain': [
+                    ('model' ,'=','is.ei'),
+                    ('res_id','=',obj.id),
+                ],
+            }
+
+
+    @api.depends('redacteur_id')
+    def _partner_id(self):
+        for obj in self:
+            obj.partner_id=obj.redacteur_id.partner_id
+
+
+    @api.multi
+    def get_responsable_ids(self):
+        for obj in self:
+            responsable_ids=[]
+            for responsable in obj.etablissement_id.responsable_ids:
+                responsable_ids.append(responsable.id)
+            return responsable_ids
+
+
+    @api.depends('state','etablissement_id','redacteur_id')
+    def _btn_redaction_ei(self):
+        for obj in self:
+            r = False
+            responsable_ids=self.get_responsable_ids()
+            if obj.state == "redige":
+                if self._uid == SUPERUSER_ID \
+                    or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
+                    or self.env.user.has_group('is_eig12.group_is_directeur') \
+                    or self._uid == obj.etablissement_id.director_id.id \
+                    or self._uid == obj.etablissement_id.responsible_id.id \
+                    or self._uid in responsable_ids:
+                    r = True
+            obj.btn_redaction_ei = r
+
+    @api.depends('state','etablissement_id','redacteur_id')
+    def _btn_valider_ei(self):
+        for obj in self:
+            r = False
+            responsable_ids=self.get_responsable_ids()
+            if obj.state == "redige":
+                if self._uid == SUPERUSER_ID \
+                    or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
+                    or self.env.user.has_group('is_eig12.group_is_directeur') \
+                    or self._uid == obj.etablissement_id.director_id.id \
+                    or self._uid == obj.etablissement_id.responsible_id.id \
+                    or self._uid in responsable_ids:
+                    r = True
+            obj.btn_valider_ei = r
+
+    @api.depends('state','etablissement_id','redacteur_id')
+    def _btn_rediger_ei(self):
+        for obj in self:
+            r = False
+            responsable_ids=self.get_responsable_ids()
+            if obj.state == "valide":
+                if self._uid == SUPERUSER_ID \
+                    or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
+                    or self.env.user.has_group('is_eig12.group_is_directeur') \
+                    or self._uid == obj.etablissement_id.director_id.id \
+                    or self._uid == obj.etablissement_id.responsible_id.id \
+                    or self._uid in responsable_ids:
+                    r = True
+            obj.btn_rediger_ei = r
+
+    @api.depends('state','etablissement_id','redacteur_id')
+    def _btn_send_mail_ei(self):
+        for obj in self:
+            r = False
+            responsable_ids=self.get_responsable_ids()
+            if obj.state == "draft":
+                if self._uid == SUPERUSER_ID \
+                    or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
+                    or self.env.user.has_group('is_eig12.group_is_directeur') \
+                    or self._uid == obj.etablissement_id.director_id.id \
+                    or self._uid == obj.etablissement_id.responsible_id.id \
+                    or self._uid in responsable_ids:
+                    r = True
+            obj.btn_send_mail_ei = r
+
+
+    @api.depends('state','etablissement_id','redacteur_id')
+    def _btn_convertir_en_eig(self):
+        for obj in self:
+            r = False
+            responsable_ids=self.get_responsable_ids()
+            if obj.state == "draft" or obj.state == "redige":
+                if self._uid == SUPERUSER_ID \
+                    or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
+                    or self.env.user.has_group('is_eig12.group_is_directeur') \
+                    or self._uid == obj.etablissement_id.director_id.id \
+                    or self._uid == obj.etablissement_id.responsible_id.id \
+                    or self._uid in responsable_ids:
+                    r = True
+            obj.btn_convertir_en_eig = r
+
+
+    @api.multi
+    def action_convertir_en_eig(self):
+        for obj in self:
+            type_event = self.env['is.type.evenement'].search([('code', '=', 'IP')])[0]
+            vals={
+                'etablissement_id': obj.etablissement_id.id,
+                'redacteur_id'    : obj.redacteur_id.id,
+                'valideur_id'     : obj.valideur_id.id,
+                'type_event_id'   : type_event.id,
+            }
+            eig=self.env['is.eig'].create(vals)
+            print(eig)
+            return {
+                'name': "EIG",
+                'view_mode': 'form,tree',
+                'view_type': 'form',
+                'res_model': 'is.eig',
+                'type': 'ir.actions.act_window',
+                'res_id': eig.id,
+            }
+
 
 
     @api.multi
@@ -84,6 +220,26 @@ class is_ei(models.Model):
         })
         return super(is_ei, self).copy(default)
 
+
+
+    @api.multi
+    def creer_notification(self, subject):
+        for obj in self:
+            vals={
+                'subject'       : subject,
+                'body'          : subject, 
+                'body_html'     : subject, 
+                'model'         : self._name,
+                'res_id'        : obj.id,
+                'notification'  : True,
+                'message_type'  : 'comment',
+                'state'         : 'sent',
+            }
+            email=self.env['mail.mail'].create(vals)
+
+
+
+
     @api.multi
     def action_rediger_ei(self):
         for data in self:
@@ -91,21 +247,25 @@ class is_ei(models.Model):
             template = self.env.ref('is_eig12.email_template_ei_vers_redige', False)
             if template:
                 template.send_mail(data.id, force_send=True, raise_exception=True)
+            self.creer_notification(u'vers Rédigé')
 
     @api.multi
-    def action_valider_eig(self):
+    def action_valider_ei(self):
         """ transaction de redigé vers validé """
         for data in self:
-            data.write({'state': 'valide'})
             template = self.env.ref('is_eig12.email_template_ei_vers_valide', False)
             if template:
                 template.send_mail(data.id, force_send=True, raise_exception=True)
+            self.creer_notification(u'de Redigé vers Validé')
+            data.write({'state': 'valide'})
+
 
     @api.multi
-    def action_rediger_eig(self):
+    def action_rediger_ei(self):
         """ transaction de validé vers redigé """
         for data in self:
-            data.write({'state': 'redige'})
+            data.sudo().write({'state': 'redige'})
+            self.creer_notification(u'de Validé vers Redigé')
 
     @api.multi
     def action_send_manual_ei(self):

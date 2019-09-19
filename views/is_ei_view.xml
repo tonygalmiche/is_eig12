@@ -9,15 +9,35 @@
             <field name="arch" type="xml">
                 <form string="Evénements Indésirables">
                     <header>
+
+                        <!--
                         <button name="action_rediger_ei"             states="draft"   type="object" string="Rédiger"   class="oe_highlight" />
                         <button name="%(action_is_ei_motif_retour)d" states="redige"  type="action" string="Rédaction" groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur"/>
                         <button name="action_valider_eig"            states="redige"  type="object" string="Valider"   groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur" class="oe_highlight" />
                         <button name="action_rediger_eig"            states="valide"  type="object" string="Rédiger"   groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur"/>
-                        <!-- <button name="imprimer_rapport"              states="draft,redige,valide" type="object" string="Imprimer" /> -->
                         <button name="action_send_manual_ei"         states="draft" type="object"   string="Envoyer un email" groups="is_eig12.group_is_gestionnaire_ei,is_eig12.group_is_directeur" />
+                        -->
+
+                        <field name="btn_redaction_ei"     invisible="1"/>
+                        <field name="btn_valider_ei"       invisible="1"/>
+                        <field name="btn_rediger_ei"       invisible="1"/>
+                        <field name="btn_send_mail_ei"     invisible="1"/>
+                        <field name="btn_convertir_en_eig" invisible="1"/>
+
+                        <button name="action_rediger_ei"             type="object" string="Rédiger"          states="draft" class="oe_highlight" />
+                        <button name="%(action_is_ei_motif_retour)d" type="action" string="Rédaction"        attrs="{'invisible':[('btn_redaction_ei','!=',True)]}" />
+                        <button name="action_valider_ei"             type="object" string="Valider"          attrs="{'invisible':[('btn_valider_ei','!=',True)]}" class="oe_highlight" />
+                        <button name="action_rediger_ei"             type="object" string="Rédiger"          attrs="{'invisible':[('btn_rediger_ei','!=',True)]}" />
+                        <button name="action_send_manual_ei"         type="object" string="Envoyer un email" attrs="{'invisible':[('btn_send_mail_ei','!=',True)]}" />
+                        <button name="action_convertir_en_eig"       type="object" string="Convertir en EIG" attrs="{'invisible':[('btn_convertir_en_eig','!=',True)]}" confirm="Voulez-vous vraiment créer un nouvel EIG à partir cet EI ?" />
+
+
                         <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done"                       />
                     </header>
                     <sheet>
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                            <button class="oe_inline oe_stat_button" string="Mails " name= "liste_mails" type="object" icon="fa-cog" style="margin-left:10px;padding-right:5px" groups="is_eig12.group_is_gestionnaire"/>
+                        </div>
                         <group>
                             <group>
                                 <field name="name" readonly="1"/>
