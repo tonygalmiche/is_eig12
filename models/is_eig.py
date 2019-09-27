@@ -2192,6 +2192,7 @@ class is_eig(models.Model):
     #Variables calculées pour modèles ODT
     autorite_administrative_informee = fields.Char(u'Autorités administratives informées', compute='_autorite_administrative_informee')
 
+    ei_id = fields.Many2one('is.ei', u'EI', readonly=True)
     
 
 

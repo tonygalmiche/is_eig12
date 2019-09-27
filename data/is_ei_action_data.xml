@@ -1,13 +1,14 @@
 <?xml version="1.0" ?>
 <odoo>
+    <data noupdate="0">
 
     <!-- Mail au valideur de EI lors de passage de status rédaction au status rédigé -->
-    <data noupdate="0">
     <record id="email_template_ei_vers_redige" model="mail.template">
         <field name="name">EI - Rédaction vers Rédigé</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] EI à valider</field>
         <field name="email_to">${object.valideur_id.email}</field>
+        <field name="email_cc">${object.get_directeur_autre()}</field>
         <field name="model_id" ref="is_eig12.model_is_ei"/>
         <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
@@ -22,16 +23,16 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
+
 
 
     <!-- Mail au rédacteur et valideur de EI lors de passage de status rédigé au status validé -->
-    <data noupdate="0">
     <record id="email_template_ei_vers_valide" model="mail.template">
         <field name="name">EI - Rédigé vers Validé</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] EI validé</field>
-        <field name="email_to">${object.redacteur_id.email},${object.valideur_id.email}</field>
+        <field name="email_to">${object.redacteur_id.email}</field>
+        <field name="email_cc">${object.get_directeur_responsable_autre()}</field>
         <field name="model_id" ref="is_eig12.model_is_ei"/>
         <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
@@ -46,16 +47,16 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
 
 
-<!-- Mail au rédacteur de EI lors de passage de status rédigé au status rédaction -->
-    <data noupdate="0">
+
+    <!-- Mail au rédacteur de EI lors de passage de status rédigé au status rédaction -->
     <record id="email_template_ei_vers_redaction" model="mail.template">
         <field name="name">EI - Rédigé vers Rédaction</field>
         <field name="email_from">${user.email}</field>
         <field name="subject">[${object.name}] retour Rédaction</field>
         <field name="email_to">${object.redacteur_id.email}</field>
+        <field name="email_cc">${object.get_directeur_responsable_autre()}</field>
         <field name="model_id" ref="is_eig12.model_is_ei"/>
         <field name="auto_delete" eval="False"/>
         <field name="body_html"><![CDATA[
@@ -71,6 +72,31 @@
 <p>Cordialement.</p>
         ]]></field>
     </record>
-    </data>
 
+
+    <!-- Mail Transformation EI en EIG -->
+    <record id="email_template_ei_vers_eig" model="mail.template">
+        <field name="name">EI - Transformation EI en EIG</field>
+        <field name="email_from">${user.email}</field>
+        <field name="subject">[${object.name}] transformation EI en EIG</field>
+        <field name="email_to">${object.redacteur_id.email}</field>
+        <field name="email_cc">${object.get_directeur_responsable_autre()}</field>
+        <field name="model_id" ref="is_eig12.model_is_ei"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+<p>Bonjour,</p>
+<p>Votre déclaration d'EI vient d'être transformée en EIG :
+<ul>
+    <li>N°EI : <a href="${object.get_signup_url()}">${object.name}</a></li>
+    <li>N°EIG : ${object.eig_id.name}</li>
+    <li>Rédacteur : ${object.redacteur_id.name}</li>
+    <li>Établissement : ${object.etablissement_id.name}</li>
+</ul>
+<p>Merci d'en prendre connaissance en <a href="${object.get_signup_url()}">cliquant ici</a>.</p>
+<p>Cordialement.</p>
+        ]]></field>
+    </record>
+
+
+    </data>
 </odoo>

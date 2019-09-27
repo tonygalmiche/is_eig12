@@ -27,12 +27,12 @@
                         <button name="action_rediger_ei"             type="object" string="Rédiger"          states="draft" class="oe_highlight" />
                         <button name="%(action_is_ei_motif_retour)d" type="action" string="Rédaction"        attrs="{'invisible':[('btn_redaction_ei','!=',True)]}" />
                         <button name="action_valider_ei"             type="object" string="Valider"          attrs="{'invisible':[('btn_valider_ei','!=',True)]}" class="oe_highlight" />
-                        <button name="action_rediger_ei"             type="object" string="Rédiger"          attrs="{'invisible':[('btn_rediger_ei','!=',True)]}" />
+                        <!--<button name="action_rediger_ei"             type="object" string="Rédiger"          attrs="{'invisible':[('btn_rediger_ei','!=',True)]}" />-->
                         <button name="action_send_manual_ei"         type="object" string="Envoyer un email" attrs="{'invisible':[('btn_send_mail_ei','!=',True)]}" />
                         <button name="action_convertir_en_eig"       type="object" string="Convertir en EIG" attrs="{'invisible':[('btn_convertir_en_eig','!=',True)]}" confirm="Voulez-vous vraiment créer un nouvel EIG à partir cet EI ?" />
 
 
-                        <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done"                       />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,redige,valide,complet,done"/>
                     </header>
                     <sheet>
                         <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
@@ -44,8 +44,8 @@
                                 <field name="etablissement_id" />
                             </group>
                             <group>
-                                <field name="redacteur_id" />
-                                <field name="valideur_id" />
+                                <field name="redacteur_id"/>
+                                <field name="valideur_id"/>
                             </group>
                         </group>
                         <group>
@@ -153,6 +153,13 @@
                                  <group string="Pièces jointes">
                                     <field name="attachment_ids" widget="many2many_binary" />
                                 </group>
+
+
+                                <group>
+                                    <field name="eig_id" attrs="{'invisible': [('eig_id', '=', False)]}"/>
+                                </group>
+
+
                             </page>
 
 

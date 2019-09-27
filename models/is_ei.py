@@ -11,7 +11,7 @@ class is_ei(models.Model):
     name                    = fields.Char('N°')
     etablissement_id        = fields.Many2one('is.etablissement', u'Établissement', required=True)
     redacteur_id            = fields.Many2one('res.users', u'Rédacteur', readonly=True, required=True, default=lambda self: self.env.uid)
-    valideur_id             = fields.Many2one('res.users', 'Valideur', readonly=True)
+    valideur_id             = fields.Many2one('res.users', 'Valideur', compute='_valideur_id', readonly=True, store=True)
     #type_event_id           = fields.Many2one('is.type.evenement.ei', u"Type d'événement", required=True)
     nature_event_id         = fields.Many2one('is.nature.evenement.ei', u"Nature d'événement", required=True)
     date_faits              = fields.Datetime('Date/heure', required=True)
@@ -33,9 +33,12 @@ class is_ei(models.Model):
 #     auteur_id = fields.Many2one('res.users', 'Auteur (responsable de la diffusion)')
     attachment_ids          = fields.Many2many('ir.attachment', 'is_ei_attachment_rel', 'ei_id', 'attachment_id', u'Pièces jointes')
     motif_ids               = fields.One2many('is.motif.retour.ei', 'ei_id1', 'Motif de retour', readonly=True)
-    state                   = fields.Selection([('draft', u'Rédaction'),
-                              ('redige', u'Rédigé'),
-                              ('valide', u'Validé')], u'État', default='draft', readonly=True)
+    state                   = fields.Selection([
+                                ('draft', u'Rédaction'),
+                                ('redige', u'Rédigé'),
+                                ('valide', u'Validé'),
+                                ('eig', u'EIG'),
+                            ], u'État', default='draft', readonly=True)
     pour_proteger           = fields.Text(u'Pour protéger, accompagner ou soutenir les personnes victimes ou exposées')
     pour_assurer            = fields.Text(u'Pour assurer la continuité de la prise en charge, le cas échéant')
     legard                  = fields.Text(u'A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)')
@@ -55,6 +58,7 @@ class is_ei(models.Model):
     btn_send_mail_ei        = fields.Boolean('Bouton envoyer mail'     , compute='_btn_send_mail_ei')
     btn_convertir_en_eig    = fields.Boolean('Bouton convertir en EIG' , compute='_btn_convertir_en_eig')
     partner_id              = fields.Many2one('res.partner', u'Partner', compute='_partner_id')
+    eig_id                  = fields.Many2one('is.eig', u'EIG', readonly=True)
 
 
     @api.multi
@@ -71,6 +75,12 @@ class is_ei(models.Model):
                     ('res_id','=',obj.id),
                 ],
             }
+
+
+    @api.depends('etablissement_id')
+    def _valideur_id(self):
+        for obj in self:
+            obj.valideur_id = obj.etablissement_id.responsible_id.id
 
 
     @api.depends('redacteur_id')
@@ -154,7 +164,7 @@ class is_ei(models.Model):
         for obj in self:
             r = False
             responsable_ids=self.get_responsable_ids()
-            if obj.state == "draft" or obj.state == "redige":
+            if obj.state == "redige" or obj.state == "valide":
                 if self._uid == SUPERUSER_ID \
                     or self.env.user.has_group('is_eig12.group_is_gestionnaire_ei') \
                     or self.env.user.has_group('is_eig12.group_is_directeur') \
@@ -168,15 +178,34 @@ class is_ei(models.Model):
     @api.multi
     def action_convertir_en_eig(self):
         for obj in self:
+            attachment_ids=[]
+            for attachment in obj.attachment_ids:
+                attachment_ids.append(attachment.id)
             type_event = self.env['is.type.evenement'].search([('code', '=', 'IP')])[0]
             vals={
-                'etablissement_id': obj.etablissement_id.id,
-                'redacteur_id'    : obj.redacteur_id.id,
-                'valideur_id'     : obj.valideur_id.id,
-                'type_event_id'   : type_event.id,
+                'start_date'                   : obj.date_faits,
+                'date_heure_constatation_faits': obj.date_constatation_faits,
+                'lieu_faits'                   : obj.lieu_faits,
+                'description_faits'            : obj.description_faits,
+                'causes_profondes'             : obj.une_recherche,
+                'attachment_ids'               : [(6,0,attachment_ids)],
+                'etablissement_id'             : obj.etablissement_id.id,
+                'redacteur_id'                 : obj.redacteur_id.id,
+                'valideur_id'                  : obj.valideur_id.id,
+                'type_event_id'                : type_event.id,
+                'ei_id'                        : obj.id,
+
             }
             eig=self.env['is.eig'].create(vals)
-            print(eig)
+            vals=eig.onchange_type_event_id()
+            if 'value' in vals:
+                eig.write(vals['value'])
+            obj.eig_id = eig.id
+            template = self.env.ref('is_eig12.email_template_ei_vers_eig', False)
+            if template:
+                template.send_mail(obj.id, force_send=True, raise_exception=True)
+            self.creer_notification(u'vers EIG')
+            obj.state='eig'
             return {
                 'name': "EIG",
                 'view_mode': 'form,tree',
@@ -195,10 +224,10 @@ class is_ei(models.Model):
             url = "https://eig.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.ei"
         return url
 
-    @api.onchange('etablissement_id')
-    def onchange_etablissement_id(self):
-        if self.etablissement_id:
-            self.valideur_id = self.etablissement_id.director_id and self.etablissement_id.director_id.id
+    #@api.onchange('etablissement_id')
+    #def onchange_etablissement_id(self):
+    #    if self.etablissement_id:
+    #        self.valideur_id = self.etablissement_id.responsible_id and self.etablissement_id.responsible_id.id
 
     @api.model
     def create(self, vals):
@@ -207,7 +236,7 @@ class is_ei(models.Model):
 #             res = self.get_valideur_traiteurs(vals['etablissement_id'])
             etablissement_obj = self.env['is.etablissement']
             etablissement = etablissement_obj.browse(vals['etablissement_id'])
-            vals.update({'valideur_id': etablissement.director_id and etablissement.director_id.id or False})
+            #vals.update({'valideur_id': etablissement.responsible_id and etablissement.responsible_id.id or False})
         return super(is_ei, self).create(vals)
 
     @api.multi
@@ -239,6 +268,31 @@ class is_ei(models.Model):
 
 
 
+    @api.multi
+    def get_directeur_autre(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.etablissement_id.director_id.email)
+            for line in obj.etablissement_id.responsable_ids:
+                if line.email:
+                    mails.append(line.email)
+        mail=','.join(mails)
+        return mail
+
+
+
+    @api.multi
+    def get_directeur_responsable_autre(self):
+        mails=[]
+        for obj in self:
+            mails.append(obj.etablissement_id.director_id.email)
+            mails.append(obj.etablissement_id.responsible_id.email)
+            for line in obj.etablissement_id.responsable_ids:
+                if line.email:
+                    mails.append(line.email)
+        mail=','.join(mails)
+        return mail
+
 
     @api.multi
     def action_rediger_ei(self):
@@ -247,7 +301,7 @@ class is_ei(models.Model):
             template = self.env.ref('is_eig12.email_template_ei_vers_redige', False)
             if template:
                 template.send_mail(data.id, force_send=True, raise_exception=True)
-            self.creer_notification(u'vers Rédigé')
+            self.creer_notification(u'de Rédaction vers Rédigé')
 
     @api.multi
     def action_valider_ei(self):
@@ -260,12 +314,12 @@ class is_ei(models.Model):
             data.write({'state': 'valide'})
 
 
-    @api.multi
-    def action_rediger_ei(self):
-        """ transaction de validé vers redigé """
-        for data in self:
-            data.sudo().write({'state': 'redige'})
-            self.creer_notification(u'de Validé vers Redigé')
+#    @api.multi
+#    def action_rediger_ei(self):
+#        """ transaction de validé vers redigé """
+#        for data in self:
+#            data.sudo().write({'state': 'redige'})
+#            self.creer_notification(u'de Validé vers Redigé')
 
     @api.multi
     def action_send_manual_ei(self):

@@ -2035,9 +2035,18 @@
                         </group>
 
 
+                        <group>
+                            <field name="ei_id" attrs="{'invisible': [('ei_id', '=', False)]}"/>
+                        </group>
+
+
+
                         <group string="Variables pour modèles ODT" groups="is_eig12.group_is_gestionnaire">
                             <field name="autorite_administrative_informee"/>
                         </group>
+
+
+
 
 
 
