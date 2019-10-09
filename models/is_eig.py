@@ -1238,7 +1238,15 @@ class is_eig(models.Model):
                     attachment_ids=[]
                     for attachment in destinataire.attachment_ids:
                         attachment_ids.append(attachment.id)
-                    #Ajout des pièces jointes au modèle
+
+                    # Ajout des elements complémentaires ***********************
+                    print("Ajout des elements complémentaires")
+                    for attachment in doc.attachment_ids:
+                        print(attachment)
+                        attachment_ids.append(attachment.id)
+
+
+                    # Ajout des pièces jointes au modèle ***********************
                     template_id.write({'attachment_ids': [(6, 0, attachment_ids)]})
                     # Envoi du mail (avec les pièces jointes)
                     template_id.send_mail(doc.id, force_send=True, raise_exception=True)

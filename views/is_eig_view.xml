@@ -1996,7 +1996,7 @@
                                 </tree>
                             </field>
                         </group>
-                        <group string="Pièces jointes">
+                        <group>
                             <field name="related_vsb_note" invisible="1"  />
                             <field name="related_rqr_note" invisible="1"  />
                             <field name="note" placeholder="Note ... " attrs="{

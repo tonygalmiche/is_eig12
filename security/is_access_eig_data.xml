@@ -79,7 +79,7 @@
         <field eval="1" name="perm_read"/>
         <field eval="0" name="perm_create"/>
     </record>
-    <record id="is_eig_model_access_write_valide" model="ir.rule">
+    <record id="is_eig_model_access_write_traiteur" model="ir.rule">
         <field name="name">EIG - Accès en modification au groupe 'Traiteur des EIG' pour tous les états</field>
         <field name="model_id" ref="model_is_eig"/>
         <field name="domain_force">[(1,'=',1)]</field>
@@ -104,15 +104,40 @@
         <field eval="1" name="perm_read"/>
         <field eval="0" name="perm_create"/>
     </record>
-    <record id="is_eig_model_access_write_done" model="ir.rule">
-        <field name="name">EIG[Traité] - Accès en modification au créateur, au valideur, au directeur et aux responsables de l'établissement (uniquement onglet 'Elements Complémentaires')</field>
+
+
+
+    <record id="is_eig_model_access_write_valide" model="ir.rule">
+        <field name="name">EIG[Validé] - Accès en modification au créateur, au valideur, au directeur et aux responsables de l'établissement (pour ajouter des notes en dessous)</field>
         <field name="model_id" ref="model_is_eig"/>
         <field name="domain_force">
-            [   '&amp;', ('state','=','done'),
-                '|','|','|',
+            [   '&amp;', ('state','=','valide'),
+                '|','|','|','|',
                 ('redacteur_id', '=', user.id),
                 ('valideur_id', '=', user.id),
                 ('etablissement_id.responsible_id','=',user.id),
+                ('etablissement_id.responsable_ids','in',user.id),
+                ('etablissement_id.director_id','=',user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="1" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
+    <record id="is_eig_model_access_write_done" model="ir.rule">
+        <field name="name">EIG[Traité] - Accès en modification au créateur, au valideur, au directeur et aux responsables de l'établissement (pour ajouter des notes en dessous)</field>
+        <field name="model_id" ref="model_is_eig"/>
+        <field name="domain_force">
+            [   '&amp;', ('state','=','done'),
+                '|','|','|','|',
+                ('redacteur_id', '=', user.id),
+                ('valideur_id', '=', user.id),
+                ('etablissement_id.responsible_id','=',user.id),
+                ('etablissement_id.responsable_ids','in',user.id),
                 ('etablissement_id.director_id','=',user.id)
             ]
         </field>
