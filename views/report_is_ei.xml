@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <template id="report_is_ei_document">
+        <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2><center>Évènement indésirable</center></h2>
+                <div class="row">
+                    <table class="table" >
+                        <thead>
+                            <tr>
+                                <th style="border:none;"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                    
+
+                <div class="row">
+                    <div class="col-xs-6">
+                          <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Evènement</th>
+                                    <th></th>                               
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Etablissement :</th>
+                                    <td>    
+                                        <span t-if="o.etablissement_id" t-field="o.etablissement_id.name" />    
+                                    </td>                               
+                                </tr>
+                                <tr>
+                                    <th>Rédacteur :</th>
+                                    <td>    
+                                        <span t-if="o.redacteur_id" t-field="o.redacteur_id.name"/>        
+                                    </td>                               
+                                </tr>
+                                <tr>
+                                    <th>Valideur :</th>
+                                    <td>    
+                                        <span t-if="o.valideur_id" t-field="o.valideur_id.name"/> 
+                                    </td>                               
+                                </tr>
+                                <tr>
+                                    <th>Nature d'évènement :</th>
+                                    <td>
+                                        <span t-if="o.nature_event_id"  t-field="o.nature_event_id.name"/>
+                                    </td>                               
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-6">
+                          <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Faits</th>
+                                    <th></th>                               
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Date/Heure :</th>
+                                    <td>    
+                                        <span t-if="o.date_faits" t-field="o.date_faits" />    
+                                    </td>                               
+                                </tr>
+                                <tr>
+                                    <th>Description :</th>
+                                    <td>    
+                                        <span t-if="o.description_faits" t-field="o.description_faits"/>        
+                                    </td>                               
+                                </tr>
+                                <tr>
+                                    <th>Lieu :</th>
+                                    <td>    
+                                        <span t-if="o.lieu_faits" t-field="o.lieu_faits"/> 
+                                    </td>                               
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </t>
+        </t>
+    </template>
+    
+    <template id="report_is_ei">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="is_eig12.report_is_ei_document" />
+            </t>
+        </t>
+    </template>
+
+
+    <report 
+        id="is_ei_report"
+        string="Évènement Indésirable"
+        model="is.ei" 
+        report_type="qweb-pdf"
+        file="is_eig12.report_is_ei" 
+        name="is_eig12.report_is_ei" 
+    />
+
+
+
+</data>
+</odoo>
