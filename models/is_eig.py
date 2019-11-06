@@ -1651,6 +1651,10 @@ class is_eig(models.Model):
             #    ('drdjscs'  , 'DRDJSCS'),
             departement = rec.etablissement_id.departement_id
             mails  = []
+
+
+
+
             if destination == 'ars' or destination == 'ars_cd_se':
                 if departement.mail_ars:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
@@ -1676,20 +1680,27 @@ class is_eig(models.Model):
                 else:
                     raise UserError(u"Mail DRDJSCS non renseigné pour ce département !")
 
-            trame_id = False
-            if rec.type_event_id.code == "SE" and (destination == 'ars' or destination == 'ars_cd_se'):
-                trame_id = departement.trame_se_ars_id
-            if rec.type_event_id.code == "SE" and destination == 'cd_se':
-                trame_id = departement.trame_se_cd_id
-            if rec.type_event_id.code == "SEA":
-                trame_id = departement.trame_sea_id
-            if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
-                trame_id = departement.trame_ip_id
-
-            #if not trame_id and autorite_controle!='drdjscs':
-            #    raise UserError(u"Trame non identifée pour ce type d'évènement et ce destinataire !")
+#            trame_id = False
+#            if rec.type_event_id.code == "SE" and (destination == 'ars' or destination == 'ars_cd_se'):
+#                trame_id = departement.trame_se_ars_id
+#            if rec.type_event_id.code == "SE" and destination == 'cd_se':
+#                trame_id = departement.trame_se_cd_id
+#            if rec.type_event_id.code == "SEA":
+#                trame_id = departement.trame_sea_id
+#            if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
+#                trame_id = departement.trame_ip_id
 
             for mail in mails:
+                destinataire = mail[0]
+                trame_id = False
+                if rec.type_event_id.code == "SE" and destinataire == 'ars':
+                    trame_id = departement.trame_se_ars_id
+                if rec.type_event_id.code == "SE" and destinataire == 'cd_se':
+                    trame_id = departement.trame_se_cd_id
+                if rec.type_event_id.code == "SEA":
+                    trame_id = departement.trame_sea_id
+                if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
+                    trame_id = departement.trame_ip_id
                 vals={
                     'is_eig_id'        : rec.id,
                     'autorite_controle': autorite_controle,
