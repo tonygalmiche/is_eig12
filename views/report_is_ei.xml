@@ -89,8 +89,95 @@
                         </table>
                     </div>
                 </div>
-            </div>
 
+
+
+                <h3>Action(s) immédiate(s) entreprise(s)</h3>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Pour protéger, accompagner ou soutenir les personnes victimes ou exposées</td>
+                            <td>    
+                                <span t-if="o.pour_proteger" t-field="o.pour_proteger" />
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Pour assurer la continuité de la prise en charge, le cas échéant" for="pour_assurer</td>
+                            <td>    
+                                <span t-if="o.pour_assurer" t-field="o.pour_assurer"/>        
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>A l’égard des autres personnes prises en charge ou du personnel, le cas échéant (par exemple : information à l’ensemble des usagers, soutien psychologique...)</td>
+                            <td>    
+                                <span t-if="o.legard" t-field="o.legard"/> 
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Autre (à préciser)</td>
+                            <td>    
+                                <span t-if="o.autre_preciser" t-field="o.autre_preciser"/> 
+                            </td>                               
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+
+                <h3>Analyse</h3>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Une recherche des causes profondes a-t-elle été réalisée ou est-elle prévue ?</td>
+                            <td>    
+                                <span t-if="o.une_recherche" t-field="o.une_recherche" />
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Cause(s) identifiée(s)</td>
+                            <td>    
+                                <span t-if="o.cause_identifiee" t-field="o.cause_identifiee"/>        
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Proposition d’actions d’amélioration</td>
+                            <td>    
+                                <span t-if="o.proposition" t-field="o.proposition"/> 
+                            </td>                               
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Action(s) d’amélioration planifiée(s)</h3>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Concernant les usagers ou les résidents</td>
+                            <td>    
+                                <span t-if="o.concernant_les" t-field="o.concernant_les" />
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Concernant le personnel</td>
+                            <td>    
+                                <span t-if="o.concernant_personnel" t-field="o.concernant_personnel" />
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Concernant l’organisation du travail</td>
+                            <td>    
+                                <span t-if="o.concernant_travail" t-field="o.concernant_travail"/>
+                            </td>                               
+                        </tr>
+                        <tr>
+                            <td>Concernant la structure</td>
+                            <td>    
+                                <span t-if="o.concernant_structure" t-field="o.concernant_structure"/> 
+                            </td>                               
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </t>
         </t>
     </template>
