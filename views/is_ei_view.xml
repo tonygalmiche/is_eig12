@@ -28,7 +28,7 @@
                         <button name="%(action_is_ei_motif_retour)d" type="action" string="Rédaction"        attrs="{'invisible':[('btn_redaction_ei','!=',True)]}" />
                         <button name="action_valider_ei"             type="object" string="Valider"          attrs="{'invisible':[('btn_valider_ei','!=',True)]}" class="oe_highlight" />
                         <!--<button name="action_rediger_ei"             type="object" string="Rédiger"          attrs="{'invisible':[('btn_rediger_ei','!=',True)]}" />-->
-                        <button name="action_send_manual_ei"         type="object" string="Envoyer un email" attrs="{'invisible':[('btn_send_mail_ei','!=',True)]}" />
+                        <!--<button name="action_send_manual_ei"         type="object" string="Envoyer un email" attrs="{'invisible':[('btn_send_mail_ei','!=',True)]}" />-->
                         <button name="action_convertir_en_eig"       type="object" string="Convertir en EIG" attrs="{'invisible':[('btn_convertir_en_eig','!=',True)]}" confirm="Voulez-vous vraiment créer un nouvel EIG à partir cet EI ?" />
 
 

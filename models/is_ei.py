@@ -183,18 +183,25 @@ class is_ei(models.Model):
                 attachment_ids.append(attachment.id)
             type_event = self.env['is.type.evenement'].search([('code', '=', 'IP')])[0]
             vals={
-                'start_date'                   : obj.date_faits,
-                'date_heure_constatation_faits': obj.date_constatation_faits,
-                'lieu_faits'                   : obj.lieu_faits,
-                'description_faits'            : obj.description_faits,
-                'causes_profondes'             : obj.une_recherche,
-                'attachment_ids'               : [(6,0,attachment_ids)],
-                'etablissement_id'             : obj.etablissement_id.id,
-                'redacteur_id'                 : obj.redacteur_id.id,
-                'valideur_id'                  : obj.valideur_id.id,
-                'type_event_id'                : type_event.id,
-                'ei_id'                        : obj.id,
-
+                'start_date'                      : obj.date_faits,
+                'date_heure_constatation_faits'   : obj.date_constatation_faits,
+                'lieu_faits'                      : obj.lieu_faits,
+                'description_faits'               : obj.description_faits,
+                'causes_profondes'                : obj.une_recherche,
+                'attachment_ids'                  : [(6,0,attachment_ids)],
+                'etablissement_id'                : obj.etablissement_id.id,
+                'redacteur_id'                    : obj.redacteur_id.id,
+                'valideur_id'                     : obj.valideur_id.id,
+                'type_event_id'                   : type_event.id,
+                'ei_id'                           : obj.id,
+                'mesure_pour_proteger_accompagner': obj.pour_proteger,
+                'mesure_pour_assurer_continuite'  : obj.pour_assurer,
+                'mesure_egard_autres_personnes'   : obj.legard,
+                'mesure_autre'                    : obj.autre_preciser,
+                'mesure_usagers'                  : obj.concernant_les,
+                'mesure_personnel'                : obj.concernant_personnel,
+                'mesure_organisation'             : obj.concernant_travail,
+                'mesure_structure'                : obj.concernant_structure,
             }
             eig=self.env['is.eig'].create(vals)
             vals=eig.onchange_type_event_id()
