@@ -187,6 +187,7 @@ class is_ei(models.Model):
                 'date_heure_constatation_faits'   : obj.date_constatation_faits,
                 'lieu_faits'                      : obj.lieu_faits,
                 'description_faits'               : obj.description_faits,
+                'element_faits'                   : obj.description_faits,
                 'causes_profondes'                : obj.une_recherche,
                 'attachment_ids'                  : [(6,0,attachment_ids)],
                 'etablissement_id'                : obj.etablissement_id.id,
