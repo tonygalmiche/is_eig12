@@ -639,9 +639,10 @@
                     </group>
                     <group>
                         <div style="background:orange" attrs="{'invisible':[('signalement_autorites','=',False)]}">
-                            <b>Attention</b> : l'applicatif n'envoie pas automatiquement un courrier aux autorités judiciaires. 
-                            En cas de signalement aux autorités judiciaires, il est nécessaire d'imprimer le document pdf intitulé 
-                            "signalement" généré dans les "pièces-jointes" de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante".
+                        <b>Attention</b> : l'applicatif n'envoie pas automatiquement un courrier aux autorités judiciaires. 
+                        En cas de signalement aux autorités judiciaires, il est nécessaire d'imprimer le document pdf intitulé "signalement" généré dans 
+                        l'onglet "Éléments complémentaires" de l'applicatif et de l'envoyer par fax à l'autorité judiciaire correspondante. Également, 
+                        une information préoccupante est automatiquement envoyée au Conseil Départemental, par mail.
                         </div>
                     </group>
                     <group attrs="{'readonly': [('state','in',['valide','done'])]}">
