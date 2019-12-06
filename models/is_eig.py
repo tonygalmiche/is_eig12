@@ -1269,18 +1269,30 @@ class is_eig(models.Model):
         for obj in self:
             obj.write({'state': 'non_declarable'})
             self.creer_notification(u'vers Non déclarable')
-            vals = {
-                'etablissement_id'   : obj.etablissement_id.id,
-                'type_event_id'      : 15,
-                'destinataire_id'    : 4,
-                'nature_event_id'    : 46,
-                'date_faits'         : obj.start_date,
-                'mesure_amelioration': ' ',
-                'mesure_immediat'    : ' ',
-                'mesure_autre'       : ' ',
-                'consequence_faits'  : ' ',
-                'lieu_faits'         : ' ',
-                'description_faits'  : ' ',
+            nature = self.env['is.nature.evenement.ei'].search([])[0]
+            attachment_ids=[]
+            for attachment in obj.attachment_ids:
+                attachment_ids.append(attachment.id)
+            vals={
+                'etablissement_id'       : obj.etablissement_id.id,
+                'nature_event_id'        : nature.id,
+                'date_faits'             : obj.start_date,
+                'date_constatation_faits': obj.date_heure_constatation_faits,
+                'lieu_faits'             : obj.lieu_faits,
+                'description_faits'      : obj.description_faits,
+                'description_faits'      : obj.element_faits,
+                'une_recherche'          : obj.causes_profondes,
+                'attachment_ids'         : [(6,0,attachment_ids)],
+                'redacteur_id'           : obj.redacteur_id.id,
+                'valideur_id'            : obj.valideur_id.id,
+                'pour_proteger'          : obj.mesure_pour_proteger_accompagner,
+                'pour_assurer'           : obj.mesure_pour_assurer_continuite,
+                'legard'                 : obj.mesure_egard_autres_personnes,
+                'autre_preciser'         : obj.mesure_autre,
+                'concernant_les'         : obj.mesure_usagers,
+                'concernant_personnel'   : obj.mesure_personnel,
+                'concernant_travail'     : obj.mesure_organisation,
+                'concernant_structure'   : obj.mesure_structure,
             }
             ei_id = self.env['is.ei'].create(vals)
             return {
@@ -1289,7 +1301,7 @@ class is_eig(models.Model):
                 'view_type': 'form',
                 'res_model': 'is.ei',
                 'type': 'ir.actions.act_window',
-                'res_id': ei_id,
+                'res_id': ei_id.id,
                 'domain': '[]',
             }
 
