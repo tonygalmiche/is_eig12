@@ -99,6 +99,23 @@
     </record>
 
 
+    <record id="is_ei_model_access_eig_responsables" model="ir.rule">
+        <field name="name">EI[EIG] - Accès en modification aux valideur, directeur et responsable établissement</field>
+        <field name="model_id" ref="model_is_ei"/>
+        <field name="domain_force">['&amp;', ('state','=','eig'),'|','|','|',
+            ('valideur_id', '=', user.id), 
+            ('etablissement_id.director_id','=',user.id), 
+            ('etablissement_id.responsible_id','=',user.id),
+            ('etablissement_id.responsable_ids','in',user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field eval="0" name="perm_unlink"/>
+        <field eval="1" name="perm_write"/>
+        <field eval="1" name="perm_read"/>
+        <field eval="0" name="perm_create"/>
+    </record>
+
+
 
     <record id="is_ei_model_access_valide_consultation_gestionnaire" model="ir.rule">
         <field name="name">EI - Accès consultation au groupe Gestionnaire EI</field>
