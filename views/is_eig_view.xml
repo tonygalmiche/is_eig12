@@ -14,10 +14,14 @@
                     <field name="mail_cd_se"/>
                     <field name="mail_cd_ip"/>
                     <field name="mail_drdjscs"/>
+                    <field name="mail_se_mna"/>
+                    <field name="mail_mecs"/>
                     <field name="trame_se_ars_id"/>
                     <field name="trame_se_cd_id"/>
                     <field name="trame_ip_id"/>
                     <field name="trame_sea_id"/>
+                    <field name="trame_se_mna_id"/>
+                    <field name="trame_mecs_id"/>
                 </tree>
             </field>
         </record>
@@ -54,6 +58,14 @@
                         <div>
                             <field name="mail_drdjscs" nolabel="1" colspan="4" />
                         </div>
+                        <label for="mail_se_mna" colspan="4" />
+                        <div>
+                            <field name="mail_se_mna" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="mail_mecs" colspan="4" />
+                        <div>
+                            <field name="mail_mecs" nolabel="1" colspan="4" />
+                        </div>
                     </group>
                     <group string="Modèles ODT (Trames)">
                         <label for="trame_se_ars_id" colspan="4" />
@@ -72,6 +84,14 @@
                         <label for="trame_sea_id" colspan="4" />
                         <div>
                             <field name="trame_sea_id" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="trame_se_mna_id" colspan="4" />
+                        <div>
+                            <field name="trame_se_mna_id" nolabel="1" colspan="4" />
+                        </div>
+                        <label for="trame_mecs_id" colspan="4" />
+                        <div>
+                            <field name="trame_mecs_id" nolabel="1" colspan="4" />
                         </div>
                     </group>
                 </sheet>

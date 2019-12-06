@@ -16,10 +16,12 @@ import pytz
 # SUPERUSER_ID = 2
 
 AutoriteControle = [
-    ('ars', 'ARS'),
-    ('cd', 'CD'),
-    ('ars_cd', 'ARS+CD'),
+    ('ars'    , 'ARS'),
+    ('cd'     , 'CD'),
+    ('ars_cd' , 'ARS+CD'),
     ('drdjscs', 'DRDJSCS'),
+    ('se_mna' , 'SE MNA'),
+    ('mecs'   , 'MECS'),
 ]
 
 MailDestination = [
@@ -28,7 +30,8 @@ MailDestination = [
     ('cd_ip'    , 'CD pour IP'),
     ('ars_cd_se', 'ARS + CD pour SE'),
     ('drdjscs'  , 'DRDJSCS'),
-
+    ('se_mna'   , 'SE MNA'),
+    ('mecs'     , 'MECS'),
 ]
 
 OuiNon=[
@@ -49,13 +52,15 @@ class is_departement(models.Model):
     mail_cd_se   = fields.Char(string='Mail CD pour les SE', help=u"Mail du Conseil Départemental pour Situation Exceptionnelle (SE)")
     mail_cd_ip   = fields.Char(string='Mail CD pour les IP', help=u"Mail du Conseil Départemental pour Information préoccupante (IP)")
     mail_drdjscs = fields.Char(string='Mail DRDJSCS')
+    mail_se_mna  = fields.Char(string='Mail SE MNA')
+    mail_mecs    = fields.Char(string='Mail MECS')
 
-
-    #input_attach_ids = fields.Many2many('ir.attachment', string='Input File')
     trame_se_ars_id = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour ARS")
     trame_se_cd_id  = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle (SE) pour CD")
     trame_sea_id    = fields.Many2one('is.trame', string=u"Modèle ODT Situation Exceptionnelle pour public Adulte AMI/CHU (SEA)")
     trame_ip_id     = fields.Many2one('is.trame', string=u"Modèle ODT Information préoccupante (IP)")
+    trame_se_mna_id = fields.Many2one('is.trame', string=u"Modèle ODT SE MNA")
+    trame_mecs_id   = fields.Many2one('is.trame', string=u"Modèle ODT MECS")
 
     _sql_constraints = [
         ('code_uniq', 'unique(code)', u"Le code du département doit être unique !"),
@@ -1654,18 +1659,19 @@ class is_eig(models.Model):
             if rec.signalement_autorites==False and rec.type_event_id.code != 'SP':
                 if not destination:
                     raise UserError(u"Mail de destination non renseigné pour l'autorité de contrôle "+autorite_controle+" et pour ce type d'événement !")
+            departement = rec.etablissement_id.departement_id
 
+            #MailDestination = [
             #    ('ars'      , 'ARS'),
             #    ('cd_se'    , 'CD pour SE'),
             #    ('cd_ip'    , 'CD pour IP'),
             #    ('ars_cd_se', 'ARS + CD pour SE'),
             #    ('drdjscs'  , 'DRDJSCS'),
-            departement = rec.etablissement_id.departement_id
+            #    ('se_mna'   , 'SE MNA'),
+            #    ('mecs'     , 'MECS'),
+            #]
+
             mails  = []
-
-
-
-
             if destination == 'ars' or destination == 'ars_cd_se':
                 if departement.mail_ars:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
@@ -1691,15 +1697,19 @@ class is_eig(models.Model):
                 else:
                     raise UserError(u"Mail DRDJSCS non renseigné pour ce département !")
 
-#            trame_id = False
-#            if rec.type_event_id.code == "SE" and (destination == 'ars' or destination == 'ars_cd_se'):
-#                trame_id = departement.trame_se_ars_id
-#            if rec.type_event_id.code == "SE" and destination == 'cd_se':
-#                trame_id = departement.trame_se_cd_id
-#            if rec.type_event_id.code == "SEA":
-#                trame_id = departement.trame_sea_id
-#            if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
-#                trame_id = departement.trame_ip_id
+            if destination == 'se_mna':
+                if departement.mail_se_mna:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_se_mna', False)
+                    mails.append(['se_mna', departement.mail_se_mna, mail_template_id])
+                else:
+                    raise UserError(u"Mail SE MNA non renseigné pour ce département !")
+
+            if destination == 'mecs':
+                if departement.mail_mecs:
+                    mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_mecs', False)
+                    mails.append(['mecs', departement.mail_mecs, mail_template_id])
+                else:
+                    raise UserError(u"Mail MECS non renseigné pour ce département !")
 
             for mail in mails:
                 destinataire = mail[0]
@@ -1712,6 +1722,10 @@ class is_eig(models.Model):
                     trame_id = departement.trame_sea_id
                 if rec.type_event_id.code == "IP" or rec.type_event_id.code == "SP":
                     trame_id = departement.trame_ip_id
+                if rec.type_event_id.code == "SE MNA":
+                    trame_id = departement.trame_se_mna_id
+                if rec.type_event_id.code == "MECS":
+                    trame_id = departement.trame_mecs_id
                 vals={
                     'is_eig_id'        : rec.id,
                     'autorite_controle': autorite_controle,
@@ -1725,32 +1739,6 @@ class is_eig(models.Model):
                     for attch in trame_id.attachment_ids:
                         for l in attch.read(['name','datas']):
                             rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-
-#                #** Recherche des modeles associés au département ******************
-#                for attch in rec.etablissement_id.departement_id.trame_se_ars_id.attachment_ids:
-#                    for l in attch.read(['name','datas']):
-#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-#                for attch in rec.etablissement_id.departement_id.trame_se_cd_id.attachment_ids:
-#                    for l in attch.read(['name','datas']):
-#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-#                for attch in rec.etablissement_id.departement_id.trame_sea_id.attachment_ids:
-#                    for l in attch.read(['name','datas']):
-#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-#                for attch in rec.etablissement_id.departement_id.trame_ip_id.attachment_ids:
-#                    for l in attch.read(['name','datas']):
-#                        rec.generation_document_par_nom(destinataire,type, v, l["datas"], l["name"])
-#                #*******************************************************************
-
-
-
-#             ** Recherche des modeles associés au département *****************
-#            for attch in rec.etablissement_id.departement_id.input_attach_ids:
-#                for l in attch.read(['name','datas']):
-#                    rec.generation_document_par_nom(type, v, l["datas"], l["name"])
-#            if rec.type_event_id.code == "SE":
-#                for attch in rec.etablissement_id.departement_id.trame_id.attachment_ids:
-#                    for l in attch.read(['name','datas']):
-#                        rec.generation_document_par_nom(type, v, l["datas"], l["name"])
 
         return True
 
@@ -3014,6 +3002,16 @@ class is_type_evenement(models.Model):
                     data.update_one2many_fields(personne_obj, eig_id.id, data.fields_personne_id)
                     data.update_one2many_fields(infos_obj,  eig_id.id, data.fields_info_id)
         return res
+
+
+    @api.multi
+    def copy(self, default=None):
+        default = default or {}
+        default.update({
+            'name': self.name+u' (copie)',
+        })
+        return super(is_type_evenement, self).copy(default)
+
 
     name                          = fields.Char('Nom', required=True)
     code                          = fields.Char('Code')
