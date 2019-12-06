@@ -229,7 +229,7 @@ class is_ei(models.Model):
     def get_signup_url(self):
         url = False
         for data in self:
-            url = "https://eig.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.ei"
+            url = "https://eig2.fondation-ove.fr/web#id=" + str(data.id) + "&view_type=form&model=is.ei"
         return url
 
     #@api.onchange('etablissement_id')
