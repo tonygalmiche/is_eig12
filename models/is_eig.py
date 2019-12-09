@@ -1285,7 +1285,7 @@ class is_eig(models.Model):
                 'date_constatation_faits': obj.date_heure_constatation_faits,
                 'lieu_faits'             : obj.lieu_faits or ' ',
                 'description_faits'      : obj.description_faits or obj.element_faits or ' ',
-                'une_recherche'          : obj.causes_profondes or ' ',
+                'une_recherche'          : obj.causes_profondes,
                 'attachment_ids'         : [(6,0,attachment_ids)],
                 'redacteur_id'           : obj.redacteur_id.id,
                 'valideur_id'            : obj.valideur_id.id,
