@@ -1272,8 +1272,8 @@ class is_eig(models.Model):
     @api.multi
     def action_non_declarable(self):
         for obj in self:
-            obj.write({'state': 'non_declarable'})
             self.creer_notification(u'vers Non déclarable')
+            obj.write({'state': 'non_declarable'})
             nature = self.env['is.nature.evenement.ei'].search([])[0]
             attachment_ids=[]
             for attachment in obj.attachment_ids:
