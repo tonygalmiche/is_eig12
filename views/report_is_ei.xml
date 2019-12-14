@@ -96,13 +96,13 @@
                 <table class="table table-condensed">
                     <tbody>
                         <tr>
-                            <td>Pour protéger, accompagner ou soutenir les personnes victimes ou exposées</td>
+                            <td width="60%">Pour protéger, accompagner ou soutenir les personnes victimes ou exposées</td>
                             <td>    
                                 <span t-if="o.pour_proteger" t-field="o.pour_proteger" />
                             </td>                               
                         </tr>
                         <tr>
-                            <td>Pour assurer la continuité de la prise en charge, le cas échéant" for="pour_assurer</td>
+                            <td>Pour assurer la continuité de la prise en charge, le cas échéant</td>
                             <td>    
                                 <span t-if="o.pour_assurer" t-field="o.pour_assurer"/>        
                             </td>                               
