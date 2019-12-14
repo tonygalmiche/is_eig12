@@ -557,7 +557,7 @@
             <field name="name">is.ove.eig.tree</field>
             <field name="model">is.eig</field>
             <field name="arch" type="xml">
-            <tree string="Evénements Indésirables Graves">
+            <tree string="Evénements Indésirables Graves" import="false">
                 <field name="name"/>
                 <field name="etablissement_id"/>
                 <field name="type_event_id"/>

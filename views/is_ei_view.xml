@@ -198,7 +198,7 @@
             <field name="name">is_ei_tous_tree_view</field>
             <field name="model">is.ei</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree import="false">
                     <field name="name"/>
                     <field name="etablissement_id"/>
                     <field name="redacteur_id"/>
