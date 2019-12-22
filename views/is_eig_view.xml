@@ -627,7 +627,16 @@
                             />
                             <field name="event_information_speciale" style="background-color:orange;" attrs="{'invisible': [('event_information_speciale', '=', False)]}" />
                             <field name="type_nature_event_ids" widget="many2many_tags" invisible="1" />
+
+                            <field name="related_vsb_autorite_administrative_informee_ids" invisible="1"  />
+                            <field name="related_rqr_autorite_administrative_informee_ids" invisible="1"  />
+                            <field 
+                                name="autorite_administrative_informee_ids" 
+                                attrs="{'invisible': [('related_vsb_autorite_administrative_informee_ids', '=', False)], 'required':[('related_rqr_autorite_administrative_informee_ids','=', True)]}"
+                                widget="many2many_tags"
+                            />
                         </group>
+
                         <group attrs="{
                                 'invisible': [('type_event_id','=',False)],
                                 'readonly': [('state','in',['valide','done'])]
@@ -944,6 +953,7 @@
                             attrs="{'invisible': [
                                 ('related_vsb_fait_deja_produit','=',False),
                                 ('related_vsb_eig_deja_declare','=',False),
+                                ('related_vsb_relation_victime_auteur','=',False),
                                 ('related_vsb_risque_reproductibilite','=',False),
                                 ('related_vsb_risque_extension','=',False),
                                 ('related_vsb_risque_contentieux','=',False),
@@ -977,6 +987,20 @@
                                     'readonly': [('state','in',['valide','done'])]
                                 }"/>
                             </div>
+
+                            <label for="relation_victime_auteur" colspan="4" attrs="{'invisible': [('related_vsb_relation_victime_auteur','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_relation_victime_auteur" invisible="1"  />
+                                <field name="related_rqr_relation_victime_auteur" invisible="1"  />
+                                <field name="relation_victime_auteur" colspan="4" nolabel="1" attrs="{
+                                    'invisible': [('related_vsb_relation_victime_auteur', '=', False)],
+                                    'required':[('related_rqr_relation_victime_auteur','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+
+
     
                             <label for="risque_reproductibilite" colspan="4" attrs="{'invisible': [('related_vsb_risque_reproductibilite','=',False)]}"/>
                             <div>
@@ -1832,6 +1856,9 @@
                                 ('related_vsb_mesure_usagers','=',False),
                                 ('related_vsb_mesure_personnel','=',False),
                                 ('related_vsb_mesure_organisation','=',False),
+                                ('related_vsb_demande_designation_administrateur','=',False),
+                                ('related_vsb_declaration_assurance','=',False),
+                                ('related_vsb_demande_protection_fonctionnelle','=',False),
                                 ('related_vsb_mesure_structure','=',False)]}">
                             <label colspan="4" for="mesure_usagers" attrs="{'invisible': [('related_vsb_mesure_usagers', '=', False)]}"/>
                             <div>
@@ -1868,14 +1895,50 @@
                             
                             <label colspan="4" for="mesure_structure" attrs="{'invisible': [('related_vsb_mesure_structure', '=', False)]}"/>
                             <div>
-                            <field name="related_vsb_mesure_structure" invisible="1"  />
-                            <field name="related_rqr_mesure_structure" invisible="1"  />
-                            <field colspan="4" nolabel="1" name="mesure_structure" attrs="{
-                                'invisible': [('related_vsb_mesure_structure', '=', False)],
-                                'required':[('related_rqr_mesure_structure','=', True)],
-                                'readonly': [('state','in',['valide','done'])]
-                            }"/>
+                                <field name="related_vsb_mesure_structure" invisible="1"  />
+                                <field name="related_rqr_mesure_structure" invisible="1"  />
+                                <field colspan="4" nolabel="1" name="mesure_structure" attrs="{
+                                    'invisible': [('related_vsb_mesure_structure', '=', False)],
+                                    'required':[('related_rqr_mesure_structure','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
                             </div>
+
+
+                            <label colspan="4" for="demande_designation_administrateur" attrs="{'invisible': [('related_vsb_demande_designation_administrateur', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_demande_designation_administrateur" invisible="1"  />
+                                <field name="related_rqr_demande_designation_administrateur" invisible="1"  />
+                                <field colspan="4" nolabel="1" name="demande_designation_administrateur" attrs="{
+                                    'invisible': [('related_vsb_demande_designation_administrateur', '=', False)],
+                                    'required':[('related_rqr_demande_designation_administrateur','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="declaration_assurance" attrs="{'invisible': [('related_vsb_declaration_assurance', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_declaration_assurance" invisible="1"  />
+                                <field name="related_rqr_declaration_assurance" invisible="1"  />
+                                <field colspan="4" nolabel="1" name="declaration_assurance" attrs="{
+                                    'invisible': [('related_vsb_declaration_assurance', '=', False)],
+                                    'required':[('related_rqr_declaration_assurance','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="demande_protection_fonctionnelle" attrs="{'invisible': [('related_vsb_demande_protection_fonctionnelle', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_demande_protection_fonctionnelle" invisible="1"  />
+                                <field name="related_rqr_demande_protection_fonctionnelle" invisible="1"  />
+                                <field colspan="4" nolabel="1" name="demande_protection_fonctionnelle" attrs="{
+                                    'invisible': [('related_vsb_demande_protection_fonctionnelle', '=', False)],
+                                    'required':[('related_rqr_demande_protection_fonctionnelle','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+
                             
                         </group>
                     </page>
@@ -2464,6 +2527,36 @@
             <field name="name">Demande d’intervention des secours</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.demande.intervention.secours</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- is.autorite.administrative.informee  -->
+        <record model="ir.ui.view" id="is_autorite_administrative_informee_tree_view">
+            <field name="name">is.autorite.administrative.informee.tree</field>
+            <field name="model">is.autorite.administrative.informee</field>
+            <field name="arch" type="xml">
+            <tree string="Pour la ou les personnes prises en charge">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_autorite_administrative_informee_form_view">
+            <field name="name">is.autorite.administrative.informee.form</field>
+            <field name="model">is.autorite.administrative.informee</field>
+            <field name="arch" type="xml">
+            <form string="Pour la ou les personnes prises en charge">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_autorite_administrative_informee_action" model="ir.actions.act_window">
+            <field name="name">Autorité administrative et judiciaire informée</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.autorite.administrative.informee</field>
             <field name="view_mode">tree,form</field>
         </record>
 

@@ -228,6 +228,17 @@ class is_demande_intervention_secours(models.Model):
     ]
 
 
+class is_autorite_administrative_informee(models.Model):
+    _name = 'is.autorite.administrative.informee'
+    _description = u'Autorité(s) administratives et judiciaires informées'
+
+    name = fields.Char('Nom' , required=True)
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
+    ]
+
+
 class is_consequence_personne_prise_en_charge(models.Model):
     _name = 'is.consequence.personne.prise.en.charge'
     _description = 'Consequence Charge'
@@ -674,8 +685,13 @@ class is_eig(models.Model):
                 #'related_rqr_nature_precision':  False,
                 'related_vsb_start_date':  False,
                 'related_rqr_start_date':  False,
+
+                'related_vsb_autorite_administrative_informee_ids': False,
+                'related_rqr_autorite_administrative_informee_ids': False,
+
                 'related_vsb_consequence_personne_prise_en_charge_ids': False,
                 'related_rqr_consequence_personne_prise_en_charge_ids': False,
+
                 'related_vsb_consequence_personnel_ids': False,
                 'related_rqr_consequence_personnel_ids': False,
                 'related_vsb_consequence_fonctionnement_stucture_ids': False,
@@ -690,6 +706,10 @@ class is_eig(models.Model):
                 'related_rqr_fait_deja_produit': False,
                 'related_vsb_eig_deja_declare': False,
                 'related_rqr_eig_deja_declare': False,
+
+                'related_vsb_relation_victime_auteur': False,
+                'related_rqr_relation_victime_auteur': False,
+
                 'related_vsb_risque_reproductibilite': False,
                 'related_rqr_risque_reproductibilite': False,
                 'related_vsb_risque_extension': False,
@@ -767,6 +787,16 @@ class is_eig(models.Model):
                 'related_rqr_mesure_egard_autres_personnes':  False,
                 'related_vsb_mesure_structure':  False,
                 'related_rqr_mesure_structure':  False,
+
+                'related_vsb_demande_designation_administrateur':  False,
+                'related_rqr_demande_designation_administrateur':  False,
+
+                'related_vsb_declaration_assurance':  False,
+                'related_rqr_declaration_assurance':  False,
+
+                'related_vsb_demande_protection_fonctionnelle':  False,
+                'related_rqr_demande_protection_fonctionnelle':  False,
+
                 'related_vsb_si_causes_profondes':  False,
                 'related_rqr_si_causes_profondes':  False,
                 'related_vsb_enseignements_a_tirer':  False,
@@ -1784,12 +1814,19 @@ class is_eig(models.Model):
 #    related_rqr_nature_precision          = fields.Boolean(u'Champs related_rqr_nature_precision - Obligation')
 #     type_risq_id                          = fields.Many2one('is.type.risque', "Type de risque", required=False, help=u"Permet de préciser sur quel temps du parcours de l'usager est apparu l'EIG.")
 #     nature_risq_id                        = fields.Many2one('is.nature.risque', "Nature de risque", required=True, help=u"Permet d'identifier la nature du risque afin d'alimenter la cartographie des risques de la fondation OVE")
+
     signalement_autorites                 = fields.Boolean(u'Signalement aux autorités judiciaires')
     related_vsb_signalement_autorites     = fields.Boolean(u'Champs related_vsb_signalement_autorites - Visibilité')
     related_rqr_signalement_autorites     = fields.Boolean(u'Champs related_rqr_signalement_autorites - Obligation')
+
+    autorite_administrative_informee_ids                 = fields.Many2many('is.autorite.administrative.informee', 'is_autorite_administrative_informee_rel', 'eig_id', 'autorite_id', string=u'Autorité(s) administratives et judiciaires informées')
+    related_vsb_autorite_administrative_informee_ids     = fields.Boolean(u'Champs related_vsb_autorite_administrative_informee_ids - Visibilité')
+    related_rqr_autorite_administrative_informee_ids     = fields.Boolean(u'Champs related_rqr_autorite_administrative_informee_ids - Obligation')
+
     consequence_personne_prise_en_charge_ids             = fields.Many2many('is.consequence.personne.prise.en.charge', 'is_type_event_prise_charge_rel', 'type_event_id', 'price_charge_id', string=u'Pour la ou les personnes prises en charge')
     related_vsb_consequence_personne_prise_en_charge_ids = fields.Boolean(u'Champs related_vsb_consequence_personne_prise_en_charge_ids - Visibilité')
     related_rqr_consequence_personne_prise_en_charge_ids = fields.Boolean(u'Champs related_rqr_consequence_personne_prise_en_charge_ids - Obligation')
+
     consequence_personnel_ids                            = fields.Many2many('is.consequence.personnel', 'is_type_event_personnel_rel', 'type_event_id', 'personnel_id', string=u'Pour les personnels')
     related_vsb_consequence_personnel_ids                = fields.Boolean(u'Champs related_vsb_consequence_personnel_ids - Visibilité')
     related_rqr_consequence_personnel_ids                = fields.Boolean(u'Champs related_rqr_consequence_personnel_ids - Obligation')
@@ -1808,9 +1845,15 @@ class is_eig(models.Model):
     fait_deja_produit                               = fields.Selection(OuiNon, u"Ces faits se sont-ils déjà produits en ce qui concerne la (les) personne(s) victime(s) ou auteur(s) ?")
     related_vsb_fait_deja_produit               = fields.Boolean(u'Champs related_vsb_fait_deja_produit - Visibilité')
     related_rqr_fait_deja_produit             = fields.Boolean(u'Champs related_rqr_fait_deja_produit - Obligation')
+
     eig_deja_declare                    = fields.Selection(OuiNon, u"Un EIG a-t-il déjà été déclaré pour des faits similaires ?")
     related_vsb_eig_deja_declare             = fields.Boolean(u'Champs related_vsb_eig_deja_declare - Visibilité')
     related_rqr_eig_deja_declare             = fields.Boolean(u'Champs related_rqr_eig_deja_declare - Obligation')
+
+    relation_victime_auteur             = fields.Char(u"Relation de la victime par rapport à l’auteur présumé (lien de parenté, personne ayant autorité, ...)")
+    related_vsb_relation_victime_auteur = fields.Boolean(u'Champs related_vsb_relation_victime_auteur - Visibilité')
+    related_rqr_relation_victime_auteur = fields.Boolean(u'Champs related_rqr_relation_victime_auteur - Obligation')
+
     risque_reproductibilite                    = fields.Selection(OuiNon, u"Risque de reproductivité ?")
     related_vsb_risque_reproductibilite             = fields.Boolean(u'Champs related_vsb_risque_reproductibilite - Visibilité')
     related_rqr_risque_reproductibilite             = fields.Boolean(u'Champs related_rqr_risque_reproductibilite - Obligation')
@@ -1938,9 +1981,23 @@ class is_eig(models.Model):
     mesure_organisation                          = fields.Text(u"Concernant l’organisation du travail")
     related_vsb_mesure_organisation              = fields.Boolean(u'Champs related_vsb_mesure_organisation - Visibilité')
     related_rqr_mesure_organisation              = fields.Boolean(u'Champs related_rqr_mesure_organisation - Obligation')
+
     mesure_structure                             = fields.Text(u"Concernant la structure")
     related_vsb_mesure_structure                 = fields.Boolean(u'Champs related_vsb_mesure_structure - Visibilité')
     related_rqr_mesure_structure                 = fields.Boolean(u'Champs related_rqr_mesure_structure - Obligation')
+
+    demande_designation_administrateur             = fields.Boolean(u"Demande de désignation d’un administrateur ad’hoc")
+    related_vsb_demande_designation_administrateur = fields.Boolean(u'Champs related_vsb_demande_designation_administrateur - Visibilité')
+    related_rqr_demande_designation_administrateur = fields.Boolean(u'Champs related_rqr_demande_designation_administrateur - Obligation')
+
+    declaration_assurance                          = fields.Boolean(u"Déclaration assurance")
+    related_vsb_declaration_assurance              = fields.Boolean(u'Champs related_vsb_declaration_assurance - Visibilité')
+    related_rqr_declaration_assurance              = fields.Boolean(u'Champs related_rqr_declaration_assurance - Obligation')
+
+    demande_protection_fonctionnelle              = fields.Boolean(u"Demande protection fonctionnelle")
+    related_vsb_demande_protection_fonctionnelle  = fields.Boolean(u'Champs related_vsb_demande_protection_fonctionnelle - Visibilité')
+    related_rqr_demande_protection_fonctionnelle  = fields.Boolean(u'Champs related_rqr_demande_protection_fonctionnelle - Obligation')
+
     si_causes_profondes                   = fields.Text("Si oui, quelle est la méthodologie utilisée ?")
     related_vsb_si_causes_profondes       = fields.Boolean(u'Champs related_vsb_si_causes_profondes - Visibilité')
     related_rqr_si_causes_profondes       = fields.Boolean(u'Champs related_rqr_si_causes_profondes - Obligation')
@@ -2269,7 +2326,8 @@ class is_default_type_event(models.Model):
                            'enseignements_a_tirer','si_enseignements_a_tirer','premiere_cause_identifiee',
                            'evolution_previsible','mesure_pour_proteger_accompagner',
                            'mesure_pour_assurer_continuite','mesure_egard_autres_personnes','mesure_autre',
-                           'mesure_usagers','mesure_personnel','mesure_organisation','mesure_structure'
+                           'mesure_usagers','mesure_personnel','mesure_organisation','mesure_structure',
+                           'demande_designation_administrateur','declaration_assurance','demande_protection_fonctionnelle'
             ])])
         return field_ids
 
@@ -2293,6 +2351,9 @@ class is_default_type_event(models.Model):
             'mesure_personnel': 13,
             'mesure_organisation': 14,
             'mesure_structure': 15,
+            'demande_designation_administrateur': 16,
+            'declaration_assurance': 17,
+            'demande_protection_fonctionnelle': 18,
         }
         for field_id in field_ids:
             seq = sequence.get(field_id.name, 999)
@@ -2332,9 +2393,9 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig'),
-            ('name', 'in', ['consequence_personne_prise_en_charge_ids', 'consequence_personnel_ids', 'consequence_fonctionnement_stucture_ids',
+            ('name', 'in', ['consequence_personne_prise_en_charge_ids', 'autorite_administrative_informee_ids', 'consequence_personnel_ids', 'consequence_fonctionnement_stucture_ids',
                             'si_autre_pour_personnel', 'si_autre_pour_organisation', 'nb_jours_interuption_travail',
-                            'fait_deja_produit', 'eig_deja_declare', 'risque_reproductibilite', 'risque_extension',
+                            'fait_deja_produit', 'eig_deja_declare', 'relation_victime_auteur', 'risque_reproductibilite', 'risque_extension',
                             'risque_contentieux', 'evenement_semble_maitrise',
                             'si_non_maitrise_precisez',
                             'maltraitance_fait_constate',
@@ -2685,10 +2746,16 @@ class is_default_type_event(models.Model):
                 mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
             if field.name == 'mesure_organisation':
                 mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+
             if field.name == 'mesure_structure':
                 mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
-            
-            
+            if field.name == 'demande_designation_administrateur':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'declaration_assurance':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'demande_protection_fonctionnelle':
+                mesures_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+
         elements_lst = []
         fields_elements_ids = self.get_elements_fields()
         for field in fields_elements_ids:
@@ -2699,6 +2766,8 @@ class is_default_type_event(models.Model):
         group_lst = []
         fields_group_ids = self.get_group_fields()
         for field in fields_group_ids:
+            if field.name == 'autorite_administrative_informee_ids':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'consequence_personne_prise_en_charge_ids':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'consequence_personnel_ids':
@@ -2714,6 +2783,8 @@ class is_default_type_event(models.Model):
             if field.name == 'fait_deja_produit':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'eig_deja_declare':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'relation_victime_auteur':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'risque_reproductibilite':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
