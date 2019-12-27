@@ -561,11 +561,9 @@
                 <field name="name"/>
                 <field name="etablissement_id"/>
                 <field name="type_event_id"/>
-                <field name="nature_event_id"/>
+                <field name="nature_event_libelle"/>
                 <field name="redacteur_id"/>
                 <field name="valideur_id"/>
-                <!-- <field name="type_risq_id"/>
-                <field name="nature_risq_id"/> -->
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="state"/>
@@ -1297,8 +1295,16 @@
                             <field name="related_vict_rqr_qualite_id"  invisible="1"  />
                             <field name="related_vict_vsb_disposition_id"  invisible="1" />
                             <field name="related_vict_rqr_disposition_id"   invisible="1" />
+
                             <field name="related_vict_vsb_consequence_id"  invisible="1" />
                             <field name="related_vict_rqr_consequence_id"  invisible="1"  />
+
+                            <field name="related_vict_vsb_statut_personne_accompagnee_ids"  invisible="1" />
+                            <field name="related_vict_rqr_statut_personne_accompagnee_ids"  invisible="1"  />
+
+                            <field name="related_vict_vsb_statut_professionnel_ids"  invisible="1" />
+                            <field name="related_vict_rqr_statut_professionnel_ids"  invisible="1"  />
+
                             <field name="related_vict_vsb_nom_pere"   invisible="1" />
                             <field name="related_vict_rqr_nom_pere"  invisible="1"  />
                             <field name="related_vict_vsb_prenom_pere"  invisible="1" />
@@ -1333,8 +1339,16 @@
                                     'default_related_rqr_sexe_id': related_vict_rqr_sexe_id,
                                     'default_related_vsb_qualite_id': related_vict_vsb_qualite_id, 
                                     'default_related_rqr_qualite_id': related_vict_rqr_qualite_id,
+
                                     'default_related_vsb_consequence_id': related_vict_vsb_consequence_id, 
                                     'default_related_rqr_consequence_id': related_vict_rqr_consequence_id,
+
+                                    'default_related_vsb_statut_personne_accompagnee_ids': related_vict_vsb_statut_personne_accompagnee_ids, 
+                                    'default_related_rqr_statut_personne_accompagnee_ids': related_vict_rqr_statut_personne_accompagnee_ids,
+
+                                    'default_related_vsb_statut_professionnel_ids': related_vict_vsb_statut_professionnel_ids, 
+                                    'default_related_rqr_statut_professionnel_ids': related_vict_rqr_statut_professionnel_ids,
+
                                     'default_related_vsb_nom_pere': related_vict_vsb_nom_pere, 
                                     'default_related_rqr_nom_pere': related_vict_rqr_nom_pere,
                                     'default_related_vsb_prenom_pere': related_vict_vsb_prenom_pere, 
@@ -1371,12 +1385,24 @@
                                     <field name="related_vsb_qualite_id" invisible="1"  />
                                     <field name="related_rqr_qualite_id" invisible="1"  />
                                     <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
+
                                     <field name="related_vsb_consequence_id" invisible="1"  />
                                     <field name="related_rqr_consequence_id" invisible="1"  />
                                     <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
+
+
                                     <field name="related_vsb_disposition_id" invisible="1"  />
                                     <field name="related_rqr_disposition_id" invisible="1"  />
                                     <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
+
+                                    <field name="related_vsb_statut_personne_accompagnee_ids" invisible="1"  />
+                                    <field name="related_rqr_statut_personne_accompagnee_ids" invisible="1"  />
+                                    <field name="statut_personne_accompagnee_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_statut_personne_accompagnee_ids', '=', False)], 'required':[('related_rqr_statut_personne_accompagnee_ids','=', True)]}"/>
+
+                                    <field name="related_vsb_statut_professionnel_ids" invisible="1"  />
+                                    <field name="related_rqr_statut_professionnel_ids" invisible="1"  />
+                                    <field name="statut_professionnel_ids" widget="many2many_tags" attrs="{'invisible': [('related_vsb_statut_professionnel_ids', '=', False)], 'required':[('related_rqr_statut_professionnel_ids','=', True)]}"/>
+
                                 </group>
                                 <group>
                                 <group string="Père"
@@ -2384,7 +2410,6 @@
             </tree>
             </field>
         </record>
-        
         <record model="ir.ui.view" id="is_consequence_form_view">
             <field name="name">is.consequence.form</field>
             <field name="model">is.consequence</field>
@@ -2404,6 +2429,74 @@
             <field name="res_model">is.consequence</field>
             <field name="view_mode">tree,form</field>
         </record>
+
+
+
+        <!-- is.statut.personne.accompagnee  -->
+        <record model="ir.ui.view" id="is_consequense_tree_view">
+            <field name="name">is.statut.personne.accompagnee.tree</field>
+            <field name="model">is.statut.personne.accompagnee</field>
+            <field name="arch" type="xml">
+            <tree string="Conséquense">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_statut_personne_accompagnee_form_view">
+            <field name="name">is.statut.personne.accompagnee.form</field>
+            <field name="model">is.statut.personne.accompagnee</field>
+            <field name="arch" type="xml">
+            <form string="Conséquence">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_statut_personne_accompagnee_action" model="ir.actions.act_window">
+            <field name="name">Statut, si personne accompagnée</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.statut.personne.accompagnee</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.statut.professionnel  -->
+        <record model="ir.ui.view" id="is_consequense_tree_view">
+            <field name="name">is.statut.professionnel.tree</field>
+            <field name="model">is.statut.professionnel</field>
+            <field name="arch" type="xml">
+            <tree string="Conséquense">
+                <field name="name"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_statut_professionnel_form_view">
+            <field name="name">is.statut.professionnel.form</field>
+            <field name="model">is.statut.professionnel</field>
+            <field name="arch" type="xml">
+            <form string="Conséquence">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_statut_professionnel_action" model="ir.actions.act_window">
+            <field name="name">Statut, si professionnel</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.statut.professionnel</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+
+
 
         <!-- Nature Risque  
         <record model="ir.ui.view" id="is_nature_risque_tree_view">

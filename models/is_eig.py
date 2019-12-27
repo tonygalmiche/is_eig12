@@ -170,6 +170,22 @@ class is_consequence(models.Model):
     name = fields.Char(u'Conséquence', required=True)
 
 
+class is_statut_personne_accompagnee(models.Model):
+    _name = 'is.statut.personne.accompagnee'
+    _description = u"Statut, si personne accompagnée"
+    _order = "name"
+
+    name = fields.Char(u'Statut, si personne accompagnée', required=True)
+
+
+class is_statut_professionnel(models.Model):
+    _name = 'is.statut.professionnel'
+    _description = u"Statut, si professionnel"
+    _order = "name"
+
+    name = fields.Char(u'Statut, si professionnel', required=True)
+
+
 class is_destinataire(models.Model):
     _name = 'is.destinataire'
     _description = u"Destinataire"
@@ -376,15 +392,23 @@ class is_eig_victime(models.Model):
     qualite_id                 = fields.Many2one('is.qualite.autre', u'Qualité')
     related_vsb_qualite_id     = fields.Boolean(u'Champs related_vsb_qualite_id - Visibilité')
     related_rqr_qualite_id     = fields.Boolean(u'Champs related_rqr_qualite_id - Obligation')
-    disposition_id             = fields.Many2one('is.disposition.prise', 'Disposition prises')
-    related_vsb_disposition_id = fields.Boolean(u'Champs related_vsb_disposition_id - Visibilité')
-    related_rqr_disposition_id = fields.Boolean(u'Champs related_rqr_disposition_id - Obligation')
-#    auteur_victime             = fields.Selection([('auteur', 'Auteur'), ('victime', 'Victime')], "Auteur / Victime")
-#    related_vsb_auteur_victime = fields.Boolean(u'Champs related_vsb_auteur_victime - Visibilité')
-#    related_rqr_auteur_victime = fields.Boolean(u'Champs related_rqr_auteur_victime - Obligation')
+
     consequence_id             = fields.Many2one('is.consequence', u'Conséquences')
     related_vsb_consequence_id = fields.Boolean(u'Champs related_vsb_consequence_id - Visibilité')
     related_rqr_consequence_id = fields.Boolean(u'Champs related_rqr_consequence_id - Obligation')
+
+    disposition_id             = fields.Many2one('is.disposition.prise', 'Disposition prises')
+    related_vsb_disposition_id = fields.Boolean(u'Champs related_vsb_disposition_id - Visibilité')
+    related_rqr_disposition_id = fields.Boolean(u'Champs related_rqr_disposition_id - Obligation')
+
+    statut_personne_accompagnee_ids             = fields.Many2many('is.statut.personne.accompagnee', 'is_statut_personne_accompagnee_rel', 'victime_id', 'statut_id', string=u"Statut, si personne accompagnée")
+    related_vsb_statut_personne_accompagnee_ids = fields.Boolean(u'Champs related_vsb_statut_personne_accompagnee_ids - Visibilité')
+    related_rqr_statut_personne_accompagnee_ids = fields.Boolean(u'Champs related_rqr_statut_personne_accompagnee_ids - Obligation')
+
+    statut_professionnel_ids             = fields.Many2many('is.statut.professionnel', 'is_statut_professionnel_rel', 'victime_id', 'statut_id', string=u"Statut, si professionnel")
+    related_vsb_statut_professionnel_ids = fields.Boolean(u'Champs related_vsb_statut_professionnel_ids - Visibilité')
+    related_rqr_statut_professionnel_ids = fields.Boolean(u'Champs related_rqr_statut_professionnel_ids - Obligation')
+
 
     nom_pere                   = fields.Char(u'Nom Père')
     related_vsb_nom_pere       = fields.Boolean(u'Champs related_vsb_nom_pere - Visibilité')
@@ -395,9 +419,6 @@ class is_eig_victime(models.Model):
     address_pere               = fields.Char(u'Adresse Père')
     related_vsb_address_pere   = fields.Boolean(u'Champs related_vsb_address_pere - Visibilité')
     related_rqr_address_pere   = fields.Boolean(u'Champs related_rqr_address_pere - Obligation')
-#    autorite_parentale_pere             = fields.Boolean(u'Autorité parentale (Père)')
-#    related_vsb_autorite_parentale_pere = fields.Boolean(u'Champs related_vsb_autorite_parentale_pere - Visibilité')
-#    related_rqr_autorite_parentale_pere = fields.Boolean(u'Champs related_rqr_autorite_parentale_pere - Obligation')
 
     nom_mere                   = fields.Char(u'Nom Mère')
     related_vsb_nom_mere       = fields.Boolean(u'Champs related_vsb_nom_mere - Visibilité')
@@ -408,19 +429,7 @@ class is_eig_victime(models.Model):
     address_mere               = fields.Char(u'Adresse Mère')
     related_vsb_address_mere   = fields.Boolean(u'Champs related_vsb_address_mere - Visibilité')
     related_rqr_address_mere   = fields.Boolean(u'Champs related_rqr_address_mere - Obligation')
-#    autorite_parentale_mere             = fields.Boolean(u'Autorité parentale (Mère)')
-#    related_vsb_autorite_parentale_mere = fields.Boolean(u'Champs related_vsb_autorite_parentale_mere - Visibilité')
-#    related_rqr_autorite_parentale_mere = fields.Boolean(u'Champs related_rqr_autorite_parentale_mere - Obligation')
 
-#    tuteur_nom                 = fields.Char('Nom Tuteur')
-#    related_vsb_tuteur_nom     = fields.Boolean(u'Champs related_vsb_tuteur_nom - Visibilité')
-#    related_rqr_tuteur_nom     = fields.Boolean(u'Champs related_rqr_tuteur_nom - Obligation')
-#    tuteur_prenom              = fields.Char(u"Prénom Tuteur")
-#    related_vsb_tuteur_prenom  = fields.Boolean(u'Champs related_vsb_tuteur_prenom - Visibilité')
-#    related_rqr_tuteur_prenom  = fields.Boolean(u'Champs related_rqr_tuteur_prenom - Obligation')
-#    tuteur_adresse             = fields.Char('Adresse Tuteur')
-#    related_vsb_tuteur_adresse = fields.Boolean(u'Champs related_vsb_tuteur_adresse - Visibilité')
-#    related_rqr_tuteur_adresse = fields.Boolean(u'Champs related_rqr_tuteur_adresse - Obligation')
     is_eig_id                  = fields.Many2one('is.eig', 'EIG')
 
 
@@ -883,10 +892,19 @@ class is_eig(models.Model):
                 'related_vict_rqr_birthdate': False,
                 'related_vict_vsb_qualite_id': False,
                 'related_vict_rqr_qualite_id': False,
-                'related_vict_vsb_disposition_id': False,
-                'related_vict_rqr_disposition_id': False,
+
                 'related_vict_vsb_consequence_id': False,
                 'related_vict_rqr_consequence_id': False,
+
+                'related_vict_vsb_disposition_id': False,
+                'related_vict_rqr_disposition_id': False,
+
+                'related_vict_vsb_statut_personne_accompagnee_ids': False,
+                'related_vict_rqr_statut_personne_accompagnee_ids': False,
+
+                'related_vict_vsb_statut_professionnel_ids': False,
+                'related_vict_rqr_statut_professionnel_ids': False,
+
 
                 'related_vict_vsb_nom_pere': False,
                 'related_vict_rqr_nom_pere': False,
@@ -1774,6 +1792,15 @@ class is_eig(models.Model):
 
 
 
+    @api.depends('nature_event_id')
+    def _compute_nature_event_libelle(self):
+        for obj in self:
+            libelle=[]
+            for line in obj.nature_event_id:
+                libelle.append(line.name)
+            obj.nature_event_libelle=', '.join(libelle)
+
+
     btn_rediger_eig                       = fields.Boolean('Rediger EIG', compute='_btn_rediger_eig')
     btn_valider_eig                       = fields.Boolean('Valider EIG', compute='_btn_valider_eig')
     btn_retour_redaction                  = fields.Boolean('Ertour Redaction', compute='_btn_retour_redaction')
@@ -1796,6 +1823,9 @@ class is_eig(models.Model):
     event_description                     = fields.Text('Description', related='type_event_id.description')
     event_information_speciale            = fields.Text(u'Information spéciale', related='type_event_id.information_speciale')
     nature_event_id                       = fields.Many2many('is.nature.evenement', string=u"Nature d'événement ", required=True, help=u"Préciser le type d'événement à déclarer.")
+
+    nature_event_libelle                  = fields.Char(u"Nature événement", compute='_compute_nature_event_libelle', readonly=True, store=False)
+
     type_nature_event_ids                 = fields.Many2many(related="type_event_id.is_nature_ids")
     related_vsb_si_autre_presumees        = fields.Boolean(u'Champs related_vsb_si_autre_presumees - Visibilité')
     related_rqr_si_autre_presumees        = fields.Boolean(u'Champs related_rqr_si_autre_presumees - Obligation')
@@ -2113,10 +2143,19 @@ class is_eig(models.Model):
     related_vict_rqr_birthdate            = fields.Boolean(u'Champs related_vict_rqr_birthdate - Obligation')
     related_vict_vsb_qualite_id           = fields.Boolean(u'Champs related_vict_vsb_qualite_id - Visibilité')
     related_vict_rqr_qualite_id           = fields.Boolean(u'Champs related_vict_rqr_qualite_id - Obligation')
-    related_vict_vsb_disposition_id       = fields.Boolean(u'Champs related_vict_vsb_disposition_id - Visibilité')
-    related_vict_rqr_disposition_id       = fields.Boolean(u'Champs related_vict_rqr_disposition_id - Obligation')
+
     related_vict_vsb_consequence_id       = fields.Boolean(u'Champs related_vict_vsb_consequence_id - Visibilité')
     related_vict_rqr_consequence_id       = fields.Boolean(u'Champs related_vict_rqr_consequence_id - Obligation')
+
+    related_vict_vsb_disposition_id       = fields.Boolean(u'Champs related_vict_vsb_disposition_id - Visibilité')
+    related_vict_rqr_disposition_id       = fields.Boolean(u'Champs related_vict_rqr_disposition_id - Obligation')
+
+    related_vict_vsb_statut_personne_accompagnee_ids = fields.Boolean(u'Champs related_vict_vsb_statut_personne_accompagnee_ids - Visibilité')
+    related_vict_rqr_statut_personne_accompagnee_ids = fields.Boolean(u'Champs related_vict_rqr_statut_personne_accompagnee_ids - Obligation')
+
+    related_vict_vsb_statut_professionnel_ids = fields.Boolean(u'Champs related_vict_vsb_statut_professionnel_ids - Visibilité')
+    related_vict_rqr_statut_professionnel_ids = fields.Boolean(u'Champs related_vict_rqr_statut_professionnel_ids - Obligation')
+
 
     related_vict_vsb_nom_pere             = fields.Boolean(u'Champs related_vict_vsb_nom_pere - Visibilité')
     related_vict_rqr_nom_pere             = fields.Boolean(u'Champs related_vict_rqr_nom_pere - Obligation')
@@ -2484,7 +2523,7 @@ class is_default_type_event(models.Model):
         field_ids = field_obj.search([
             ('model', '=', 'is.eig.victime'),
             ('name','in', ('identifie','name','prenom','address','ecole','birthdate','sexe_id',
-                           'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
+                           'qualite_id','disposition_id','consequence_id','statut_personne_accompagnee_ids','statut_professionnel_ids','nom_pere','prenom_pere',
                             'address_pere','nom_mere','prenom_mere','address_mere',
             ))])
         return field_ids
@@ -2504,6 +2543,8 @@ class is_default_type_event(models.Model):
             'qualite_id': 8,
             'consequence_id': 9,
             'disposition_id': 10,
+            'statut_personne_accompagnee_ids': 10,
+            'statut_professionnel_ids': 10,
             'nom_pere': 11,
             'prenom_pere': 12,
             'address_pere': 13,

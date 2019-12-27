@@ -62,6 +62,8 @@
         <menuitem name="Conséquence pour les personnels"                                      id="menu_is_consequence_personnel_action"                sequence="13" parent="menu_parametrage_tables" action="is_consequence_personnel_action" />
         <menuitem name="Conséquence pour l’organisation et le fonctionnement de la structure" id="menu_is_consequence_fonctionnement_stucture_action"  sequence="14" parent="menu_parametrage_tables" action="is_consequence_fonctionnement_stucture_action" />
         <menuitem name="Qualité (autre)"                                                      id="menu_is_qualite_autre"                               sequence="15" parent="menu_parametrage_tables" action="is_qualite_autre_action" />
+        <menuitem name="Statut, si personne accompagnée"                                      id="is_statut_personne_accompagnee_menu"                 sequence="16" parent="menu_parametrage_tables" action="is_statut_personne_accompagnee_action" />
+        <menuitem name="Statut, si professionnel"                                             id="is_statut_professionnel_menu"                        sequence="17" parent="menu_parametrage_tables" action="is_statut_professionnel_action" />
 
 
         <menuitem action="is_ove_eig_action"         id="menu_is_ove_eig_action"         parent="menu_declaration" sequence="10"/>
