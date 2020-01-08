@@ -19,8 +19,7 @@ access_is_nature_evenement_ei_gestionnaire,is.nature.evenement.ei.gestionnaire,m
 access_is_victime_ei_user,is.victime.ei.user,model_is_victime_ei,base.group_user,1,0,0,0
 access_is_victime_ei_gestionnaire,is.victime.ei.gestionnaire,model_is_victime_ei,group_is_gestionnaire,1,1,1,1
 
-access_is_motif_retour_ei_user,is.motif.retour.ei.user,model_is_motif_retour_ei,base.group_user,1,0,0,0
-access_is_motif_retour_ei_gestionnaire,is.motif.retour.ei.gestionnaire,model_is_motif_retour_ei,group_is_gestionnaire,1,1,1,1
+access_is_motif_retour_ei_user,is.motif.retour.ei.user,model_is_motif_retour_ei,base.group_user,1,1,1,1
 
 access_is_sexe_user,is.sexe.user,model_is_sexe,base.group_user,1,0,0,0
 access_is_sexe_gestionnaire,is.sexe.gestionnaire,model_is_sexe,group_is_gestionnaire,1,1,1,1
@@ -49,23 +48,17 @@ access_is_destinataire_gestionnaire,is_destinataire.gestionnaire,model_is_destin
 access_is_auteur_user,is_auteur.user,model_is_auteur,base.group_user,1,0,0,0
 access_is_auteur_gestionnaire,is_auteur.gestionnaire,model_is_auteur,group_is_gestionnaire,1,1,1,1
 
-access_is_motif_retour_eig_user,is_motif_retour_eig.user,model_is_motif_retour_eig,base.group_user,1,0,0,0
-access_is_motif_retour_eig_gestionnaire,is_motif_retour_eig.gestionnaire,model_is_motif_retour_eig,group_is_gestionnaire,1,1,1,1
+access_is_motif_retour_eig_user,is_motif_retour_eig.user,model_is_motif_retour_eig,base.group_user,1,1,1,1
 
-access_is_eig_auteur_user,is_eig_auteur.user,model_is_eig_auteur,base.group_user,1,0,0,0
-access_is_eig_auteur_gestionnaire,is_eig_auteur.gestionnaire,model_is_eig_auteur,group_is_gestionnaire,1,1,1,1
+access_is_eig_auteur_user,is_eig_auteur.user,model_is_eig_auteur,base.group_user,1,1,1,1
 
-access_is_eig_temoin_user,is_eig_temoin.user,model_is_eig_temoin,base.group_user,1,0,0,0
-access_is_eig_temoin_gestionnaire,is_eig_temoin.gestionnaire,model_is_eig_temoin,group_is_gestionnaire,1,1,1,1
+access_is_eig_temoin_user,is_eig_temoin.user,model_is_eig_temoin,base.group_user,1,1,1,1
 
-access_is_eig_victime_user,is_eig_victime.user,model_is_eig_victime,base.group_user,1,0,0,0
-access_is_eig_victime_gestionnaire,is_eig_victime.gestionnaire,model_is_eig_victime,group_is_gestionnaire,1,1,1,1
+access_is_eig_victime_user,is_eig_victime.user,model_is_eig_victime,base.group_user,1,1,1,1
 
-access_is_eig_personne_user,is_eig_personne.user,model_is_eig_personne,base.group_user,1,0,0,0
-access_is_eig_personne_gestionnaire,is_eig_personne.gestionnaire,model_is_eig_personne,group_is_gestionnaire,1,1,1,1
+access_is_eig_personne_user,is_eig_personne.user,model_is_eig_personne,base.group_user,1,1,1,1
 
-access_is_infos_communication_user,is_infos_communication.user,model_is_infos_communication,base.group_user,1,0,0,0
-access_is_infos_communication_gestionnaire,is_infos_communication.gestionnaire,model_is_infos_communication,group_is_gestionnaire,1,1,1,1
+access_is_infos_communication_user,is_infos_communication.user,model_is_infos_communication,base.group_user,1,1,1,1
 
 access_is_default_type_event_user,is_default_type_event.user,model_is_default_type_event,base.group_user,1,0,0,0
 access_is_default_type_event_gestionnaire,is_default_type_event.gestionnaire,model_is_default_type_event,group_is_gestionnaire,1,1,1,1
@@ -88,8 +81,7 @@ access_is_consequence_personnel_gestionnaire,is.consequence.personnel.gestionnai
 access_is_consequence_fonctionnement_stucture_user,is.consequence.fonctionnement.stucture.user,model_is_consequence_fonctionnement_stucture,base.group_user,1,0,0,0
 access_is_consequence_fonctionnement_stucture_gestionnaire,is.consequence.fonctionnement.stucture.gestionnaire,model_is_consequence_fonctionnement_stucture,group_is_gestionnaire,1,1,1,1
 
-access_is_eig_autre_personne_user,is_eig_autre_personne.user,model_is_eig_autre_personne,base.group_user,1,0,0,0
-access_is_eig_autre_personne_gestionnaire,is_eig_autre_personne.gestionnaire,model_is_eig_autre_personne,group_is_gestionnaire,1,1,1,1
+access_is_eig_autre_personne_user,is_eig_autre_personne.user,model_is_eig_autre_personne,base.group_user,1,1,1,1
 
 access_is_qualite_autre_user,is_qualite_autre.user,model_is_qualite_autre,base.group_user,1,0,0,0
 access_is_qualite_autre_gestionnaire,is_qualite_autre.gestionnaire,model_is_qualite_autre,group_is_gestionnaire,1,1,1,1
@@ -97,8 +89,7 @@ access_is_qualite_autre_gestionnaire,is_qualite_autre.gestionnaire,model_is_qual
 access_is_trame_user,is_trame.user,model_is_trame,base.group_user,1,0,0,0
 access_is_trame_gestionnaire,is_trame.gestionnaire,model_is_trame,group_is_gestionnaire,1,1,1,1
 
-access_is_eig_destinataire_user,access_is_eig_destinataire_user,model_is_eig_destinataire,base.group_user,1,0,0,0
-access_is_eig_destinataire_gestionnaire,access_is_eig_destinataire_gestionnaire,model_is_eig_destinataire,group_is_gestionnaire,1,1,1,1
+access_is_eig_destinataire_user,access_is_eig_destinataire_user,model_is_eig_destinataire,base.group_user,1,1,1,1
 
 access_is_autorite_administrative_informee_user,access_is_autorite_administrative_informee_user,model_is_autorite_administrative_informee,base.group_user,1,0,0,0
 access_is_autorite_administrative_informee_gestionnaire,access_is_autorite_administrative_informee_gestionnaire,model_is_autorite_administrative_informee,group_is_gestionnaire,1,1,1,1
