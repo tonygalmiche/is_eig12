@@ -449,9 +449,15 @@ class is_eig_personne(models.Model):
     sexe_id                    = fields.Many2one('is.sexe', 'Sexe')
     related_vsb_sexe_id        = fields.Boolean(u'Champs related_vsb_sexe_id - Visibilité')
     related_rqr_sexe_id        = fields.Boolean(u'Champs related_rqr_sexe_id - Obligation')
+
     address                    = fields.Char('Adresse')
     related_vsb_address        = fields.Boolean(u'Champs related_vsb_address - Visibilité')
     related_rqr_address        = fields.Boolean(u'Champs related_rqr_address - Obligation')
+
+    departement_id             = fields.Many2one('is.departement', u'Département', help=u"Ce champ est utilisé pour déterminer les destinataires des mails pour les IP")
+    related_vsb_departement_id = fields.Boolean(u'Champs related_vsb_departement_id - Visibilité')
+    related_rqr_departement_id = fields.Boolean(u'Champs related_rqr_departement_id - Obligation')
+
     birthdate                  = fields.Date('Date de naissance')
     related_vsb_birthdate      = fields.Boolean(u'Champs related_vsb_birthdate - Visibilité')
     related_rqr_birthdate      = fields.Boolean(u'Champs related_rqr_birthdate - Obligation')
@@ -943,6 +949,8 @@ class is_eig(models.Model):
                 'related_pers_rqr_sexe_id': False,
                 'related_pers_vsb_address': False,
                 'related_pers_rqr_address': False,
+                'related_pers_vsb_departement_id': False,
+                'related_pers_rqr_departement_id': False,
                 'related_pers_vsb_ecole': False,
                 'related_pers_rqr_ecole': False,
                 'related_pers_vsb_birthdate': False,
@@ -1707,7 +1715,18 @@ class is_eig(models.Model):
             if rec.signalement_autorites==False and rec.type_event_id.code != 'SP':
                 if not destination:
                     raise UserError(u"Mail de destination non renseigné pour l'autorité de contrôle "+autorite_controle+" et pour ce type d'événement !")
-            departement = rec.etablissement_id.departement_id
+
+            departement = False
+            if rec.type_event_id.code=='IP':
+                if len(rec.personne_ids)>0:
+                    departement = rec.personne_ids[0].departement_id
+                if not departement:
+                    raise UserError(u"Département non renseigné pour la personne déclarée !");
+            else:
+                departement = rec.etablissement_id.departement_id
+            if not departement:
+                raise UserError(u"Département non renseigné !");
+
 
             #MailDestination = [
             #    ('ars'      , 'ARS'),
@@ -1725,39 +1744,39 @@ class is_eig(models.Model):
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_ars', False)
                     mails.append(['ars', departement.mail_ars, mail_template_id])
                 else:
-                    raise UserError(u"Mail ARS non renseigné pour ce département !")
+                    raise UserError(u"Mail ARS non renseigné pour le département "+str(departement.name))
             if destination == 'cd_se' or destination == 'ars_cd_se':
                 if departement.mail_cd_se:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_cd_se', False)
                     mails.append(['cd_se', departement.mail_cd_se, mail_template_id])
                 else:
-                    raise UserError(u"Mail CD pour les SE non renseigné pour ce département !")
+                    raise UserError(u"Mail CD pour les SE non renseigné pour le département "+str(departement.name))
             if destination == 'cd_ip':
                 if departement.mail_cd_ip:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_cd_ip', False)
                     mails.append(['cd_ip', departement.mail_cd_ip, mail_template_id])
                 else:
-                    raise UserError(u"Mail CD pour les IP non renseigné pour ce département !")
+                    raise UserError(u"Mail CD pour les IP non renseigné pour le département "+str(departement.name))
             if destination == 'drdjscs':
                 if departement.mail_drdjscs:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_drdjscs', False)
                     mails.append(['drdjscs', departement.mail_drdjscs, mail_template_id])
                 else:
-                    raise UserError(u"Mail DRDJSCS non renseigné pour ce département !")
+                    raise UserError(u"Mail DRDJSCS non renseigné pour le département "+str(departement.name))
 
             if destination == 'se_mna':
                 if departement.mail_se_mna:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_se_mna', False)
                     mails.append(['se_mna', departement.mail_se_mna, mail_template_id])
                 else:
-                    raise UserError(u"Mail SE MNA non renseigné pour ce département !")
+                    raise UserError(u"Mail SE MNA non renseigné pour le département "+str(departement.name))
 
             if destination == 'mecs':
                 if departement.mail_mecs:
                     mail_template_id = self.env.ref('is_eig12.email_template_redige_vers_valide_mecs', False)
                     mails.append(['mecs', departement.mail_mecs, mail_template_id])
                 else:
-                    raise UserError(u"Mail MECS non renseigné pour ce département !")
+                    raise UserError(u"Mail MECS non renseigné pour le département "+str(departement.name))
 
             for mail in mails:
                 destinataire = mail[0]
@@ -2203,6 +2222,8 @@ class is_eig(models.Model):
     related_pers_rqr_sexe_id              = fields.Boolean(u'Champs related_pers_rqr_sexe_id - Obligation')
     related_pers_vsb_address              = fields.Boolean(u'Champs related_pers_vsb_address - Visibilité')
     related_pers_rqr_address              = fields.Boolean(u'Champs related_pers_rqr_address - Obligation')
+    related_pers_vsb_departement_id       = fields.Boolean(u'Champs related_pers_vsb_departement_id - Visibilité')
+    related_pers_rqr_departement_id       = fields.Boolean(u'Champs related_pers_rqr_departement_id - Obligation')
     related_pers_vsb_ecole                = fields.Boolean(u'Champs related_pers_vsb_ecole - Visibilité')
     related_pers_rqr_ecole                = fields.Boolean(u'Champs related_pers_rqr_ecole - Obligation')
     related_pers_vsb_birthdate            = fields.Boolean(u'Champs related_pers_vsb_birthdate - Visibilité')
@@ -2569,7 +2590,7 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig.personne'),
-            ('name','in', ('identifie','name','prenom','address','ecole','birthdate','sexe_id',
+            ('name','in', ('identifie','name','prenom','address','departement_id','ecole','birthdate','sexe_id',
                            'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
                             'address_pere','autorite_parentale_pere','nom_mere','prenom_mere','address_mere','autorite_parentale_mere','auteur_victime',
                             'tuteur_nom','tuteur_prenom','tuteur_adresse',
@@ -2587,6 +2608,7 @@ class is_default_type_event(models.Model):
             'sexe_id': 4,
             'birthdate': 5,
             'address': 6,
+            'departement_id': 6,
             'ecole': 7,
             'qualite_id': 8,
             'consequence_id': 9,

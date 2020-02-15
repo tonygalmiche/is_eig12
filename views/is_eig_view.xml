@@ -1474,6 +1474,8 @@
                             <field name="related_pers_rqr_sexe_id" invisible="1"   />
                             <field name="related_pers_vsb_address"  invisible="1" />
                             <field name="related_pers_rqr_address"  invisible="1"  />
+                            <field name="related_pers_vsb_departement_id"  invisible="1" />
+                            <field name="related_pers_rqr_departement_id"  invisible="1"  />
                             <field name="related_pers_vsb_ecole"  invisible="1" />
                             <field name="related_pers_rqr_ecole"  invisible="1"  />
                             <field name="related_pers_vsb_birthdate"  invisible="1" />
@@ -1518,6 +1520,8 @@
                                     'default_related_rqr_name': related_pers_rqr_name, 
                                     'default_related_vsb_address': related_pers_vsb_address, 
                                     'default_related_rqr_address': related_pers_rqr_address, 
+                                    'default_related_vsb_departement_id': related_pers_vsb_departement_id, 
+                                    'default_related_rqr_departement_id': related_pers_rqr_departement_id, 
                                     'default_related_vsb_ecole': related_pers_vsb_ecole, 
                                     'default_related_rqr_ecole': related_pers_rqr_ecole, 
                                     'default_related_vsb_birthdate': related_pers_vsb_birthdate, 
@@ -1573,6 +1577,9 @@
                                     <field name="related_vsb_address" invisible="1"  />
                                     <field name="related_rqr_address" invisible="1"  />
                                     <field name="address" attrs="{'invisible': [('related_vsb_address', '=', False)], 'required':[('related_rqr_address','=', True)]}"/>
+                                    <field name="related_vsb_departement_id" invisible="1"  />
+                                    <field name="related_rqr_departement_id" invisible="1"  />
+                                    <field name="departement_id" attrs="{'invisible': [('related_vsb_departement_id', '=', False)], 'required':[('related_rqr_departement_id','=', True)]}"/>
                                     <field name="related_vsb_ecole" invisible="1"  />
                                     <field name="related_rqr_ecole" invisible="1"  />
                                     <field name="ecole" attrs="{'invisible': [('related_vsb_ecole', '=', False)], 'required':[('related_rqr_ecole','=', True)]}"/>
@@ -1658,6 +1665,7 @@
                                 <field name="prenom"/>
                                 <field name="sexe_id"/>
                                 <field name="address"/>
+                                <field name="departement_id"/>
                                 <field name="birthdate"/>
                                 <field name="qualite_id"/>
                                 <field name="disposition_id"/>
