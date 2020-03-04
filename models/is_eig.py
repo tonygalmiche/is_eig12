@@ -454,7 +454,7 @@ class is_eig_personne(models.Model):
     related_vsb_address        = fields.Boolean(u'Champs related_vsb_address - Visibilité')
     related_rqr_address        = fields.Boolean(u'Champs related_rqr_address - Obligation')
 
-    departement_id             = fields.Many2one('is.departement', u'Département', help=u"Ce champ est utilisé pour déterminer les destinataires des mails pour les IP")
+    departement_id             = fields.Many2one('is.departement', u"Département du lieu de résidence de la personne faisant l'objet de la déclaration", help=u"Ce champ est utilisé pour déterminer les destinataires des mails pour les IP")
     related_vsb_departement_id = fields.Boolean(u'Champs related_vsb_departement_id - Visibilité')
     related_rqr_departement_id = fields.Boolean(u'Champs related_rqr_departement_id - Obligation')
 
