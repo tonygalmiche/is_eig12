@@ -12,8 +12,7 @@ import time
 from pytz import timezone
 import pytz
 
-
-# SUPERUSER_ID = 2
+SUPERUSER_ID = 2
 
 AutoriteControle = [
     ('ars'    , 'ARS'),
@@ -616,9 +615,10 @@ class is_eig(models.Model):
     def _btn_rediger_eig(self):
         for obj in self:
             r = False
+            #print(obj,self._uid,SUPERUSER_ID,self.env.user.has_group('is_eig12.group_is_traiteur'))
             if obj.state == "draft":
                 if self._uid == SUPERUSER_ID \
-                    or self.env.user.has_group('is_eig.group_is_traiteur') \
+                    or self.env.user.has_group('is_eig12.group_is_traiteur') \
                     or self._uid == obj.etablissement_id.director_id.id \
                     or self._uid == obj.etablissement_id.responsible_id.id \
                     or self._uid == obj.redacteur_id.id:
