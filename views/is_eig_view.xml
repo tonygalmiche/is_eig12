@@ -557,7 +557,7 @@
             <field name="name">is.ove.eig.tree</field>
             <field name="model">is.eig</field>
             <field name="arch" type="xml">
-            <tree string="Evénements Indésirables Graves" import="false">
+            <tree string="Événements à déclarer aux autorités" import="false">
                 <field name="name"/>
                 <field name="etablissement_id"/>
                 <field name="type_event_id"/>
@@ -575,7 +575,7 @@
             <field name="name">is.ove.eig.form</field>
             <field name="model">is.eig</field>
             <field name="arch" type="xml">
-            <form string="Evénements Indésirables Graves">
+            <form string="Événements à déclarer aux autorités">
                 <header>
                     <!-- Etat Rédaction-->
                     <field name="btn_rediger_eig" invisible="1" />
@@ -2187,7 +2187,7 @@
             <field name="name">is.ove.eig.search</field>
             <field name="model">is.eig</field>
             <field name="arch" type="xml">
-                <search string="Evénements Indésirables Graves">
+                <search string="Événements à déclarer aux autorités">
                     <field name="name"/>
                     <field name="etablissement_id"/>
                     <field name="type_event_id"/>
@@ -2202,7 +2202,7 @@
         </record>
         <!-- Tous les EIG -->
         <record id="is_ove_eig_action" model="ir.actions.act_window">
-            <field name="name">Tous les EIG</field>
+            <field name="name">Tous les événements à déclarer aux autorités</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.eig</field>
             <field name="view_mode">tree,form</field>

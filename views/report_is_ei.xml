@@ -5,7 +5,7 @@
         <t t-call="web.html_container">
         <t t-call="web.external_layout">
             <div class="page">
-                <h2><center>Évènement indésirable</center></h2>
+                <h2><center>Incident</center></h2>
                 <div class="row">
                     <table class="table" >
                         <thead>
@@ -193,7 +193,7 @@
 
     <report 
         id="is_ei_report"
-        string="Évènement Indésirable"
+        string="Incident"
         model="is.ei" 
         report_type="qweb-pdf"
         file="is_eig12.report_is_ei" 

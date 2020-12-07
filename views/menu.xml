@@ -13,24 +13,23 @@
             parent="base.menu_custom" />
 
 
-        <!-- EIG -->
-        <menuitem name="EIG"                  id="menu_main_eig"                   sequence="10" />
-        <menuitem name="Événements Indésirables Graves" id="menu_declaration"            parent="menu_main_eig"     sequence="10"/>
+        <!-- EI / EIG -->
+        <menuitem name="Évènements Indésirables" id="menu_main_eig" sequence="10" />
+        <menuitem name="Incidents" id="menu_ei_root"  sequence="10" parent="menu_main_eig" />
+
+        <menuitem name="Création incident"   id="menu_is_ei_creation"  sequence="10" parent="menu_ei_root" action="is_ei_creation_action"/>
+        <menuitem name="Tous les incidents"  id="menu_is_ei_tous"      sequence="20" parent="menu_ei_root" action="is_ei_tous_action"/>
+        <menuitem name="Rédaction"           id="menu_is_ei_redaction" sequence="30" parent="menu_ei_root" action="is_ei_redaction_action"/>
+        <menuitem name="Rédigé"              id="menu_is_ei_redige"    sequence="40" parent="menu_ei_root" action="is_ei_redige_action"/>
+        <menuitem name="Validé"              id="menu_is_ei_valide"    sequence="50" parent="menu_ei_root" action="is_ei_valide_action"/>
 
 
-        <menuitem name="Évènements Indésirables"           id="menu_ei_root"         sequence="20" parent="menu_main_eig" />
-        <!--<menuitem name="Évènements Indésirables"           id="menu_ei"              sequence="10" parent="menu_ei_root" />-->
-        <menuitem name="Tous les Évènements Indésirables" id="menu_is_ei_tous"      sequence="10" parent="menu_ei_root"      action="is_ei_tous_action"  />
-        <menuitem name="Rédaction"          id="menu_is_ei_redaction" sequence="11" parent="menu_ei_root"      action="is_ei_redaction_action"/>
-        <menuitem name="Rédigé"             id="menu_is_ei_redige"    sequence="12" parent="menu_ei_root"      action="is_ei_redige_action"/>
-        <menuitem name="Validé"             id="menu_is_ei_valide"    sequence="13" parent="menu_ei_root"      action="is_ei_valide_action" />
-
-
+        <menuitem name="Événements à déclarer aux autorités" id="menu_declaration"            parent="menu_main_eig"     sequence="20"/>
 
 
         <!-- Paramétrage EIG -->
         <menuitem name="Paramétrage"          id="menu_parametrage"                sequence="30" groups="group_is_gestionnaire"                 parent="menu_main_eig" />
-        <menuitem name="Paramétrage Événements Indésirables Graves"      id="menu_parametrage_eig"            sequence="10" groups="group_is_gestionnaire"                 parent="menu_parametrage" />
+        <menuitem name="Paramétrage Événements à déclarer aux autorités" id="menu_parametrage_eig"            sequence="10" groups="group_is_gestionnaire"                 parent="menu_parametrage" />
         <menuitem name="Fondation OVE"        id="menu_fondation_ove"              sequence="1"  action="base.action_res_company_form"          parent="menu_parametrage_eig" />
         <menuitem name="Département"          id="menu_is_departement_action"      sequence="2"  action="is_departement_action"                 parent="menu_parametrage_eig" />
         <menuitem name="Etablissement"        id="menu_is_etablissement_action"    sequence="3"  action="is_etablissement_action"               parent="menu_parametrage_eig" />
@@ -40,10 +39,9 @@
         <menuitem name="Trame"                id="menu_is_trame"                   sequence="7"  action="is_trame_action"                       parent="menu_parametrage_eig" />
 
         <!-- Paramétrage EI -->
-        <menuitem name="Paramétrage Évènements Indésirables" id="menu_parametrage_ei"                sequence="20" parent="menu_parametrage"        groups="group_is_gestionnaire_ei" />
-        <!--<menuitem name="Type Evènement"       id="menu_is_type_evenement_ei_action"   sequence="5"   parent="menu_parametrage_ei" action="is_type_evenement_ei_action" />-->
-        <menuitem name="Nature Evènement"     id="menu_is_nature_evenement_ei_action" sequence="10"  parent="menu_parametrage_ei" action="is_nature_evenement_ei_action" />
-        <menuitem name="Modèles de courriels" id="menu_is_ei_email_templates"         sequence="20"  parent="menu_parametrage_ei" action="is_ei_action_email_template_tree_all" />
+        <menuitem name="Paramétrage incidents" id="menu_parametrage_ei"                sequence="20" parent="menu_parametrage"    groups="group_is_gestionnaire_ei" />
+        <menuitem name="Nature Evènement"      id="menu_is_nature_evenement_ei_action" sequence="10" parent="menu_parametrage_ei" action="is_nature_evenement_ei_action" />
+        <menuitem name="Modèles de courriels"  id="menu_is_ei_email_templates"         sequence="20" parent="menu_parametrage_ei" action="is_ei_action_email_template_tree_all" />
 
 
         <!-- Paramétrage Tables -->
