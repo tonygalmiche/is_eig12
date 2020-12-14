@@ -687,6 +687,10 @@ class is_eig(models.Model):
                 'related_onglet_mesures':  False,
                 'related_onglet_infos':  False,
                 'related_onglet_element_complementaire':  False,
+
+                'related_vsb_portail_national':  False,
+                'related_rqr_portail_national':  False,
+
                 'related_group_motif_retour':  False,
                 'related_vsb_si_autre_presumees':  False,
                 'related_rqr_si_autre_presumees':  False,
@@ -1841,8 +1845,12 @@ class is_eig(models.Model):
     type_event_id                         = fields.Many2one('is.type.evenement', u"Type d'événement", required=True, help=u"Grandes catégories d'EIG. Pour tout EIG concernant un ou plusieurs mineurs relevant de l'ASE, il est nécessaire de sélectionner « Mineur relevant de l'ASE ». Ce choix détermine également le formulaire départemental qui sera généré et envoyé aux autorités de tutelles.")
     event_description                     = fields.Text('Description', related='type_event_id.description')
     event_information_speciale            = fields.Text(u'Information spéciale', related='type_event_id.information_speciale')
+    
+    related_vsb_portail_national          = fields.Boolean(u'Champs related_vsb_portail_national - Visibilité')
+    related_rqr_portail_national          = fields.Boolean(u'Champs related_rqr_portail_national - Obligation')
+    portail_national                      = fields.Char(u'Portail national de signalement des événements sanitaires indésirables', default="https://signalement.social-sante.gouv.fr/psig_ihm_utilisateurs/index.html#/accueil", readonly=True)
+    
     nature_event_id                       = fields.Many2many('is.nature.evenement', string=u"Nature d'événement ", required=True, help=u"Préciser le type d'événement à déclarer.")
-
     nature_event_libelle                  = fields.Char(u"Nature événement", compute='_compute_nature_event_libelle', readonly=True, store=False)
 
     type_nature_event_ids                 = fields.Many2many(related="type_event_id.is_nature_ids")
@@ -2346,7 +2354,7 @@ class is_default_type_event(models.Model):
             ('model', '=', 'is.eig'),
             ('name', 'in', ['start_date', 'date_heure_constatation_faits', 'end_date', 'description_faits',
                            'lieu_faits', 'element_faits', 'criteres_generaux_ids', 'solution_prise_en_charge',
-                           'demande_intervention_secours_ids'
+                           'demande_intervention_secours_ids', 'portail_national'
             ])])
         return field_ids
 
@@ -2764,6 +2772,8 @@ class is_default_type_event(models.Model):
         for field in fields_eig_ids:
             #if field.name == 'nature_precision':
             #    eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
+            if field.name == 'portail_national':
+                eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
             if field.name == 'start_date':
                 eig_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig': True}])
             if field.name == 'end_date':
