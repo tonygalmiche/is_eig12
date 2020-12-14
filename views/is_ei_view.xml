@@ -46,7 +46,7 @@
                             <page string="Faits" >
                                 <group col="2" colspan="4">
                                     <field name="date_faits"/>
-                                    <field name="date_constatation_faits"/>
+                                    <field name="date_constatation_faits" required="1"/>
                                     <field name="lieu_faits" />
                                     <field name="description_faits"/>
                                     <field name="evenement_survenu"/>
