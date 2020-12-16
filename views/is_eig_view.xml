@@ -675,13 +675,13 @@
                     <group attrs="{'readonly': [('state','in',['valide','done'])]}">
 
                         <label colspan="4" for="portail_national" attrs="{'invisible': [('related_vsb_portail_national', '=', False)]}" />
-                        <div>
-                        <field name="related_vsb_portail_national" invisible="1"  />
-                        <field name="related_rqr_portail_national" invisible="1"  />
-                        <field colspan="4" nolabel="1" name="portail_national" widget="url" attrs="{
-                            'invisible': [('related_vsb_portail_national', '=', False)],
-                            'required':[('related_rqr_portail_national','=', True)],
-                        }"/>
+                        <div style="background:orange" attrs="{'invisible':[('portail_national','=',False)]}">
+                            <field name="related_vsb_portail_national" invisible="1"  />
+                            <field name="related_rqr_portail_national" invisible="1"  />
+                            <field colspan="4" nolabel="1" name="portail_national" widget="url" attrs="{
+                                'invisible': [('related_vsb_portail_national', '=', False)],
+                                'required':[('related_rqr_portail_national','=', True)],
+                            }"/>
                         </div>
 
                         <label colspan="4" for="nature_event_id" attrs="{'invisible': [('type_event_id','=',False)]}" />
