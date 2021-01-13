@@ -16,7 +16,7 @@ access_is_type_evenement_ei_gestionnaire,is.type.evenement.ei.gestionnaire,model
 access_is_nature_evenement_ei_user,is.nature.evenement.ei.user,model_is_nature_evenement_ei,base.group_user,1,0,0,0
 access_is_nature_evenement_ei_gestionnaire,is.nature.evenement.ei.gestionnaire,model_is_nature_evenement_ei,group_is_gestionnaire,1,1,1,1
 
-access_is_victime_ei_user,is.victime.ei.user,model_is_victime_ei,base.group_user,1,0,0,0
+access_is_victime_ei_user,is.victime.ei.user,model_is_victime_ei,base.group_user,1,1,1,1
 access_is_victime_ei_gestionnaire,is.victime.ei.gestionnaire,model_is_victime_ei,group_is_gestionnaire,1,1,1,1
 
 access_is_motif_retour_ei_user,is.motif.retour.ei.user,model_is_motif_retour_ei,base.group_user,1,1,1,1
