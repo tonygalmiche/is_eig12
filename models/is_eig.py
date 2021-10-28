@@ -185,6 +185,14 @@ class is_statut_professionnel(models.Model):
     name = fields.Char(u'Statut, si professionnel', required=True)
 
 
+class is_eig_lien(models.Model):
+    _name = 'is.eig.lien'
+    _description = "Lien"
+    _order = "name"
+
+    name = fields.Char('Lien', required=True)
+
+
 class is_destinataire(models.Model):
     _name = 'is.destinataire'
     _description = u"Destinataire"
@@ -299,6 +307,44 @@ class is_qualite_autre(models.Model):
     _sql_constraints = [
         ('name_uniq', 'unique(name)', u"Le nom doit être unique !"),
     ]
+
+
+class is_statut_familial(models.Model):
+    _name = 'is.statut.familial'
+    _description = 'Statut familial'
+
+    name = fields.Char('Statut familial' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+class is_logement(models.Model):
+    _name = 'is.logement'
+    _description = 'Logement'
+
+    name = fields.Char('Logement' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+class is_statut_logement(models.Model):
+    _name = 'is.statut.logement'
+    _description = 'Statut logement'
+
+    name = fields.Char('Statut' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+
 
 
 class is_eig_auteur(models.Model):
@@ -472,9 +518,72 @@ class is_eig_personne(models.Model):
     auteur_victime             = fields.Selection([('auteur', 'Auteur'), ('victime', 'Victime')], "Auteur / Victime")
     related_vsb_auteur_victime = fields.Boolean(u'Champs related_vsb_auteur_victime - Visibilité')
     related_rqr_auteur_victime = fields.Boolean(u'Champs related_rqr_auteur_victime - Obligation')
+
     consequence_id             = fields.Many2one('is.consequence', u'Conséquences')
     related_vsb_consequence_id = fields.Boolean(u'Champs related_vsb_consequence_id - Visibilité')
     related_rqr_consequence_id = fields.Boolean(u'Champs related_rqr_consequence_id - Obligation')
+
+    personne_informee             = fields.Selection(OuiNon, "La personne est-elle informée de la démarche")
+    related_vsb_personne_informee = fields.Boolean(u'Champs related_vsb_personne_informee - Visibilité')
+    related_rqr_personne_informee = fields.Boolean(u'Champs related_rqr_personne_informee - Obligation')
+
+    personne_concernee            = fields.Selection(OuiNon, "La personne concernée ou son représentant a donné son consentement pour le partage et/ou l’échange d'informations entre professionnels sur sa situation")
+    related_vsb_personne_concernee = fields.Boolean(u'Champs related_vsb_personne_concernee - Visibilité')
+    related_rqr_personne_concernee = fields.Boolean(u'Champs related_rqr_personne_concernee - Obligation')
+
+    nom_naissance              = fields.Char('Nom de naissance')
+    related_vsb_nom_naissance  = fields.Boolean('Champs related_vsb_nom_naissance - Visibilité')
+    related_rqr_nom_naissance  = fields.Boolean('Champs related_vsb_nom_naissance - Obligation')
+
+    lieu_naissance              = fields.Char('Lieu de naissance')
+    related_vsb_lieu_naissance  = fields.Boolean('Champs related_vsb_lieu_naissance - Visibilité')
+    related_rqr_lieu_naissance  = fields.Boolean('Champs related_rqr_lieu_naissance - Obligation')
+
+    age             = fields.Char('Age')
+    related_vsb_age = fields.Boolean('Champs related_vsb_age - Visibilité')
+    related_rqr_age = fields.Boolean('Champs related_rqr_age - Obligation')
+
+    statut_familial_id             = fields.Many2one('is.statut.familial', 'Statut familial')
+    related_vsb_statut_familial_id = fields.Boolean('Champs related_vsb_statut_familial_id - Visibilité')
+    related_rqr_statut_familial_id = fields.Boolean('Champs related_rqr_statut_familial_id - Obligation')
+
+    code_postal             = fields.Char('Code postal')
+    related_vsb_code_postal = fields.Boolean('Champs related_vsb_code_postal - Visibilité')
+    related_rqr_code_postal = fields.Boolean('Champs related_rqr_code_postal - Obligation')
+
+    ville             = fields.Char('Ville')
+    related_vsb_ville = fields.Boolean('Champs related_vsb_ville - Visibilité')
+    related_rqr_ville = fields.Boolean('Champs related_rqr_ville - Obligation')
+
+    email             = fields.Char('Email')
+    related_vsb_email = fields.Boolean('Champs related_vsb_email - Visibilité')
+    related_rqr_email = fields.Boolean('Champs related_rqr_email - Obligation')
+
+    logement_id             = fields.Many2one('is.logement', 'Logement')
+    related_vsb_logement_id = fields.Boolean('Champs related_vsb_logement_id - Visibilité')
+    related_rqr_logement_id = fields.Boolean('Champs related_rqr_logement_id - Obligation')
+
+    autre_logement           = fields.Char('Autre logement')
+    related_vsb_autre_logement = fields.Boolean('Champs related_vsb_autre_logement - Visibilité')
+    related_rqr_autre_logement = fields.Boolean('Champs related_rqr_autre_logement - Obligation')
+
+    statut_logement_id             = fields.Many2one('is.statut.logement', 'Statut Logement')
+    related_vsb_statut_logement_id = fields.Boolean('Champs related_vsb_statut_logement_id - Visibilité')
+    related_rqr_statut_logement_id = fields.Boolean('Champs related_rqr_statut_logement_id - Obligation')
+
+    statut_autre             = fields.Char('Statut autre')
+    related_vsb_statut_autre = fields.Boolean('Champs related_vsb_statut_autre - Visibilité')
+    related_rqr_statut_autre = fields.Boolean('Champs related_rqr_statut_autre - Obligation')
+
+    en_activite             = fields.Selection(OuiNon, "En activité")
+    related_vsb_en_activite = fields.Boolean('Champs related_vsb_en_activite - Visibilité')
+    related_rqr_en_activite = fields.Boolean('Champs related_rqr_en_activite - Obligation')
+
+    activite                = fields.Char('Activité socio-professionnelle')
+    related_vsb_activite = fields.Boolean('Champs related_vsb_activite - Visibilité')
+    related_rqr_activite = fields.Boolean('Champs related_rqr_activite - Obligation')
+
+
 
     nom_pere                   = fields.Char(u'Nom Père')
     related_vsb_nom_pere       = fields.Boolean(u'Champs related_vsb_nom_pere - Visibilité')
@@ -563,6 +672,39 @@ class is_eig_autre_personne(models.Model):
     qualite_id                 = fields.Many2one('is.qualite.autre', u'Qualité')
     related_vsb_qualite_id     = fields.Boolean(u'Champs related_vsb_qualite_id - Visibilité')
     related_rqr_qualite_id     = fields.Boolean(u'Champs related_rqr_qualite_id - Obligation')
+
+    lien_id                    = fields.Many2one('is.eig.lien', "Lien")
+    related_vsb_lien_id        = fields.Boolean('Champs related_vsb_lien_id - Visibilité')
+    related_rqr_lien_id        = fields.Boolean('Champs related_rqr_lien_id - Obligation')
+
+    rue                        = fields.Char('Rue')
+    related_vsb_rue            = fields.Boolean('Champs related_vsb_rue - Visibilité')
+    related_rqr_rue            = fields.Boolean('Champs related_rqr_rue - Obligation')
+
+    adresse                    = fields.Char("Complément d'adresse")
+    related_vsb_adresse        = fields.Boolean('Champs related_vsb_adresse - Visibilité')
+    related_rqr_adresse        = fields.Boolean('Champs related_rqr_adresse - Obligation')
+
+    code_postal                = fields.Char("Code postal")
+    related_vsb_code_postal    = fields.Boolean('Champs related_vsb_code_postal - Visibilité')
+    related_rqr_code_postal    = fields.Boolean('Champs related_rqr_code_postal - Obligation')
+
+    ville                      = fields.Char("Ville")
+    related_vsb_ville          = fields.Boolean('Champs related_vsb_ville - Visibilité')
+    related_rqr_ville          = fields.Boolean('Champs related_rqr_ville - Obligation')
+
+    telephone                  = fields.Char("Téléphone")
+    related_vsb_telephone      = fields.Boolean('Champs related_vsb_telephone - Visibilité')
+    related_rqr_telephone      = fields.Boolean('Champs related_rqr_telephone - Obligation')
+
+    mail                       = fields.Char("Mail")
+    related_vsb_mail           = fields.Boolean('Champs related_vsb_mail - Visibilité')
+    related_rqr_mail           = fields.Boolean('Champs related_rqr_mail - Obligation')
+
+    personne_informee             = fields.Selection(OuiNon, "La personne est-elle informée de la demande ?")
+    related_vsb_personne_informee = fields.Boolean('Champs related_vsb_personne_informee - Visibilité')
+    related_rqr_personne_informee = fields.Boolean('Champs related_rqr_personne_informee - Obligation')
+
     consequence_id             = fields.Many2one('is.consequence', u'Conséquences')
     related_vsb_consequence_id = fields.Boolean(u'Champs related_vsb_consequence_id - Visibilité')
     related_rqr_consequence_id = fields.Boolean(u'Champs related_rqr_consequence_id - Obligation')
@@ -761,6 +903,36 @@ class is_eig(models.Model):
                 'related_vsb_mesure_protection_enfance': False,
                 'related_rqr_mesure_protection_enfance': False,
 
+                'related_vsb_garder_anonymat': False,
+                'related_rqr_garder_anonymat': False,
+
+                'related_vsb_origine_nom': False,
+                'related_rqr_origine_nom': False,
+
+                'related_vsb_origine_prenom': False,
+                'related_rqr_origine_prenom': False,
+
+                'related_vsb_origine_fonction': False,
+                'related_rqr_origine_fonction': False,
+
+                'related_vsb_origine_adresse': False,
+                'related_rqr_origine_adresse': False,
+
+                'related_vsb_origine_code_postal': False,
+                'related_rqr_origine_code_postal': False,
+
+                'related_vsb_origine_ville': False,
+                'related_rqr_origine_ville': False,
+
+                'related_vsb_origine_email': False,
+                'related_rqr_origine_email': False,
+
+                'related_vsb_origine_telephone_mobile': False,
+                'related_rqr_origine_telephone_mobile': False,
+
+                'related_vsb_origine_telephone_fixe': False,
+                'related_rqr_origine_telephone_fixe': False,
+
                 'related_vsb_date_heure_constatation_faits': False,
                 'related_rqr_date_heure_constatation_faits': False,
                 'related_vsb_end_date':  False,
@@ -847,7 +1019,6 @@ class is_eig(models.Model):
                 'related_vsb_communication_prevue_oui':  False,
                 'related_rqr_communication_prevue_oui':  False,
 
-
                 'related_aut_vsb_identifie': False,
                 'related_aut_rqr_identifie': False,
                 'related_aut_vsb_name': False,
@@ -865,7 +1036,6 @@ class is_eig(models.Model):
                 'related_aut_vsb_adresse': False,
                 'related_aut_rqr_adresse': False,
 
-
                 'related_tem_vsb_identifie': False,
                 'related_tem_rqr_identifie': False,
                 'related_tem_vsb_name': False,
@@ -882,9 +1052,6 @@ class is_eig(models.Model):
                 'related_tem_rqr_qualite_id': False,
                 'related_tem_vsb_disposition_id': False,
                 'related_tem_rqr_disposition_id': False,
-
-
-
 
                 'related_vict_vsb_identifie': False,
                 'related_vict_rqr_identifie': False,
@@ -914,7 +1081,6 @@ class is_eig(models.Model):
 
                 'related_vict_vsb_statut_professionnel_ids': False,
                 'related_vict_rqr_statut_professionnel_ids': False,
-
 
                 'related_vict_vsb_nom_pere': False,
                 'related_vict_rqr_nom_pere': False,
@@ -986,20 +1152,58 @@ class is_eig(models.Model):
 
                 'related_pers_vsb_auteur_victime': False,
                 'related_pers_rqr_auteur_victime': False,
+
+                'related_pers_vsb_personne_informee': False,
+                'related_pers_rqr_personne_informee': False,
+
+                'related_pers_vsb_personne_concernee': False,
+                'related_pers_rqr_personne_concernee': False,
+
+                'related_pers_vsb_nom_naissance': False,
+                'related_pers_rqr_nom_naissance': False,
+
+                'related_pers_vsb_lieu_naissance': False,
+                'related_pers_rqr_lieu_naissance': False,
+
+                'related_pers_vsb_age': False,
+                'related_pers_rqr_age': False,
+
+                'related_pers_vsb_statut_familial_id': False,
+                'related_pers_rqr_statut_familial_id': False,
+
+                'related_pers_vsb_code_postal': False,
+                'related_pers_rqr_code_postal': False,
+
+                'related_pers_vsb_ville': False,
+                'related_pers_rqr_ville': False,
+
+                'related_pers_vsb_email': False,
+                'related_pers_rqr_email': False,
+
+                'related_pers_vsb_logement_id': False,
+                'related_pers_rqr_logement_id': False,
+
+                'related_pers_vsb_autre_logement': False,
+                'related_pers_rqr_autre_logement': False,
+
+                'related_pers_vsb_statut_logement_id': False,
+                'related_pers_rqr_statut_logement_id': False,
+
+                'related_pers_vsb_statut_autre': False,
+                'related_pers_rqr_statut_autre': False,
+
+                'related_pers_vsb_en_activite': False,
+                'related_pers_rqr_en_activite': False,
+
+                'related_pers_vsb_activite': False,
+                'related_pers_rqractivite': False,
+
                 'related_pers_vsb_tuteur_nom': False,
                 'related_pers_rqr_tuteur_nom': False,
                 'related_pers_vsb_tuteur_prenom': False,
                 'related_pers_rqr_tuteur_prenom': False,
                 'related_pers_vsb_tuteur_adresse': False,
                 'related_pers_rqr_tuteur_adresse': False,
-
-
-
-
-
-
-
-
 
                 'related_inf_vsb_date': False,
                 'related_inf_rqr_date': False,
@@ -1023,6 +1227,31 @@ class is_eig(models.Model):
                 'related_autre_personne_rqr_prenom': False,
                 'related_autre_personne_vsb_qualite_id': False,
                 'related_autre_personne_rqr_qualite_id': False,
+
+                'related_autre_personne_vsb_lien_id': False,
+                'related_autre_personne_rqr_lien_id': False,
+
+                'related_autre_personne_vsb_rue': False,
+                'related_autre_personne_rqr_rue': False,
+
+                'related_autre_personne_vsb_adresse': False,
+                'related_autre_personne_rqr_adresse': False,
+
+                'related_autre_personne_vsb_code_postal': False,
+                'related_autre_personne_rqr_code_postal': False,
+
+                'related_autre_personne_vsb_ville': False,
+                'related_autre_personne_rqr_ville': False,
+
+                'related_autre_personne_vsb_telephone': False,
+                'related_autre_personne_rqr_telephone': False,
+
+                'related_autre_personne_vsb_mail': False,
+                'related_autre_personne_rqr_mail': False,
+
+                'related_autre_personne_vsb_personne_informee': False,
+                'related_autre_personne_rqr_personne_informee': False,
+
                 'related_autre_personne_vsb_consequence_id': False,
                 'related_autre_personne_rqr_consequence_id': False,
                 'related_autre_personne_vsb_disposition_id': False,
@@ -1947,9 +2176,6 @@ class is_eig(models.Model):
     related_vsb_objet_signalement_justice = fields.Boolean(u'Champs objet_signalement_justice - Visibilité')
     related_rqr_objet_signalement_justice = fields.Boolean(u'Champs objet_signalement_justice - Obligation')
 
-    mesure_protection_enfance             = fields.Selection(OuiNon, u"A votre connaissance la famille a-t-elle déjà fait l’objet d’une mesure au titre de la protection de l’enfance ?")
-    related_vsb_mesure_protection_enfance = fields.Boolean(u'Champs mesure_protection_enfance - Visibilité')
-    related_rqr_mesure_protection_enfance = fields.Boolean(u'Champs mesure_protection_enfance - Obligation')
 
     start_date                            = fields.Datetime(u'Date heure de début', help=u"Date connue de début de l'événement. En cas de maladie il s'agit de la date connue de déclaration des symptômes chez le premier malade.")
     related_vsb_start_date                = fields.Boolean(u'Champs related_vsb_start_date - Visibilité')
@@ -2117,6 +2343,50 @@ class is_eig(models.Model):
     related_rqr_infos_ids                 = fields.Boolean(u'Champs related_rqr_infos_ids - Obligation')
     motif_ids                             = fields.One2many('is.motif.retour.eig', 'eig_id1', 'Motif de retour', readonly=True)
 
+    mesure_protection_enfance             = fields.Selection(OuiNon, "A votre connaissance la famille a-t-elle déjà fait l’objet d’une mesure au titre de la protection de l’enfance ?")
+    related_vsb_mesure_protection_enfance = fields.Boolean('Champs mesure_protection_enfance - Visibilité')
+    related_rqr_mesure_protection_enfance = fields.Boolean('Champs mesure_protection_enfance - Obligation')
+
+    garder_anonymat                       = fields.Selection(OuiNon, "Souhait de garder l’anonymat pour un particulier signalant ?")
+    related_vsb_garder_anonymat           = fields.Boolean(u'Champs related_vsb_garder_anonymat - Visibilité')
+    related_rqr_garder_anonymat           = fields.Boolean(u'Champs related_rqr_garder_anonymat - Obligation')
+
+    origine_nom             = fields.Char(u"Nom")
+    related_vsb_origine_nom = fields.Boolean(u'Champs related_vsb_origine_nom - Visibilité')
+    related_rqr_origine_nom = fields.Boolean(u'Champs related_rqr_origine_nom - Obligation')
+
+    origine_prenom             = fields.Char(u"Prénom")
+    related_vsb_origine_prenom = fields.Boolean(u'Champs related_vsb_origine_prenom - Visibilité')
+    related_rqr_origine_prenom = fields.Boolean(u'Champs related_rqr_origine_prenom - Obligation')
+
+    origine_fonction             = fields.Char(u"Fonction")
+    related_vsb_origine_fonction = fields.Boolean(u'Champs related_vsb_origine_fonction - Visibilité')
+    related_rqr_origine_fonction = fields.Boolean(u'Champs related_rqr_origine_fonction - Obligation')
+
+    origine_adresse             = fields.Char(u"Adresse")
+    related_vsb_origine_adresse = fields.Boolean(u'Champs related_vsb_origine_adresse - Visibilité')
+    related_rqr_origine_adresse = fields.Boolean(u'Champs related_rqr_origine_adresse - Obligation')
+
+    origine_code_postal             = fields.Char(u"Code postal")
+    related_vsb_origine_code_postal = fields.Boolean(u'Champs related_vsb_origine_code_postal - Visibilité')
+    related_rqr_origine_code_postal = fields.Boolean(u'Champs related_rqr_origine_code_postal - Obligation')
+
+    origine_ville             = fields.Char(u"Ville")
+    related_vsb_origine_ville = fields.Boolean(u'Champs related_vsb_origine_ville - Visibilité')
+    related_rqr_origine_ville = fields.Boolean(u'Champs related_rqr_origine_ville - Obligation')
+
+    origine_email             = fields.Char(u"Email")
+    related_vsb_origine_email = fields.Boolean(u'Champs related_vsb_origine_email - Visibilité')
+    related_rqr_origine_email = fields.Boolean(u'Champs related_rqr_origine_email - Obligation')
+
+    origine_telephone_mobile             = fields.Char(u"Téléphone mobile")
+    related_vsb_origine_telephone_mobile = fields.Boolean(u'Champs related_vsb_origine_telephone_mobile - Visibilité')
+    related_rqr_origine_telephone_mobile = fields.Boolean(u'Champs related_rqr_origine_telephone_mobile - Obligation')
+
+    origine_telephone_fixe             = fields.Char(u"Téléphone fixe")
+    related_vsb_origine_telephone_fixe = fields.Boolean(u'Champs related_vsb_origine_telephone_fixe - Visibilité')
+    related_rqr_origine_telephone_fixe = fields.Boolean(u'Champs related_rqr_origine_telephone_fixe - Obligation')
+
     related_aut_vsb_identifie             = fields.Boolean(u'Champs related_aut_vsb_identifie - Visibilité')
     related_aut_rqr_identifie             = fields.Boolean(u'Champs related_aut_rqr_identifie - Obligation')
     related_aut_vsb_name                  = fields.Boolean(u'Champs technique - Visibilité')
@@ -2264,18 +2534,57 @@ class is_eig(models.Model):
     related_pers_vsb_auteur_victime       = fields.Boolean(u'Champs related_pers_vsb_auteur_victime - Visibilité')
     related_pers_rqr_auteur_victime       = fields.Boolean(u'Champs related_pers_rqr_auteur_victime - Obligation')
 
+    related_pers_vsb_personne_informee       = fields.Boolean(u'Champs related_pers_vsb_personne_informee - Visibilité')
+    related_pers_rqr_personne_informee       = fields.Boolean(u'Champs related_pers_rqr_personne_informee - Obligation')
+
+    related_pers_vsb_personne_concernee       = fields.Boolean(u'Champs related_pers_vsb_personne_concernee - Visibilité')
+    related_pers_rqr_personne_concernee       = fields.Boolean(u'Champs related_pers_rqr_personne_concernee - Obligation')
+
+    related_pers_vsb_nom_naissance       = fields.Boolean('Champs related_pers_vsb_nom_naissance - Visibilité')
+    related_pers_rqr_nom_naissance       = fields.Boolean('Champs related_pers_rqr_nom_naissance - Obligation')
+
+    related_pers_vsb_lieu_naissance       = fields.Boolean('Champs related_pers_vsb_lieu_naissance - Visibilité')
+    related_pers_rqr_lieu_naissance       = fields.Boolean('Champs related_pers_rqr_lieu_naissance - Obligation')
+
+    related_pers_vsb_age       = fields.Boolean('Champs related_pers_vsb_age - Visibilité')
+    related_pers_rqr_age       = fields.Boolean('Champs related_pers_rqr_age - Obligation')
+
+    related_pers_vsb_statut_familial_id       = fields.Boolean('Champs related_pers_vsb_statut_familial_id - Visibilité')
+    related_pers_rqr_statut_familial_id       = fields.Boolean('Champs related_pers_rqr_statut_familial_id - Obligation')
+
+    related_pers_vsb_code_postal       = fields.Boolean('Champs related_pers_vsb_code_postal - Visibilité')
+    related_pers_rqr_code_postal       = fields.Boolean('Champs related_pers_rqr_code_postal - Obligation')
+
+    related_pers_vsb_ville       = fields.Boolean('Champs related_pers_vsb_ville - Visibilité')
+    related_pers_rqr_ville       = fields.Boolean('Champs related_pers_rqr_ville - Obligation')
+
+    related_pers_vsb_email       = fields.Boolean('Champs related_pers_vsb_email - Visibilité')
+    related_pers_rqr_email       = fields.Boolean('Champs related_pers_rqr_email - Obligation')
+
+    related_pers_vsb_logement_id       = fields.Boolean('Champs related_pers_vsb_logement_id - Visibilité')
+    related_pers_rqr_logement_id       = fields.Boolean('Champs related_pers_rqr_logement_id - Obligation')
+
+    related_pers_vsb_autre_logement       = fields.Boolean('Champs related_pers_vsb_autre_logement - Visibilité')
+    related_pers_rqr_autre_logement       = fields.Boolean('Champs related_pers_rqr_autre_logement - Obligation')
+
+    related_pers_vsb_statut_logement_id       = fields.Boolean('Champs related_pers_vsb_statut_logement_id - Visibilité')
+    related_pers_rqr_statut_logement_id       = fields.Boolean('Champs related_pers_rqr_statut_logement_id - Obligation')
+
+    related_pers_vsb_statut_autre       = fields.Boolean('Champs related_pers_vsb_statut_autre - Visibilité')
+    related_pers_rqr_statut_autre       = fields.Boolean('Champs related_pers_rqr_statut_autre - Obligation')
+
+    related_pers_vsb_en_activite  = fields.Boolean('Champs related_pers_vsb_en_activite - Visibilité')
+    related_pers_rqr_en_activite  = fields.Boolean('Champs related_pers_rqr_en_activite - Obligation')
+
+    related_pers_vsb_activite       = fields.Boolean('Champs related_pers_vsb_activite - Visibilité')
+    related_pers_rqr_activite       = fields.Boolean('Champs related_pers_rqr_activite - Obligation')
+
     related_pers_vsb_tuteur_nom           = fields.Boolean(u'Champs related_pers_vsb_tuteur_nom - Visibilité')
     related_pers_rqr_tuteur_nom           = fields.Boolean(u'Champs related_pers_rqr_tuteur_nom - Obligation')
     related_pers_vsb_tuteur_prenom        = fields.Boolean(u'Champs related_pers_vsb_tuteur_prenom - Visibilité')
     related_pers_rqr_tuteur_prenom        = fields.Boolean(u'Champs related_pers_rqr_tuteur_prenom - Obligation')
     related_pers_vsb_tuteur_adresse       = fields.Boolean(u'Champs related_pers_vsb_tuteur_adresse - Visibilité')
     related_pers_rqr_tuteur_adresse       = fields.Boolean(u'Champs related_pers_rqr_tuteur_adresse - Obligation')
-
-
-
-
-
-
 
     related_inf_vsb_date                  = fields.Boolean(u'Champs related_inf_vsb_date - Visibilité')
     related_inf_rqr_date                  = fields.Boolean(u'Champs related_inf_rqr_date - Obligation')
@@ -2313,6 +2622,31 @@ class is_eig(models.Model):
     related_autre_personne_rqr_prenom          = fields.Boolean(u'Champs related_autre_personne_rqr_prenom - Obligation')
     related_autre_personne_vsb_qualite_id      = fields.Boolean(u'Champs related_autre_personne_vsb_qualite_id - Visibilité')
     related_autre_personne_rqr_qualite_id      = fields.Boolean(u'Champs related_autre_personne_rqr_qualite_id - Obligation')
+
+    related_autre_personne_vsb_lien_id         = fields.Boolean(u'Champs related_autre_personne_vsb_lien_id - Visibilité')
+    related_autre_personne_rqr_lien_id         = fields.Boolean(u'Champs related_autre_personne_rqr_lien_id - Obligation')
+
+    related_autre_personne_vsb_rue             = fields.Boolean(u'Champs related_autre_personne_vsb_rue - Visibilité')
+    related_autre_personne_rqr_rue             = fields.Boolean(u'Champs related_autre_personne_rqr_rue - Obligation')
+
+    related_autre_personne_vsb_adresse         = fields.Boolean(u'Champs related_autre_personne_vsb_adresse - Visibilité')
+    related_autre_personne_rqr_adresse         = fields.Boolean(u'Champs related_autre_personne_rqr_adresse - Obligation')
+
+    related_autre_personne_vsb_code_postal     = fields.Boolean(u'Champs related_autre_personne_vsb_code_postal - Visibilité')
+    related_autre_personne_rqr_code_postal     = fields.Boolean(u'Champs related_autre_personne_rqr_code_postal - Obligation')
+
+    related_autre_personne_vsb_ville           = fields.Boolean(u'Champs related_autre_personne_vsb_ville - Visibilité')
+    related_autre_personne_rqr_ville           = fields.Boolean(u'Champs related_autre_personne_rqr_ville - Obligation')
+
+    related_autre_personne_vsb_telephone       = fields.Boolean(u'Champs related_autre_personne_vsb_telephone - Visibilité')
+    related_autre_personne_rqr_telephone       = fields.Boolean(u'Champs related_autre_personne_rqr_telephone - Obligation')
+
+    related_autre_personne_vsb_mail            = fields.Boolean(u'Champs related_autre_personne_vsb_mail - Visibilité')
+    related_autre_personne_rqr_mail            = fields.Boolean(u'Champs related_autre_personne_rqr_mail - Obligation')
+
+    related_autre_personne_vsb_personne_informee = fields.Boolean(u'Champs related_autre_personne_vsb_personne_informee - Visibilité')
+    related_autre_personne_rqr_personne_informee = fields.Boolean(u'Champs related_autre_personne_rqr_personne_informee - Obligation')
+
     related_autre_personne_vsb_consequence_id  = fields.Boolean(u'Champs related_autre_personne_vsb_consequence_id - Visibilité')
     related_autre_personne_rqr_consequence_id  = fields.Boolean(u'Champs related_autre_personne_rqr_consequence_id - Obligation')
     related_autre_personne_vsb_disposition_id  = fields.Boolean(u'Champs related_autre_personne_vsb_disposition_id - Visibilité')
@@ -2321,7 +2655,6 @@ class is_eig(models.Model):
     related_autre_personne_vsb_auteur_victime  = fields.Boolean(u'Champs related_autre_personne_vsb_auteur_victime - Visibilité')
     related_autre_personne_rqr_auteur_victime  = fields.Boolean(u'Champs related_autre_personne_rqr_auteur_victime - Obligation')
     
-
     attachment_ids             = fields.Many2many('ir.attachment', 'is_eig_attachment_rel', 'eig_id', 'attachment_id', u'Pièces jointes', help=u"Permet d'ajouter, si besoin, tout élément complémentaire susceptible d'aider à la compréhension de l'EIG (chrono, rapport éducatif,...). Pour rappel : il est inutile de surcharger l'information.")
     related_vsb_attachment_ids = fields.Boolean(u'Champs related_vsb_attachment_ids - Visibilité')
     related_rqr_attachment_ids = fields.Boolean(u'Champs related_rqr_attachment_ids - Obligation')
@@ -2472,6 +2805,16 @@ class is_default_type_event(models.Model):
                             'objet_information_preoccupante',
                             'objet_signalement_justice',
                             'mesure_protection_enfance',
+                            'garder_anonymat',
+                            'origine_nom',
+                            'origine_prenom',
+                            'origine_fonction',
+                            'origine_adresse',
+                            'origine_code_postal',
+                            'origine_ville',
+                            'origine_email',
+                            'origine_telephone_mobile',
+                            'origine_telephone_fixe',
             ])])
         return field_ids
 
@@ -2598,10 +2941,31 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig.personne'),
-            ('name','in', ('identifie','name','prenom','address','departement_id','ecole','birthdate','sexe_id',
-                           'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
-                            'address_pere','autorite_parentale_pere','nom_mere','prenom_mere','address_mere','autorite_parentale_mere','auteur_victime',
-                            'tuteur_nom','tuteur_prenom','tuteur_adresse',
+            ('name','in', (
+                'identifie','name','prenom','address','departement_id','ecole','birthdate','sexe_id',
+                'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
+                'address_pere','autorite_parentale_pere','nom_mere','prenom_mere','address_mere','autorite_parentale_mere',
+                'auteur_victime', 
+                'personne_informee', 
+                'personne_concernee',
+
+                'nom_naissance',
+                'lieu_naissance',
+                'age',
+                'statut_familial_id',
+                'code_postal',
+                'ville',
+                'email',
+                'logement_id',
+                'autre_logement',
+                'statut_logement_id',
+                'statut_autre',
+                'en_activite',
+                'activite',
+
+                'tuteur_nom',
+                'tuteur_prenom',
+                'tuteur_adresse',
             ))])
         return field_ids
 
@@ -2622,6 +2986,23 @@ class is_default_type_event(models.Model):
             'consequence_id': 9,
             'disposition_id': 10,
             'auteur_victime': 11,
+            'personne_informee': 11,
+            'personne_concernee': 11,
+
+            'nom_naissance': 11,
+            'lieu_naissance': 11,
+            'age': 11,
+            'statut_familial_id': 11,
+            'code_postal': 11,
+            'ville': 11,
+            'email': 11,
+            'logement_id': 11,
+            'autre_logement': 11,
+            'statut_logement_id': 11,
+            'statut_autre': 11,
+            'en_activite': 11,
+            'activite': 11,
+
             'nom_pere': 12,
             'prenom_pere': 13,
             'address_pere': 14,
@@ -2737,7 +3118,22 @@ class is_default_type_event(models.Model):
         field_obj = self.env['ir.model.fields']
         field_ids = field_obj.search([
             ('model', '=', 'is.eig.autre.personne'),
-            ('name','in', ('identifie','nom','prenom','qualite_id','consequence_id','disposition_id','auteur_victime',
+            ('name','in', (
+                'identifie',
+                'nom',
+                'prenom',
+                'qualite_id',
+                'lien_id',
+                'rue',
+                'adresse',
+                'code_postal',
+                'ville',
+                'telephone',
+                'mail',
+                'personne_informee',
+                'consequence_id',
+                'disposition_id',
+                'auteur_victime',
             ))])
         return field_ids
 
@@ -2750,9 +3146,17 @@ class is_default_type_event(models.Model):
             'nom': 2,
             'prenom': 3,
             'qualite_id': 4,
-            'consequence_id': 5,
-            'disposition_id': 6,
-            'auteur_victime': 7,
+            'lien_id': 5,
+            'rue': 5,
+            'adresse': 5,
+            'code_postal': 5,
+            'ville': 5,
+            'telephone': 5,
+            'mail': 5,
+            'personne_informee': 5,
+            'consequence_id': 6,
+            'disposition_id': 7,
+            'auteur_victime': 8,
         }
         for field_id in field_ids:
             seq = sequence.get(field_id.name, 999)
@@ -2881,6 +3285,39 @@ class is_default_type_event(models.Model):
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'mesure_protection_enfance':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+            if field.name == 'garder_anonymat':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_nom':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_prenom':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_fonction':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_adresse':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_code_postal':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_ville':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_email':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_telephone_mobile':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'origine_telephone_fixe':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+
+
+
         entete_lst = []
         fields_entete_ids = self.get_entete_fields()
         for field in fields_entete_ids:

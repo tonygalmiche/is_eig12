@@ -974,7 +974,8 @@
                                 ('related_vsb_problematique_familiale_reperee','=',False),
                                 ('related_vsb_objet_information_preoccupante','=',False),
                                 ('related_vsb_objet_signalement_justice','=',False),
-                                ('related_vsb_mesure_protection_enfance','=',False)
+                                ('related_vsb_mesure_protection_enfance','=',False),
+                                ('related_vsb_garder_anonymat','=',False)
                             ]}">
                             <label for="fait_deja_produit" colspan="4" attrs="{'invisible': [('related_vsb_fait_deja_produit','=',False)]}" />
                             <div>
@@ -1125,7 +1126,80 @@
                                     'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
+
+                            <label for="garder_anonymat" colspan="4" attrs="{'invisible': [('related_vsb_garder_anonymat','=',False)]}"/>
+                            <div colspan="4" attrs="{
+                                    'invisible': [('related_vsb_garder_anonymat', '=', False)],
+                                    'required':[('related_rqr_garder_anonymat','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }">
+                                Si la personne n’accepte pas de lever l’anonymat, lui préciser que son nom peut être cité dans des démarches engagées 
+                                par le service judiciaire
+                            </div>
+                            <div>
+                                <field name="related_vsb_garder_anonymat" invisible="1"  />
+                                <field name="related_rqr_garder_anonymat" invisible="1"  />
+                                <field name="garder_anonymat" colspan="4" nolabel="1" attrs="{
+                                    'invisible': [('related_vsb_garder_anonymat', '=', False)],
+                                    'required':[('related_rqr_garder_anonymat','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }" />
+                            </div>
                         </group>
+
+                        <group string="Personne à l’origine de la demande d’intervention" 
+                            attrs="{'invisible': [
+                                ('related_vsb_origine_nom','=',False),
+                                ('related_vsb_origine_prenom','=',False),
+                                ('related_vsb_origine_fonction','=',False),
+                                ('related_vsb_origine_adresse','=',False),
+                                ('related_vsb_origine_code_postal','=',False),
+                                ('related_vsb_origine_ville','=',False),
+                                ('related_vsb_origine_email','=',False),
+                                ('related_vsb_origine_telephone_mobile','=',False),
+                                ('related_vsb_origine_telephone_fixe','=',False),
+                            ]}">
+                            <group>
+                                <field name="related_vsb_origine_nom" invisible="1"  />
+                                <field name="related_rqr_origine_nom" invisible="1"  />
+                                <field name="origine_nom" attrs="{'invisible': [('related_vsb_origine_nom', '=', False)], 'required':[('related_rqr_origine_nom','=', True)]}"/>
+
+                                <field name="related_vsb_origine_prenom" invisible="1"  />
+                                <field name="related_rqr_origine_prenom" invisible="1"  />
+                                <field name="origine_prenom" attrs="{'invisible': [('related_vsb_origine_prenom', '=', False)], 'required':[('related_rqr_origine_prenom','=', True)]}"/>
+
+                                <field name="related_vsb_origine_fonction" invisible="1"  />
+                                <field name="related_rqr_origine_fonction" invisible="1"  />
+                                <field name="origine_fonction" attrs="{'invisible': [('related_vsb_origine_fonction', '=', False)], 'required':[('related_rqr_origine_fonction','=', True)]}"/>
+
+                                <field name="related_vsb_origine_adresse" invisible="1"  />
+                                <field name="related_rqr_origine_adresse" invisible="1"  />
+                                <field name="origine_adresse" attrs="{'invisible': [('related_vsb_origine_adresse', '=', False)], 'required':[('related_rqr_origine_adresse','=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="related_vsb_origine_code_postal" invisible="1"  />
+                                <field name="related_rqr_origine_code_postal" invisible="1"  />
+                                <field name="origine_code_postal" attrs="{'invisible': [('related_vsb_origine_code_postal', '=', False)], 'required':[('related_rqr_origine_code_postal','=', True)]}"/>
+
+                                <field name="related_vsb_origine_ville" invisible="1"  />
+                                <field name="related_rqr_origine_ville" invisible="1"  />
+                                <field name="origine_ville" attrs="{'invisible': [('related_vsb_origine_ville', '=', False)], 'required':[('related_rqr_origine_ville','=', True)]}"/>
+
+                                <field name="related_vsb_origine_email" invisible="1"  />
+                                <field name="related_rqr_origine_email" invisible="1"  />
+                                <field name="origine_email" attrs="{'invisible': [('related_vsb_origine_email', '=', False)], 'required':[('related_rqr_origine_email','=', True)]}"/>
+
+                                <field name="related_vsb_origine_telephone_mobile" invisible="1"  />
+                                <field name="related_rqr_origine_telephone_mobile" invisible="1"  />
+                                <field name="origine_telephone_mobile" attrs="{'invisible': [('related_vsb_origine_telephone_mobile', '=', False)], 'required':[('related_rqr_origine_telephone_mobile','=', True)]}"/>
+
+                                <field name="related_vsb_origine_telephone_fixe" invisible="1"  />
+                                <field name="related_rqr_origine_telephone_fixe" invisible="1"  />
+                                <field name="origine_telephone_fixe" attrs="{'invisible': [('related_vsb_origine_telephone_fixe', '=', False)], 'required':[('related_rqr_origine_telephone_fixe','=', True)]}"/>
+                            </group>
+                        </group>
+
+
                     </page>
                     <page string="Auteurs" attrs="{'invisible': [('related_onglet_auteurs','=',False)]}">
                         <field name="related_aut_vsb_identifie"  invisible="1"  />
@@ -1513,8 +1587,54 @@
                             <field name="related_pers_rqr_address_mere" invisible="1"  />
                             <field name="related_pers_vsb_autorite_parentale_mere" invisible="1"  />
                             <field name="related_pers_rqr_autorite_parentale_mere" invisible="1"  />
-                            <field name="related_pers_vsb_auteur_victime" invisible="1"  />
-                            <field name="related_pers_rqr_auteur_victime"  invisible="1"  />
+                            <field name="related_pers_vsb_auteur_victime" invisible="1"/>
+                            <field name="related_pers_rqr_auteur_victime" invisible="1"/>
+
+                            <field name="related_pers_vsb_personne_informee" invisible="1"/>
+                            <field name="related_pers_rqr_personne_informee" invisible="1"/>
+
+                            <field name="related_pers_vsb_personne_concernee" invisible="1"/>
+                            <field name="related_pers_rqr_personne_concernee" invisible="1"/>
+
+                            <field name="related_pers_vsb_nom_naissance" invisible="1"/>
+                            <field name="related_pers_rqr_nom_naissance" invisible="1"/>
+
+                            <field name="related_pers_vsb_lieu_naissance" invisible="1"/>
+                            <field name="related_pers_rqr_lieu_naissance" invisible="1"/>
+
+                            <field name="related_pers_vsb_age" invisible="1"/>
+                            <field name="related_pers_rqr_age" invisible="1"/>
+
+                            <field name="related_pers_vsb_statut_familial_id" invisible="1"/>
+                            <field name="related_pers_rqr_statut_familial_id" invisible="1"/>
+
+                            <field name="related_pers_vsb_code_postal" invisible="1"/>
+                            <field name="related_pers_rqr_code_postal" invisible="1"/>
+
+                            <field name="related_pers_vsb_ville" invisible="1"/>
+                            <field name="related_pers_rqr_ville" invisible="1"/>
+
+                            <field name="related_pers_vsb_email" invisible="1"/>
+                            <field name="related_pers_rqr_email" invisible="1"/>
+
+                            <field name="related_pers_vsb_logement_id" invisible="1"/>
+                            <field name="related_pers_rqr_logement_id" invisible="1"/>
+
+                            <field name="related_pers_vsb_autre_logement" invisible="1"/>
+                            <field name="related_pers_rqr_autre_logement" invisible="1"/>
+
+                            <field name="related_pers_vsb_statut_logement_id" invisible="1"/>
+                            <field name="related_pers_rqr_statut_logement_id" invisible="1"/>
+
+                            <field name="related_pers_vsb_statut_autre" invisible="1"/>
+                            <field name="related_pers_rqr_statut_autre" invisible="1"/>
+
+                            <field name="related_pers_vsb_en_activite" invisible="1"/>
+                            <field name="related_pers_rqr_en_activite" invisible="1"/>
+
+                            <field name="related_pers_vsb_activite" invisible="1"/>
+                            <field name="related_pers_rqr_activite" invisible="1"/>
+
                             <field name="related_pers_vsb_tuteur_nom" invisible="1"  />
                             <field name="related_pers_rqr_tuteur_nom"  invisible="1"  />
                             <field name="related_pers_vsb_tuteur_prenom" invisible="1"  />
@@ -1565,6 +1685,52 @@
                                     'default_related_rqr_autorite_parentale_mere': related_pers_rqr_autorite_parentale_mere,
                                     'default_related_vsb_auteur_victime': related_pers_vsb_auteur_victime,
                                     'default_related_rqr_auteur_victime': related_pers_rqr_auteur_victime,
+
+                                    'default_related_vsb_personne_informee': related_pers_vsb_personne_informee,
+                                    'default_related_rqr_personne_informee': related_pers_rqr_personne_informee,
+
+                                    'default_related_vsb_personne_concernee': related_pers_vsb_personne_concernee,
+                                    'default_related_rqr_personne_concernee': related_pers_rqr_personne_concernee,
+
+                                    'default_related_vsb_nom_naissance': related_pers_vsb_nom_naissance,
+                                    'default_related_rqr_nom_naissance': related_pers_rqr_nom_naissance,
+
+                                    'default_related_vsb_lieu_naissance': related_pers_vsb_lieu_naissance,
+                                    'default_related_rqr_lieu_naissance': related_pers_rqr_lieu_naissance,
+
+                                    'default_related_vsb_age': related_pers_vsb_age,
+                                    'default_related_rqr_age': related_pers_rqr_age,
+
+                                    'default_related_vsb_statut_familial_id': related_pers_vsb_statut_familial_id,
+                                    'default_related_rqr_statut_familial_id': related_pers_rqr_statut_familial_id,
+
+                                    'default_related_vsb_code_postal': related_pers_vsb_code_postal,
+                                    'default_related_rqr_code_postal': related_pers_rqr_code_postal,
+
+                                    'default_related_vsb_ville': related_pers_vsb_ville,
+                                    'default_related_rqr_ville': related_pers_rqr_ville,
+
+                                    'default_related_vsb_email': related_pers_vsb_email,
+                                    'default_related_rqr_email': related_pers_rqr_email,
+
+                                    'default_related_vsb_logement_id': related_pers_vsb_logement_id,
+                                    'default_related_rqr_logement_id': related_pers_rqr_logement_id,
+
+                                    'default_related_vsb_autre_logement': related_pers_vsb_autre_logement,
+                                    'default_related_rqr_autre_logement': related_pers_rqr_autre_logement,
+
+                                    'default_related_vsb_statut_logement_id': related_pers_vsb_statut_logement_id,
+                                    'default_related_rqr_statut_logement_id': related_pers_rqr_statut_logement_id,
+
+                                    'default_related_vsb_statut_autre': related_pers_vsb_statut_autre,
+                                    'default_related_rqr_statut_autre': related_pers_rqr_statut_autre,
+
+                                    'default_related_vsb_en_activite': related_pers_vsb_en_activite,
+                                    'default_related_rqr_en_activite': related_pers_rqr_en_activite,
+
+                                    'default_related_vsb_activite': related_pers_vsb_activite,
+                                    'default_related_rqr_activite': related_pers_rqr_activite,
+
                                     'default_related_vsb_tuteur_nom': related_pers_vsb_tuteur_nom,
                                     'default_related_rqr_tuteur_nom': related_pers_rqr_tuteur_nom,
                                     'default_related_vsb_tuteur_prenom': related_pers_vsb_tuteur_prenom,
@@ -1572,83 +1738,182 @@
                                     'default_related_vsb_tuteur_adresse': related_pers_vsb_tuteur_adresse,
                                     'default_related_rqr_tuteur_adresse': related_pers_rqr_tuteur_adresse,}" >
                             <form string="Personne(s) faisant l'objet de la déclaration/du signalement">
-                                <group col="2" colspan="4">
-                                    <field name="related_vsb_name" invisible="1"  />
-                                    <field name="related_rqr_name" invisible="1"  />
-                                    <field name="name" attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
-                                    <field name="related_vsb_prenom"  invisible="1" />
-                                    <field name="related_rqr_prenom"  invisible="1" />
-                                    <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}"/>
-                                    <field name="related_vsb_sexe_id" invisible="1"  />
-                                    <field name="related_rqr_sexe_id" invisible="1"  />
-                                    <field name="sexe_id" attrs="{'invisible': [('related_vsb_sexe_id', '=', False)], 'required':[('related_rqr_sexe_id','=', True)]}"/>
-                                    <field name="related_vsb_birthdate" invisible="1"  />
-                                    <field name="related_rqr_birthdate" invisible="1"  />
-                                    <field name="birthdate" attrs="{'invisible': [('related_vsb_birthdate', '=', False)], 'required':[('related_rqr_birthdate','=', True)]}"/>
-                                    <field name="related_vsb_address" invisible="1"  />
-                                    <field name="related_rqr_address" invisible="1"  />
-                                    <field name="address" attrs="{'invisible': [('related_vsb_address', '=', False)], 'required':[('related_rqr_address','=', True)]}"/>
-                                    <field name="related_vsb_departement_id" invisible="1"  />
-                                    <field name="related_rqr_departement_id" invisible="1"  />
-                                    <field name="departement_id" attrs="{'invisible': [('related_vsb_departement_id', '=', False)], 'required':[('related_rqr_departement_id','=', True)]}"/>
-                                    <field name="related_vsb_ecole" invisible="1"  />
-                                    <field name="related_rqr_ecole" invisible="1"  />
-                                    <field name="ecole" attrs="{'invisible': [('related_vsb_ecole', '=', False)], 'required':[('related_rqr_ecole','=', True)]}"/>
-                                    <field name="related_vsb_qualite_id" invisible="1"  />
-                                    <field name="related_rqr_qualite_id" invisible="1"  />
-                                    <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
-                                    <field name="related_vsb_consequence_id" invisible="1"  />
-                                    <field name="related_rqr_consequence_id" invisible="1"  />
-                                    <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
-                                    <field name="related_vsb_disposition_id" invisible="1"  />
-                                    <field name="related_rqr_disposition_id" invisible="1"  />
-                                    <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
-                                    <field name="related_vsb_auteur_victime" invisible="1"  />
-                                    <field name="related_rqr_auteur_victime" invisible="1"  />
-                                    <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
-                                </group>
                                 <group>
-                                <group string="Père"
-                                    attrs="{'invisible': [
-                                        ('related_vsb_nom_pere','=',False),
-                                        ('related_vsb_prenom_pere','=',False),
-                                        ('related_vsb_address_pere','=',False),
-                                        ('related_vsb_autorite_parentale_pere','=',False)
-                                ]}">
-                                    <field name="related_vsb_nom_pere" invisible="1"  />
-                                    <field name="related_rqr_nom_pere" invisible="1"  />
-                                    <field name="nom_pere" attrs="{'invisible': [('related_vsb_nom_pere', '=', False)], 'required':[('related_rqr_nom_pere','=', True)]}"/>
-                                    <field name="related_vsb_prenom_pere" invisible="1"  />
-                                    <field name="related_rqr_prenom_pere" invisible="1"  />
-                                    <field name="prenom_pere" attrs="{'invisible': [('related_vsb_prenom_pere', '=', False)], 'required':[('related_rqr_prenom_pere','=', True)]}"/>
-                                    <field name="related_vsb_address_pere" invisible="1"  />
-                                    <field name="related_rqr_address_pere" invisible="1"  />
-                                    <field name="address_pere" attrs="{'invisible': [('related_vsb_address_pere', '=', False)], 'required':[('related_rqr_address_pere','=', True)]}"/>
-                                    <field name="related_vsb_autorite_parentale_pere" invisible="1"  />
-                                    <field name="related_rqr_autorite_parentale_pere" invisible="1"  />
-                                    <field name="autorite_parentale_pere" attrs="{'invisible': [('related_vsb_autorite_parentale_pere', '=', False)], 'required':[('related_rqr_autorite_parentale_pere','=', True)]}"/>
+                                    <group>
+                                        <field name="related_vsb_name" invisible="1"  />
+                                        <field name="related_rqr_name" invisible="1"  />
+                                        <field name="name" attrs="{'invisible': [('related_vsb_name', '=', False)], 'required':[('related_rqr_name','=', True)]}"/>
+
+                                        <field name="related_vsb_prenom"  invisible="1" />
+                                        <field name="related_rqr_prenom"  invisible="1" />
+                                        <field name="prenom" attrs="{'invisible': [('related_vsb_prenom', '=', False)], 'required':[('related_rqr_prenom','=', True)]}"/>
+
+                                        <field name="related_vsb_nom_naissance" invisible="1"  />
+                                        <field name="related_rqr_nom_naissance" invisible="1"  />
+                                        <field name="nom_naissance" attrs="{'invisible': [('related_vsb_nom_naissance', '=', False)], 'required':[('related_rqr_nom_naissance','=', True)]}"/>
+
+                                        <field name="related_vsb_lieu_naissance" invisible="1"  />
+                                        <field name="related_rqr_lieu_naissance" invisible="1"  />
+                                        <field name="lieu_naissance" attrs="{'invisible': [('related_vsb_lieu_naissance', '=', False)], 'required':[('related_rqr_lieu_naissance','=', True)]}"/>
+
+                                        <field name="related_vsb_sexe_id" invisible="1"  />
+                                        <field name="related_rqr_sexe_id" invisible="1"  />
+                                        <field name="sexe_id" attrs="{'invisible': [('related_vsb_sexe_id', '=', False)], 'required':[('related_rqr_sexe_id','=', True)]}"/>
+                                        
+                                        <field name="related_vsb_birthdate" invisible="1"  />
+                                        <field name="related_rqr_birthdate" invisible="1"  />
+                                        <field name="birthdate" attrs="{'invisible': [('related_vsb_birthdate', '=', False)], 'required':[('related_rqr_birthdate','=', True)]}"/>
+
+                                        <field name="related_vsb_age" invisible="1"  />
+                                        <field name="related_rqr_age" invisible="1"  />
+                                        <field name="age" attrs="{'invisible': [('related_vsb_age', '=', False)], 'required':[('related_rqr_age','=', True)]}"/>
+
+                                        <field name="related_vsb_address" invisible="1"  />
+                                        <field name="related_rqr_address" invisible="1"  />
+                                        <field name="address" attrs="{'invisible': [('related_vsb_address', '=', False)], 'required':[('related_rqr_address','=', True)]}"/>
+
+                                        <field name="related_vsb_code_postal" invisible="1"  />
+                                        <field name="related_rqr_code_postal" invisible="1"  />
+                                        <field name="code_postal" attrs="{'invisible': [('related_vsb_code_postal', '=', False)], 'required':[('related_rqr_code_postal','=', True)]}"/>
+
+                                        <field name="related_vsb_ville" invisible="1"  />
+                                        <field name="related_rqr_ville" invisible="1"  />
+                                        <field name="ville" attrs="{'invisible': [('related_vsb_ville', '=', False)], 'required':[('related_rqr_ville','=', True)]}"/>
+                                    </group>
+                                    <group>
+
+
+                                        <field name="related_vsb_ecole" invisible="1"  />
+                                        <field name="related_rqr_ecole" invisible="1"  />
+                                        <field name="ecole" attrs="{'invisible': [('related_vsb_ecole', '=', False)], 'required':[('related_rqr_ecole','=', True)]}"/>
+                                        <field name="related_vsb_qualite_id" invisible="1"  />
+                                        <field name="related_rqr_qualite_id" invisible="1"  />
+                                        <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
+                                        <field name="related_vsb_consequence_id" invisible="1"  />
+                                        <field name="related_rqr_consequence_id" invisible="1"  />
+                                        <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
+                                        <field name="related_vsb_disposition_id" invisible="1"  />
+                                        <field name="related_rqr_disposition_id" invisible="1"  />
+                                        <field name="disposition_id" attrs="{'invisible': [('related_vsb_disposition_id', '=', False)], 'required':[('related_rqr_disposition_id','=', True)]}"/>
+
+                                        <field name="related_vsb_auteur_victime" invisible="1"  />
+                                        <field name="related_rqr_auteur_victime" invisible="1"  />
+                                        <field name="auteur_victime" attrs="{'invisible': [('related_vsb_auteur_victime', '=', False)], 'required':[('related_rqr_auteur_victime','=', True)]}"/>
+
+                                        <field name="related_vsb_statut_familial_id" invisible="1"  />
+                                        <field name="related_rqr_statut_familial_id" invisible="1"  />
+                                        <field name="statut_familial_id" attrs="{'invisible': [('related_vsb_statut_familial_id', '=', False)], 'required':[('related_rqr_statut_familial_id','=', True)]}"/>
+
+                                        <field name="related_vsb_email" invisible="1"  />
+                                        <field name="related_rqr_email" invisible="1"  />
+                                        <field name="email" attrs="{'invisible': [('related_vsb_email', '=', False)], 'required':[('related_rqr_email','=', True)]}"/>
+
+                                        <field name="related_vsb_logement_id" invisible="1"  />
+                                        <field name="related_rqr_logement_id" invisible="1"  />
+                                        <field name="logement_id" attrs="{'invisible': [('related_vsb_logement_id', '=', False)], 'required':[('related_rqr_logement_id','=', True)]}"/>
+
+                                        <field name="related_vsb_autre_logement" invisible="1"  />
+                                        <field name="related_rqr_autre_logement" invisible="1"  />
+                                        <field name="autre_logement" attrs="{'invisible': [('related_vsb_autre_logement', '=', False)], 'required':[('related_rqr_autre_logement','=', True)]}"/>
+
+                                        <field name="related_vsb_statut_logement_id" invisible="1"  />
+                                        <field name="related_rqr_statut_logement_id" invisible="1"  />
+                                        <field name="statut_logement_id" attrs="{'invisible': [('related_vsb_statut_logement_id', '=', False)], 'required':[('related_rqr_statut_logement_id','=', True)]}"/>
+
+                                        <field name="related_vsb_statut_autre" invisible="1"  />
+                                        <field name="related_rqr_statut_autre" invisible="1"  />
+                                        <field name="statut_autre" attrs="{'invisible': [('related_vsb_statut_autre', '=', False)], 'required':[('related_rqr_statut_autre','=', True)]}"/>
+
+                                        <field name="related_vsb_en_activite" invisible="1"  />
+                                        <field name="related_rqr_en_activite" invisible="1"  />
+                                        <field name="en_activite" attrs="{'invisible': [('related_vsb_en_activite', '=', False)], 'required':[('related_rqr_en_activite','=', True)]}"/>
+
+                                        <field name="related_vsb_activite" invisible="1"  />
+                                        <field name="related_rqr_activite" invisible="1"  />
+                                        <field name="activite" attrs="{'invisible': [('related_vsb_activite', '=', False)], 'required':[('related_rqr_activite','=', True)]}"/>
+                                    </group>
                                 </group>
-                                <group string="Mère"
-                                    attrs="{'invisible': [
-                                        ('related_vsb_nom_mere','=',False),
-                                        ('related_vsb_prenom_mere','=',False),
-                                        ('related_vsb_address_mere','=',False),
-                                        ('related_vsb_autorite_parentale_mere','=',False)
-                                ]}">
-                                    <field name="related_vsb_nom_mere"  invisible="1" />
-                                    <field name="related_rqr_nom_mere" invisible="1"  />
-                                    <field name="nom_mere" attrs="{'invisible': [('related_vsb_nom_mere', '=', False)], 'required':[('related_rqr_nom_mere','=', True)]}"/>
-                                    <field name="related_vsb_prenom_mere"  invisible="1" />
-                                    <field name="related_rqr_prenom_mere" invisible="1"  />
-                                    <field name="prenom_mere" attrs="{'invisible': [('related_vsb_prenom_mere', '=', False)], 'required':[('related_rqr_prenom_mere','=', True)]}"/>
-                                    <field name="related_vsb_address_mere"  invisible="1" />
-                                    <field name="related_rqr_address_mere"  invisible="1" />
-                                    <field name="address_mere" attrs="{'invisible': [('related_vsb_address_mere', '=', False)], 'required':[('related_rqr_address_mere','=', True)]}"/>
-                                    <field name="related_vsb_autorite_parentale_mere" invisible="1"  />
-                                    <field name="related_rqr_autorite_parentale_mere" invisible="1"  />
-                                    <field name="autorite_parentale_mere" attrs="{'invisible': [('related_vsb_autorite_parentale_mere', '=', False)], 'required':[('related_rqr_autorite_parentale_mere','=', True)]}"/>
-                                    <field name="is_eig_id" invisible="1"/>
+
+
+
+                                <group>
+                                    <label for="departement_id" colspan="4" attrs="{'invisible': [('related_vsb_departement_id','=',False)]}"/>
+                                    <div>
+                                        <field name="related_vsb_departement_id" invisible="1"  />
+                                        <field name="related_rqr_departement_id" invisible="1"  />
+                                        <field name="departement_id" colspan="4" nolabel="1" attrs="{
+                                            'invisible': [('related_vsb_departement_id', '=', False)],
+                                            'required':[('related_rqr_departement_id','=', True)]
+                                        }"/>
+                                    </div>
+
+                                    <label for="personne_informee" colspan="4" attrs="{'invisible': [('related_vsb_personne_informee','=',False)]}"/>
+                                    <div>
+                                        <field name="related_vsb_personne_informee" invisible="1"  />
+                                        <field name="related_rqr_personne_informee" invisible="1"  />
+                                        <field name="personne_informee" colspan="4" nolabel="1" attrs="{
+                                            'invisible': [('related_vsb_personne_informee', '=', False)],
+                                            'required':[('related_rqr_personne_informee','=', True)]
+                                        }"/>
+                                    </div>
+
+                                    <label for="personne_concernee" colspan="4" attrs="{'invisible': [('related_vsb_personne_concernee','=',False)]}"/>
+                                    <div>
+                                        <field name="related_vsb_personne_concernee" invisible="1"  />
+                                        <field name="related_rqr_personne_concernee" invisible="1"  />
+                                        <field name="personne_concernee" colspan="4" nolabel="1" attrs="{
+                                            'invisible': [('related_vsb_personne_concernee', '=', False)],
+                                            'required':[('related_rqr_personne_concernee','=', True)]
+                                        }"/>
+                                    </div>
+
                                 </group>
+    
+
+
+
+                                <group>
+                                    <group string="Père"
+                                        attrs="{'invisible': [
+                                            ('related_vsb_nom_pere','=',False),
+                                            ('related_vsb_prenom_pere','=',False),
+                                            ('related_vsb_address_pere','=',False),
+                                            ('related_vsb_autorite_parentale_pere','=',False)
+                                    ]}">
+                                        <field name="related_vsb_nom_pere" invisible="1"  />
+                                        <field name="related_rqr_nom_pere" invisible="1"  />
+                                        <field name="nom_pere" attrs="{'invisible': [('related_vsb_nom_pere', '=', False)], 'required':[('related_rqr_nom_pere','=', True)]}"/>
+                                        <field name="related_vsb_prenom_pere" invisible="1"  />
+                                        <field name="related_rqr_prenom_pere" invisible="1"  />
+                                        <field name="prenom_pere" attrs="{'invisible': [('related_vsb_prenom_pere', '=', False)], 'required':[('related_rqr_prenom_pere','=', True)]}"/>
+                                        <field name="related_vsb_address_pere" invisible="1"  />
+                                        <field name="related_rqr_address_pere" invisible="1"  />
+                                        <field name="address_pere" attrs="{'invisible': [('related_vsb_address_pere', '=', False)], 'required':[('related_rqr_address_pere','=', True)]}"/>
+                                        <field name="related_vsb_autorite_parentale_pere" invisible="1"  />
+                                        <field name="related_rqr_autorite_parentale_pere" invisible="1"  />
+                                        <field name="autorite_parentale_pere" attrs="{'invisible': [('related_vsb_autorite_parentale_pere', '=', False)], 'required':[('related_rqr_autorite_parentale_pere','=', True)]}"/>
+                                    </group>
+                                    <group string="Mère"
+                                        attrs="{'invisible': [
+                                            ('related_vsb_nom_mere','=',False),
+                                            ('related_vsb_prenom_mere','=',False),
+                                            ('related_vsb_address_mere','=',False),
+                                            ('related_vsb_autorite_parentale_mere','=',False)
+                                    ]}">
+                                        <field name="related_vsb_nom_mere"  invisible="1" />
+                                        <field name="related_rqr_nom_mere" invisible="1"  />
+                                        <field name="nom_mere" attrs="{'invisible': [('related_vsb_nom_mere', '=', False)], 'required':[('related_rqr_nom_mere','=', True)]}"/>
+                                        <field name="related_vsb_prenom_mere"  invisible="1" />
+                                        <field name="related_rqr_prenom_mere" invisible="1"  />
+                                        <field name="prenom_mere" attrs="{'invisible': [('related_vsb_prenom_mere', '=', False)], 'required':[('related_rqr_prenom_mere','=', True)]}"/>
+                                        <field name="related_vsb_address_mere"  invisible="1" />
+                                        <field name="related_rqr_address_mere"  invisible="1" />
+                                        <field name="address_mere" attrs="{'invisible': [('related_vsb_address_mere', '=', False)], 'required':[('related_rqr_address_mere','=', True)]}"/>
+                                        <field name="related_vsb_autorite_parentale_mere" invisible="1"  />
+                                        <field name="related_rqr_autorite_parentale_mere" invisible="1"  />
+                                        <field name="autorite_parentale_mere" attrs="{'invisible': [('related_vsb_autorite_parentale_mere', '=', False)], 'required':[('related_rqr_autorite_parentale_mere','=', True)]}"/>
+                                        <field name="is_eig_id" invisible="1"/>
+                                    </group>
                                 </group>
                                 <group>
                                     <group string="Tuteur"
@@ -1686,11 +1951,6 @@
                     </page>
 
 
-
-
-
-
-
                     <page string="Autre(s) personne(s) concernée(s)" attrs="{'invisible': [('related_onglet_autres_personnes','=',False)]}">
                         <group invisible="1">
                             <field name="related_autre_personne_vsb_identifie"  invisible="1"  />
@@ -1701,6 +1961,31 @@
                             <field name="related_autre_personne_rqr_prenom"   invisible="1" />
                             <field name="related_autre_personne_vsb_qualite_id"  invisible="1"  />
                             <field name="related_autre_personne_rqr_qualite_id"   invisible="1" />
+
+                            <field name="related_autre_personne_vsb_lien_id"  invisible="1"/>
+                            <field name="related_autre_personne_rqr_lien_id"   invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_rue" invisible="1" />
+                            <field name="related_autre_personne_rqr_rue" invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_adresse" invisible="1"/>
+                            <field name="related_autre_personne_rqr_adresse"  invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_code_postal" invisible="1"/>
+                            <field name="related_autre_personne_rqr_code_postal"  invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_ville" invisible="1"/>
+                            <field name="related_autre_personne_rqr_ville" invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_telephone" invisible="1"/>
+                            <field name="related_autre_personne_rqr_telephone" invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_mail" invisible="1"/>
+                            <field name="related_autre_personne_rqr_mail" invisible="1"/>
+
+                            <field name="related_autre_personne_vsb_personne_informee" invisible="1"  />
+                            <field name="related_autre_personne_rqr_personne_informee" invisible="1" />
+
                             <field name="related_autre_personne_vsb_consequence_id"  invisible="1"  />
                             <field name="related_autre_personne_rqr_consequence_id"   invisible="1" />
                             <field name="related_autre_personne_vsb_disposition_id"  invisible="1"  />
@@ -1719,6 +2004,31 @@
                                     'default_related_rqr_prenom': related_autre_personne_rqr_prenom,
                                     'default_related_vsb_qualite_id': related_autre_personne_vsb_qualite_id, 
                                     'default_related_rqr_qualite_id': related_autre_personne_rqr_qualite_id,
+
+                                    'default_related_vsb_lien_id': related_autre_personne_vsb_lien_id, 
+                                    'default_related_rqr_lien_id': related_autre_personne_rqr_lien_id,
+                                    
+                                    'default_related_vsb_rue': related_autre_personne_vsb_rue, 
+                                    'default_related_rqr_rue': related_autre_personne_rqr_rue,
+                                    
+                                    'default_related_vsb_adresse': related_autre_personne_vsb_adresse, 
+                                    'default_related_rqr_adresse': related_autre_personne_rqr_adresse,
+                                    
+                                    'default_related_vsb_code_postal': related_autre_personne_vsb_code_postal, 
+                                    'default_related_rqr_code_postal': related_autre_personne_rqr_code_postal,
+                                    
+                                    'default_related_vsb_ville': related_autre_personne_vsb_ville, 
+                                    'default_related_rqr_ville': related_autre_personne_rqr_ville,
+                                    
+                                    'default_related_vsb_telephone': related_autre_personne_vsb_telephone, 
+                                    'default_related_rqr_telephone': related_autre_personne_rqr_telephone,
+                                    
+                                    'default_related_vsb_mail': related_autre_personne_vsb_mail, 
+                                    'default_related_rqr_mail': related_autre_personne_rqr_mail,
+                                    
+                                    'default_related_vsb_personne_informee': related_autre_personne_vsb_personne_informee, 
+                                    'default_related_rqr_personne_informee': related_autre_personne_rqr_personne_informee,
+                                    
                                     'default_related_vsb_consequence_id': related_autre_personne_vsb_consequence_id, 
                                     'default_related_rqr_consequence_id': related_autre_personne_rqr_consequence_id,
                                     'default_related_vsb_disposition_id': related_autre_personne_vsb_disposition_id, 
@@ -1728,11 +2038,6 @@
                                     }" >
                             <form string="Autre(s) personne(s) concernée(s)">
                                 <group col="2" colspan="4">
-                                    <!--
-                                    <field name="related_vsb_identifie" invisible="1"  />
-                                    <field name="related_rqr_identifie" invisible="1"  />
-                                    <field name="identifie" attrs="{'invisible': [('related_vsb_identifie', '=', False)], 'required':[('related_rqr_identifie','=', True)]}"/>
-                                    -->
                                     <field name="related_vsb_nom" invisible="1"  />
                                     <field name="related_rqr_nom" invisible="1"  />
                                     <field name="nom" attrs="{'invisible': [('related_vsb_nom', '=', False)], 'required':[('related_rqr_nom','=', True)]}"/>
@@ -1742,6 +2047,39 @@
                                     <field name="related_vsb_qualite_id" invisible="1"  />
                                     <field name="related_rqr_qualite_id" invisible="1"  />
                                     <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
+
+                                    <field name="related_vsb_lien_id" invisible="1"  />
+                                    <field name="related_rqr_lien_id" invisible="1"  />
+                                    <field name="lien_id" attrs="{'invisible': [('related_vsb_lien_id', '=', False)], 'required':[('related_rqr_lien_id','=', True)]}"/>
+
+                                    <field name="related_vsb_rue" invisible="1"  />
+                                    <field name="related_rqr_rue" invisible="1"  />
+                                    <field name="rue" attrs="{'invisible': [('related_vsb_rue', '=', False)], 'required':[('related_rqr_rue','=', True)]}"/>
+
+                                    <field name="related_vsb_adresse" invisible="1"  />
+                                    <field name="related_rqr_adresse" invisible="1"  />
+                                    <field name="adresse" attrs="{'invisible': [('related_vsb_adresse', '=', False)], 'required':[('related_rqr_adresse','=', True)]}"/>
+
+                                    <field name="related_vsb_code_postal" invisible="1"  />
+                                    <field name="related_rqr_code_postal" invisible="1"  />
+                                    <field name="code_postal" attrs="{'invisible': [('related_vsb_code_postal', '=', False)], 'required':[('related_rqr_code_postal','=', True)]}"/>
+
+                                    <field name="related_vsb_ville" invisible="1"  />
+                                    <field name="related_rqr_ville" invisible="1"  />
+                                    <field name="ville" attrs="{'invisible': [('related_vsb_ville', '=', False)], 'required':[('related_rqr_ville','=', True)]}"/>
+
+                                    <field name="related_vsb_telephone" invisible="1"  />
+                                    <field name="related_rqr_telephone" invisible="1"  />
+                                    <field name="telephone" attrs="{'invisible': [('related_vsb_telephone', '=', False)], 'required':[('related_rqr_telephone','=', True)]}"/>
+
+                                    <field name="related_vsb_mail" invisible="1"  />
+                                    <field name="related_rqr_mail" invisible="1"  />
+                                    <field name="mail" attrs="{'invisible': [('related_vsb_mail', '=', False)], 'required':[('related_rqr_mail','=', True)]}"/>
+
+                                    <field name="related_vsb_personne_informee" invisible="1"  />
+                                    <field name="related_rqr_personne_informee" invisible="1"  />
+                                    <field name="personne_informee" attrs="{'invisible': [('related_vsb_personne_informee', '=', False)], 'required':[('related_rqr_personne_informee','=', True)]}"/>
+
                                     <field name="related_vsb_consequence_id" invisible="1"  />
                                     <field name="related_rqr_consequence_id" invisible="1"  />
                                     <field name="consequence_id" attrs="{'invisible': [('related_vsb_consequence_id', '=', False)], 'required':[('related_rqr_consequence_id','=', True)]}"/>
@@ -1757,6 +2095,10 @@
                                 <field name="nom"/>
                                 <field name="prenom"/>
                                 <field name="qualite_id"/>
+                                <field name="lien_id"/>
+                                <field name="ville"/>
+                                <field name="telephone"/>
+                                <field name="mail"/>
                                 <field name="consequence_id"/>
                                 <field name="disposition_id"/>
                                 <field name="auteur_victime"/>
@@ -2513,26 +2855,21 @@
         </record>
 
 
-
-
-
-
-        <!-- Nature Risque  
-        <record model="ir.ui.view" id="is_nature_risque_tree_view">
-            <field name="name">is.nature.risque.tree</field>
-            <field name="model">is.nature.risque</field>
+        <!-- is.eig.lien  -->
+        <record model="ir.ui.view" id="is_consequense_tree_view">
+            <field name="name">is.eig.lien.tree</field>
+            <field name="model">is.eig.lien</field>
             <field name="arch" type="xml">
-            <tree string="Nature Risque">
+            <tree string="Conséquense">
                 <field name="name"/>
             </tree>
             </field>
         </record>
-        
-        <record model="ir.ui.view" id="is_nature_risque_form_view">
-            <field name="name">is.nature.risque.form</field>
-            <field name="model">is.nature.risque</field>
+        <record model="ir.ui.view" id="is_eig_lien_form_view">
+            <field name="name">is.eig.lien.form</field>
+            <field name="model">is.eig.lien</field>
             <field name="arch" type="xml">
-            <form string="Nature Risque">
+            <form string="Conséquence">
                 <sheet>
                     <group>
                         <field name="name"/>
@@ -2541,44 +2878,13 @@
             </form>
             </field>
         </record>
-        <record id="is_nature_risque_action" model="ir.actions.act_window">
-            <field name="name">Nature Risque</field>
+        <record id="is_eig_lien_action" model="ir.actions.act_window">
+            <field name="name">Lien</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">is.nature.risque</field>
+            <field name="res_model">is.eig.lien</field>
             <field name="view_mode">tree,form</field>
         </record>
-        -->
 
-        <!-- Type Risque 
-        <record model="ir.ui.view" id="is_type_risque_tree_view">
-            <field name="name">is.type.risque.tree</field>
-            <field name="model">is.type.risque</field>
-            <field name="arch" type="xml">
-            <tree string="Type Risque">
-                <field name="name"/>
-            </tree>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="is_type_risque_form_view">
-            <field name="name">is.type.risque.form</field>
-            <field name="model">is.type.risque</field>
-            <field name="arch" type="xml">
-            <form string="Type Risque">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                    </group>
-                </sheet>
-            </form>
-            </field>
-        </record>
-        <record id="is_type_risque_action" model="ir.actions.act_window">
-            <field name="name">Type Risque</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">is.type.risque</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-         -->
 
         <!-- Critères généraux  -->
         <record model="ir.ui.view" id="is_criteres_generaux_tree_view">
