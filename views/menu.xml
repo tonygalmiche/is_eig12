@@ -62,8 +62,16 @@
         <menuitem name="Qualité (autre)"                                                      id="menu_is_qualite_autre"                               sequence="15" parent="menu_parametrage_tables" action="is_qualite_autre_action" />
         <menuitem name="Statut, si personne accompagnée"                                      id="is_statut_personne_accompagnee_menu"                 sequence="16" parent="menu_parametrage_tables" action="is_statut_personne_accompagnee_action" />
         <menuitem name="Statut, si professionnel"                                             id="is_statut_professionnel_menu"                        sequence="17" parent="menu_parametrage_tables" action="is_statut_professionnel_action" />
-        <menuitem name="Lien"                                                                 id="is_eig_lien_menu"                                    sequence="18" parent="menu_parametrage_tables" action="is_eig_lien_action" />
 
+        <menuitem name="Lien"                id="is_eig_lien_menu"        sequence="18" parent="menu_parametrage_tables" action="is_eig_lien_action"/>
+        <menuitem name="Statut familial"     id="is_statut_familial_menu" sequence="19" parent="menu_parametrage_tables" action="is_statut_familial_action"/>
+        <menuitem name="Logement"            id="is_logement_menu"        sequence="20" parent="menu_parametrage_tables" action="is_logement_action"/>
+        <menuitem name="Statut logement"     id="is_statut_logement_menu" sequence="21" parent="menu_parametrage_tables" action="is_statut_logement_action"/>
+        <menuitem name="Domaine de la sante" id="is_domaine_sante_menu"   sequence="22" parent="menu_parametrage_tables" action="is_domaine_sante_action"/>
+        <menuitem name="Domaine de l'autonomie'"    id="is_domaine_autonomie_menu"      sequence="23" parent="menu_parametrage_tables" action="is_domaine_autonomie_action"/>
+        <menuitem name="Domaine de l'environnement" id="is_domaine_environnement_menu"  sequence="24" parent="menu_parametrage_tables" action="is_domaine_environnement_action"/>
+        <menuitem name="Domaine de l'habitat"       id="is_domaine_habitat_menu"        sequence="25" parent="menu_parametrage_tables" action="is_domaine_habitat_action"/>
+        <menuitem name="Domaine de administratif"   id="is_domaine_administratifs_menu" sequence="26" parent="menu_parametrage_tables" action="is_domaine_administratifs_action"/>
 
         <menuitem action="is_ove_eig_action"         id="menu_is_ove_eig_action"         parent="menu_declaration" sequence="10"/>
         <menuitem action="is_ove_eig_draft_action"   id="menu_is_ove_eig_draft_action"   parent="menu_declaration" sequence="11"/>

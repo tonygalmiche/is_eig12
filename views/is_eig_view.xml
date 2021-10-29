@@ -242,15 +242,16 @@
                 <notebook>
                   <page string="Visibilité des onglets">
                         <group>
-                            <field name="onglet_faits"    />
-                            <field name="onglet_auteurs"  />
-                            <field name="onglet_temoins"  />
-                            <field name="onglet_victimes" />
-                            <field name="onglet_personnes" />
-                            <field name="onglet_autres_personnes" />
-                            <field name="onglet_mesures"  />
-                            <field name="onglet_infos"    />
-                            <field name="onglet_element_complementaire" />
+                            <field name="onglet_faits"/>
+                            <field name="onglet_auteurs"/>
+                            <field name="onglet_temoins"/>
+                            <field name="onglet_victimes"/>
+                            <field name="onglet_personnes"/>
+                            <field name="onglet_autres_personnes"/>
+                            <field name="onglet_mesures"/>
+                            <field name="onglet_facteur_vulnerabilite"/>
+                            <field name="onglet_infos"/>
+                            <field name="onglet_element_complementaire"/>
                         </group>
                   </page>
                   <page string="Entête">
@@ -299,6 +300,11 @@
                        </tree>
                    </field>
                 </page>
+
+
+
+
+                
                 <page string="Auteur">
                    <field name="fields_auteur_id" nolabel="1" context="{'default_is_eig_auteur': True}">
                        <tree string="Caractéristiques des champs de Auteur" editable="bottom">
@@ -442,6 +448,34 @@
                        </tree>
                    </field>
                 </page>
+
+
+                <page string="Facteurs de vulnerabilite">
+                   <field name="fields_facteur_vulnerabilite_id" nolabel="1" context="{'default_is_eig_facteur_vulnerabilite': True}">
+                       <tree string="Caractéristiques des champs de Mesures" editable="bottom">
+                           <field name="fields_id" domain="[('model', '=', 'is.eig')]"/>
+                           <field name="field_visible"/>
+                           <field name="field_required"/>
+                           <field name="is_eig" invisible="1"/>
+                           <field name="is_eig_auteur" invisible="1"/>
+                           <field name="is_eig_temoin" invisible="1"/>
+                           <field name="is_eig_victim" invisible="1"/>
+                           <field name="is_eig_personne" invisible="1"/>
+                           <field name="is_eig_infos" invisible="1"/>
+                           <field name="is_eig_infos2" invisible="1"/>
+                           <field name="is_eig_mesures" invisible="1" />
+                           <field name="is_eig_facteur_vulnerabilite" invisible="1" />
+                           <field name="is_eig_elements" invisible="1" />
+                           <field name="is_eig_group" invisible="1" />
+                           <field name="is_eig_entete" invisible="1" />
+                           <field name="is_eig_autre_personne" invisible="1" />
+                           <field name="type_event_id" invisible="1" />
+                       </tree>
+                   </field>
+                </page>
+
+
+
                 <page string="Information communication">
                    <field name="fields_info_id" nolabel="1" context="{'default_is_eig_infos': True}">
                        <tree string="Caractéristiques des champs de Communication" editable="bottom">
@@ -740,6 +774,7 @@
                         <field name="related_onglet_personnes"              invisible="1"/>
                         <field name="related_onglet_autres_personnes"       invisible="1"/>
                         <field name="related_onglet_mesures"                invisible="1"/>
+                        <field name="related_onglet_facteur_vulnerabilite"  invisible="1"/>
                         <field name="related_onglet_infos"                  invisible="1"/>
                         <field name="related_onglet_element_complementaire" invisible="1"/>
                         <field name="related_group_motif_retour"            invisible="1"/> <!-- Afficher uniquement si données dans tableau -->
@@ -968,14 +1003,16 @@
                                 ('related_vsb_risque_contentieux','=',False),
                                 ('related_vsb_evenement_semble_maitrise','=',False),
                                 ('related_vsb_si_non_maitrise_precisez','=',False),
-
                                 ('related_vsb_maltraitance_fait_constate','=',False),
                                 ('related_vsb_sont_ils_frequent','=',False),
                                 ('related_vsb_problematique_familiale_reperee','=',False),
                                 ('related_vsb_objet_information_preoccupante','=',False),
                                 ('related_vsb_objet_signalement_justice','=',False),
                                 ('related_vsb_mesure_protection_enfance','=',False),
-                                ('related_vsb_garder_anonymat','=',False)
+                                ('related_vsb_garder_anonymat','=',False),
+                                ('related_vsb_demande_professionnel','=',False),
+                                ('related_vsb_demarche_engagee','=',False),
+                                ('related_vsb_demande_exprimee','=',False)
                             ]}">
                             <label for="fait_deja_produit" colspan="4" attrs="{'invisible': [('related_vsb_fait_deja_produit','=',False)]}" />
                             <div>
@@ -1145,6 +1182,37 @@
                                     'readonly': [('state','in',['valide','done'])]
                                 }" />
                             </div>
+
+                            <label for="demande_professionnel" colspan="4" attrs="{'invisible': [('related_vsb_demande_professionnel','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_demande_professionnel" invisible="1"  />
+                                <field name="related_rqr_demande_professionnel" invisible="1"  />
+                                <field name="demande_professionnel" colspan="4" nolabel="1" attrs="{
+                                    'invisible': [('related_vsb_demande_professionnel', '=', False)],
+                                    'required':[('related_rqr_demande_professionnel','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }" />
+                            </div>
+                            <label for="demarche_engagee" colspan="4" attrs="{'invisible': [('related_vsb_demarche_engagee','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_demarche_engagee" invisible="1"  />
+                                <field name="related_rqr_demarche_engagee" invisible="1"  />
+                                <field name="demarche_engagee" colspan="4" nolabel="1" attrs="{
+                                    'invisible': [('related_vsb_demarche_engagee', '=', False)],
+                                    'required':[('related_rqr_demarche_engagee','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }" />
+                            </div>
+                            <label for="demande_exprimee" colspan="4" attrs="{'invisible': [('related_vsb_demande_exprimee','=',False)]}"/>
+                            <div>
+                                <field name="related_vsb_demande_exprimee" invisible="1"  />
+                                <field name="related_rqr_demande_exprimee" invisible="1"  />
+                                <field name="demande_exprimee" colspan="4" nolabel="1" attrs="{
+                                    'invisible': [('related_vsb_demande_exprimee', '=', False)],
+                                    'required':[('related_rqr_demande_exprimee','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }" />
+                            </div>
                         </group>
 
                         <group string="Personne à l’origine de la demande d’intervention" 
@@ -1201,6 +1269,71 @@
 
 
                     </page>
+
+
+
+
+                    <page string="Facteurs de vulnérabilité" attrs="{'invisible': [('related_onglet_facteur_vulnerabilite','=',False)]}">
+                        <group>
+                            <label colspan="4" for="domaine_sante_ids" attrs="{'invisible': [('related_vsb_domaine_sante_ids', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_domaine_sante_ids" invisible="1"/>
+                                <field name="related_rqr_domaine_sante_ids" invisible="1"/>
+                                <field colspan="4" nolabel="1" name="domaine_sante_ids" widget="many2many_tags" attrs="{
+                                    'invisible': [('related_vsb_domaine_sante_ids', '=', False)],
+                                    'required':[('related_rqr_domaine_sante_ids','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="domaine_autonomie_ids" attrs="{'invisible': [('related_vsb_domaine_autonomie_ids', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_domaine_autonomie_ids" invisible="1"/>
+                                <field name="related_rqr_domaine_autonomie_ids" invisible="1"/>
+                                <field colspan="4" nolabel="1" name="domaine_autonomie_ids" widget="many2many_tags" attrs="{
+                                    'invisible': [('related_vsb_domaine_autonomie_ids', '=', False)],
+                                    'required':[('related_rqr_domaine_autonomie_ids','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="domaine_environnement_ids" attrs="{'invisible': [('related_vsb_domaine_environnement_ids', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_domaine_environnement_ids" invisible="1"/>
+                                <field name="related_rqr_domaine_environnement_ids" invisible="1"/>
+                                <field colspan="4" nolabel="1" name="domaine_environnement_ids" widget="many2many_tags" attrs="{
+                                    'invisible': [('related_vsb_domaine_environnement_ids', '=', False)],
+                                    'required':[('related_rqr_domaine_environnement_ids','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="domaine_habitat_ids" attrs="{'invisible': [('related_vsb_domaine_habitat_ids', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_domaine_habitat_ids" invisible="1"/>
+                                <field name="related_rqr_domaine_habitat_ids" invisible="1"/>
+                                <field colspan="4" nolabel="1" name="domaine_habitat_ids" widget="many2many_tags" attrs="{
+                                    'invisible': [('related_vsb_domaine_habitat_ids', '=', False)],
+                                    'required':[('related_rqr_domaine_habitat_ids','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+
+                            <label colspan="4" for="domaine_administratifs_ids" attrs="{'invisible': [('related_vsb_domaine_administratifs_ids', '=', False)]}"/>
+                            <div>
+                                <field name="related_vsb_domaine_administratifs_ids" invisible="1"/>
+                                <field name="related_rqr_domaine_administratifs_ids" invisible="1"/>
+                                <field colspan="4" nolabel="1" name="domaine_administratifs_ids" widget="many2many_tags" attrs="{
+                                    'invisible': [('related_vsb_domaine_administratifs_ids', '=', False)],
+                                    'required':[('related_rqr_domaine_administratifs_ids','=', True)],
+                                    'readonly': [('state','in',['valide','done'])]
+                                }"/>
+                            </div>
+                        </group>
+                    </page>
+
+
+
                     <page string="Auteurs" attrs="{'invisible': [('related_onglet_auteurs','=',False)]}">
                         <field name="related_aut_vsb_identifie"  invisible="1"  />
                         <field name="related_aut_rqr_identifie"  invisible="1"  />
@@ -1561,8 +1694,13 @@
                             <field name="related_pers_rqr_address"  invisible="1"  />
                             <field name="related_pers_vsb_departement_id"  invisible="1" />
                             <field name="related_pers_rqr_departement_id"  invisible="1"  />
-                            <field name="related_pers_vsb_ecole"  invisible="1" />
-                            <field name="related_pers_rqr_ecole"  invisible="1"  />
+
+                            <field name="related_pers_vsb_scolarise"  invisible="1"/>
+                            <field name="related_pers_rqr_scolarise"  invisible="1"/>
+
+                            <field name="related_pers_vsb_ecole"  invisible="1"/>
+                            <field name="related_pers_rqr_ecole"  invisible="1"/>
+                            
                             <field name="related_pers_vsb_birthdate"  invisible="1" />
                             <field name="related_pers_rqr_birthdate"   invisible="1" />
                             <field name="related_pers_vsb_qualite_id"  invisible="1" />
@@ -1653,8 +1791,13 @@
                                     'default_related_rqr_address': related_pers_rqr_address, 
                                     'default_related_vsb_departement_id': related_pers_vsb_departement_id, 
                                     'default_related_rqr_departement_id': related_pers_rqr_departement_id, 
+
+                                    'default_related_vsb_scolarise': related_pers_vsb_scolarise, 
+                                    'default_related_rqr_scolarise': related_pers_rqr_scolarise, 
+
                                     'default_related_vsb_ecole': related_pers_vsb_ecole, 
                                     'default_related_rqr_ecole': related_pers_rqr_ecole, 
+
                                     'default_related_vsb_birthdate': related_pers_vsb_birthdate, 
                                     'default_related_rqr_birthdate': related_pers_rqr_birthdate,
                                     'default_related_vsb_disposition_id': related_pers_vsb_disposition_id, 
@@ -1781,11 +1924,14 @@
                                         <field name="ville" attrs="{'invisible': [('related_vsb_ville', '=', False)], 'required':[('related_rqr_ville','=', True)]}"/>
                                     </group>
                                     <group>
-
+                                        <field name="related_vsb_scolarise" invisible="1"  />
+                                        <field name="related_rqr_scolarise" invisible="1"  />
+                                        <field name="scolarise" attrs="{'invisible': [('related_vsb_scolarise', '=', False)], 'required':[('related_rqr_scolarise','=', True)]}"/>
 
                                         <field name="related_vsb_ecole" invisible="1"  />
                                         <field name="related_rqr_ecole" invisible="1"  />
                                         <field name="ecole" attrs="{'invisible': [('related_vsb_ecole', '=', False)], 'required':[('related_rqr_ecole','=', True)]}"/>
+
                                         <field name="related_vsb_qualite_id" invisible="1"  />
                                         <field name="related_rqr_qualite_id" invisible="1"  />
                                         <field name="qualite_id" attrs="{'invisible': [('related_vsb_qualite_id', '=', False)], 'required':[('related_rqr_qualite_id','=', True)]}"/>
@@ -2329,6 +2475,7 @@
                             
                         </group>
                     </page>
+
                     <page colspan="4" string="Information communication" attrs="{'invisible': [('related_onglet_infos','=',False)]}">
                         <group>
                                 <label colspan="4" for="intervention_police" attrs="{'invisible': [('related_vsb_intervention_police', '=', False)]}" />
@@ -2856,20 +3003,20 @@
 
 
         <!-- is.eig.lien  -->
-        <record model="ir.ui.view" id="is_consequense_tree_view">
-            <field name="name">is.eig.lien.tree</field>
+        <record model="ir.ui.view" id="is_eig_lien_tree_view">
+            <field name="name">is_eig_lien_tree_view</field>
             <field name="model">is.eig.lien</field>
             <field name="arch" type="xml">
-            <tree string="Conséquense">
+            <tree string="Lien">
                 <field name="name"/>
             </tree>
             </field>
         </record>
         <record model="ir.ui.view" id="is_eig_lien_form_view">
-            <field name="name">is.eig.lien.form</field>
+            <field name="name">is_eig_lien_form_view</field>
             <field name="model">is.eig.lien</field>
             <field name="arch" type="xml">
-            <form string="Conséquence">
+            <form string="Lien">
                 <sheet>
                     <group>
                         <field name="name"/>
@@ -2882,6 +3029,270 @@
             <field name="name">Lien</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">is.eig.lien</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.statut.familial  -->
+        <record model="ir.ui.view" id="is_statut_familial_tree_view">
+            <field name="name">is_statut_familial_tree_view</field>
+            <field name="model">is.statut.familial</field>
+            <field name="arch" type="xml">
+            <tree string="Statut familial">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_statut_familial_form_view">
+            <field name="name">is_statut_familial_form_view</field>
+            <field name="model">is.statut.familial</field>
+            <field name="arch" type="xml">
+            <form string="Statut familial">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_statut_familial_action" model="ir.actions.act_window">
+            <field name="name">Statut familial</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.statut.familial</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.logement  -->
+        <record model="ir.ui.view" id="is_logement_tree_view">
+            <field name="name">is_logement_tree_view</field>
+            <field name="model">is.logement</field>
+            <field name="arch" type="xml">
+            <tree string="Logement">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_logement_form_view">
+            <field name="name">is_logement_form_view</field>
+            <field name="model">is.logement</field>
+            <field name="arch" type="xml">
+            <form string="Logement">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_logement_action" model="ir.actions.act_window">
+            <field name="name">Logement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.logement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.statut.logement  -->
+        <record model="ir.ui.view" id="is_statut_logement_tree_view">
+            <field name="name">is_statut_logement_tree_view</field>
+            <field name="model">is.statut.logement</field>
+            <field name="arch" type="xml">
+            <tree string="Statut logement">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_statut_logement_form_view">
+            <field name="name">is_statut_logement_form_view</field>
+            <field name="model">is.statut.logement</field>
+            <field name="arch" type="xml">
+            <form string="Statut logement">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_statut_logement_action" model="ir.actions.act_window">
+            <field name="name">Statut logement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.statut.logement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.domaine.sante  -->
+        <record model="ir.ui.view" id="is_domaine_sante_tree_view">
+            <field name="name">is_domaine_sante_tree_view</field>
+            <field name="model">is.domaine.sante</field>
+            <field name="arch" type="xml">
+            <tree string="Domaine">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_domaine_sante_form_view">
+            <field name="name">is_domaine_sante_form_view</field>
+            <field name="model">is.domaine.sante</field>
+            <field name="arch" type="xml">
+            <form string="Domaine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_domaine_sante_action" model="ir.actions.act_window">
+            <field name="name">Domaine de la santé</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.domaine.sante</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.domaine.autonomie  -->
+        <record model="ir.ui.view" id="is_domaine_autonomie_tree_view">
+            <field name="name">is_domaine_autonomie_tree_view</field>
+            <field name="model">is.domaine.autonomie</field>
+            <field name="arch" type="xml">
+            <tree string="Domaine">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_domaine_autonomie_form_view">
+            <field name="name">is_domaine_autonomie_form_view</field>
+            <field name="model">is.domaine.autonomie</field>
+            <field name="arch" type="xml">
+            <form string="Domaine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_domaine_autonomie_action" model="ir.actions.act_window">
+            <field name="name">Domaine de l'autonomie</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.domaine.autonomie</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.domaine.environnement  -->
+        <record model="ir.ui.view" id="is_domaine_environnement_tree_view">
+            <field name="name">is_domaine_environnement_tree_view</field>
+            <field name="model">is.domaine.environnement</field>
+            <field name="arch" type="xml">
+            <tree string="Domaine">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_domaine_environnement_form_view">
+            <field name="name">is_domaine_environnement_form_view</field>
+            <field name="model">is.domaine.environnement</field>
+            <field name="arch" type="xml">
+            <form string="Domaine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_domaine_environnement_action" model="ir.actions.act_window">
+            <field name="name">Domaine de l'environnement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.domaine.environnement</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.domaine.habitat  -->
+        <record model="ir.ui.view" id="is_domaine_habitat_tree_view">
+            <field name="name">is_domaine_habitat_tree_view</field>
+            <field name="model">is.domaine.habitat</field>
+            <field name="arch" type="xml">
+            <tree string="Domaine">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_domaine_habitat_form_view">
+            <field name="name">is_domaine_habitat_form_view</field>
+            <field name="model">is.domaine.habitat</field>
+            <field name="arch" type="xml">
+            <form string="Domaine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_domaine_habitat_action" model="ir.actions.act_window">
+            <field name="name">Domaine de l'habitat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.domaine.habitat</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- is.domaine.administratifs  -->
+        <record model="ir.ui.view" id="is_domaine_administratifs_tree_view">
+            <field name="name">is_domaine_administratifs_tree_view</field>
+            <field name="model">is.domaine.administratifs</field>
+            <field name="arch" type="xml">
+            <tree string="Domaine">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="is_domaine_administratifs_form_view">
+            <field name="name">is_domaine_administratifs_form_view</field>
+            <field name="model">is.domaine.administratifs</field>
+            <field name="arch" type="xml">
+            <form string="Domaine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="is_domaine_administratifs_action" model="ir.actions.act_window">
+            <field name="name">Domaine administratif</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">is.domaine.administratifs</field>
             <field name="view_mode">tree,form</field>
         </record>
 

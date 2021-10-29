@@ -126,6 +126,9 @@ class is_manip_fields(models.Model):
     is_eig_group    = fields.Boolean('Group', default=False)
     is_eig_entete   = fields.Boolean(u'Entête', default=False)
     is_eig_autre_personne = fields.Boolean(u'Autre(s) personne(s) concernée(s)', default=False)
+    is_eig_facteur_vulnerabilite = fields.Boolean('Facteurs de vulnerabilite', default=False)
+
+
 
 
 class is_nature_evenement(models.Model):
@@ -344,7 +347,64 @@ class is_statut_logement(models.Model):
     ]
 
 
+class is_domaine_sante(models.Model):
+    _name = 'is.domaine.sante'
+    _description = 'A - Domaine de la santé'
 
+    name = fields.Char('Domaine' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+class is_domaine_autonomie(models.Model):
+    _name = 'is.domaine.autonomie'
+    _description = "B - Domaine de l'autonomie fonctionnelle"
+
+    name = fields.Char('Domaine' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+class is_domaine_environnement(models.Model):
+    _name = 'is.domaine.environnement'
+    _description = "C - Domaine de l'environnement familial et relationnel"
+
+    name = fields.Char('Domaine' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+class is_domaine_habitat(models.Model):
+    _name = 'is.domaine.habitat'
+    _description = "D - Domaine de l’habitat - Sécurité individuelle"
+
+    name = fields.Char('Domaine' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
+
+
+class is_domaine_administratifs(models.Model):
+    _name = 'is.domaine.administratifs'
+    _description = "E - Domaine des aspects administratifs et/ou financiers"
+
+    name = fields.Char('Domaine' , required=True)
+    code = fields.Char('Code')
+
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', "Le nom doit être unique !"),
+    ]
 
 
 class is_eig_auteur(models.Model):
@@ -506,9 +566,15 @@ class is_eig_personne(models.Model):
     birthdate                  = fields.Date('Date de naissance')
     related_vsb_birthdate      = fields.Boolean(u'Champs related_vsb_birthdate - Visibilité')
     related_rqr_birthdate      = fields.Boolean(u'Champs related_rqr_birthdate - Obligation')
+
+    scolarise                  = fields.Selection(OuiNon, "Scolarisé")
+    related_vsb_scolarise      = fields.Boolean('Champs related_vsb_scolarise - Visibilité')
+    related_rqr_scolarise      = fields.Boolean('Champs related_rqr_scolarise - Obligation')
+
     ecole                      = fields.Char(u'École fréquentée')
     related_vsb_ecole          = fields.Boolean(u'Champs related_vsb_ecole - Visibilité')
     related_rqr_ecole          = fields.Boolean(u'Champs related_rqr_ecole - Obligation')
+
     qualite_id                 = fields.Many2one('is.qualite', u'Qualité')
     related_vsb_qualite_id     = fields.Boolean(u'Champs related_vsb_qualite_id - Visibilité')
     related_rqr_qualite_id     = fields.Boolean(u'Champs related_rqr_qualite_id - Obligation')
@@ -827,6 +893,7 @@ class is_eig(models.Model):
                 'related_onglet_personnes':  False,
                 'related_onglet_autres_personnes':  False,
                 'related_onglet_mesures':  False,
+                'related_onglet_facteur_vulnerabilite':  False,
                 'related_onglet_infos':  False,
                 'related_onglet_element_complementaire':  False,
 
@@ -905,6 +972,15 @@ class is_eig(models.Model):
 
                 'related_vsb_garder_anonymat': False,
                 'related_rqr_garder_anonymat': False,
+
+                'related_vsb_demande_professionnel': False,
+                'related_rqr_demande_professionnel': False,
+
+                'related_vsb_demarche_engagee': False,
+                'related_rqr_demarche_engagee': False,
+
+                'related_vsb_demande_exprimee': False,
+                'related_rqr_demande_exprimee': False,
 
                 'related_vsb_origine_nom': False,
                 'related_rqr_origine_nom': False,
@@ -1121,8 +1197,13 @@ class is_eig(models.Model):
                 'related_pers_rqr_address': False,
                 'related_pers_vsb_departement_id': False,
                 'related_pers_rqr_departement_id': False,
+
+                'related_pers_vsb_scolarise': False,
+                'related_pers_rqr_scolarise': False,
+
                 'related_pers_vsb_ecole': False,
                 'related_pers_rqr_ecole': False,
+
                 'related_pers_vsb_birthdate': False,
                 'related_pers_rqr_birthdate': False,
                 'related_pers_vsb_qualite_id': False,
@@ -1262,8 +1343,20 @@ class is_eig(models.Model):
                 'related_vsb_signalement_autorites': False,
                 'related_rqr_signalement_autorites': False,
 
-
-
+                'related_vsb_domaine_sante_ids': False,
+                'related_rqr_domaine_sante_ids': False,
+                
+                'related_vsb_domaine_autonomie_ids': False,
+                'related_rqr_domaine_autonomie_ids': False,
+                
+                'related_vsb_domaine_environnement_ids': False,
+                'related_rqr_domaine_environnement_ids': False,
+                
+                'related_vsb_domaine_habitat_ids': False,
+                'related_rqr_domaine_habitat_ids': False,
+                
+                'related_vsb_domaine_administratifs_ids': False,
+                'related_rqr_domaine_administratifs_ids': False,
             })
             vals.update({
                 'related_onglet_faits': self.type_event_id.onglet_faits,
@@ -1273,6 +1366,7 @@ class is_eig(models.Model):
                 'related_onglet_personnes': self.type_event_id.onglet_personnes,
                 'related_onglet_autres_personnes': self.type_event_id.onglet_autres_personnes,
                 'related_onglet_mesures': self.type_event_id.onglet_mesures,
+                'related_onglet_facteur_vulnerabilite': self.type_event_id.onglet_facteur_vulnerabilite,
                 'related_onglet_infos': self.type_event_id.onglet_infos,
                 'related_onglet_element_complementaire': self.type_event_id.onglet_element_complementaire,
             })
@@ -1336,6 +1430,13 @@ class is_eig(models.Model):
                         field = str('related_rqr_'+item.fields_id.name)
                         vals.update({field: True})
             for item in self.type_event_id.fields_mesures_id:
+                if item.field_visible :
+                    field = str('related_vsb_'+item.fields_id.name)
+                    vals.update({field: True})
+                    if item.field_required:
+                        field = str('related_rqr_'+item.fields_id.name)
+                        vals.update({field: True})
+            for item in self.type_event_id.fields_facteur_vulnerabilite_id:
                 if item.field_visible :
                     field = str('related_vsb_'+item.fields_id.name)
                     vals.update({field: True})
@@ -2351,6 +2452,18 @@ class is_eig(models.Model):
     related_vsb_garder_anonymat           = fields.Boolean(u'Champs related_vsb_garder_anonymat - Visibilité')
     related_rqr_garder_anonymat           = fields.Boolean(u'Champs related_rqr_garder_anonymat - Obligation')
 
+    demande_professionnel             = fields.Char("Demande du professionnel")
+    related_vsb_demande_professionnel = fields.Boolean('Champs related_vsb_demande_professionnel - Visibilité')
+    related_rqr_demande_professionnel = fields.Boolean('Champs related_rqr_demande_professionnel - Obligation')
+
+    demarche_engagee             = fields.Char("Démarches engagées")
+    related_vsb_demarche_engagee = fields.Boolean('Champs related_vsb_demarche_engagee - Visibilité')
+    related_rqr_demarche_engagee = fields.Boolean('Champs related_rqr_demarche_engagee - Obligation')
+
+    demande_exprimee             = fields.Char("Demande exprimée par la personne concernée")
+    related_vsb_demande_exprimee = fields.Boolean('Champs related_vsb_demande_exprimee - Visibilité')
+    related_rqr_demande_exprimee = fields.Boolean('Champs related_rqr_demande_exprimee - Obligation')
+
     origine_nom             = fields.Char(u"Nom")
     related_vsb_origine_nom = fields.Boolean(u'Champs related_vsb_origine_nom - Visibilité')
     related_rqr_origine_nom = fields.Boolean(u'Champs related_rqr_origine_nom - Obligation')
@@ -2386,6 +2499,31 @@ class is_eig(models.Model):
     origine_telephone_fixe             = fields.Char(u"Téléphone fixe")
     related_vsb_origine_telephone_fixe = fields.Boolean(u'Champs related_vsb_origine_telephone_fixe - Visibilité')
     related_rqr_origine_telephone_fixe = fields.Boolean(u'Champs related_rqr_origine_telephone_fixe - Obligation')
+
+    domaine_sante_ids = fields.Many2many('is.domaine.sante', 'is_eig_domaine_sante_rel', 'eig_id', 'domaine_id', string='A -« Domaine de la santé » (physique et psychologique)')
+    related_vsb_domaine_sante_ids = fields.Boolean('Champs related_vsb_domaine_sante_ids - Visibilité')
+    related_rqr_domaine_sante_ids = fields.Boolean('Champs related_rqr_domaine_sante_ids - Obligation')
+
+    domaine_autonomie_ids = fields.Many2many('is.domaine.autonomie', 'is_eig_domaine_autonomie_rel', 'eig_id', 'domaine_id', string="B -« Domaine de l'autonomie fonctionnelle » (vie quotidienne)")
+    related_vsb_domaine_autonomie_ids = fields.Boolean('Champs related_vsb_domaine_autonomie_ids - Visibilité')
+    related_rqr_domaine_autonomie_ids = fields.Boolean('Champs related_rqr_domaine_autonomie_ids - Obligation')
+
+    domaine_environnement_ids = fields.Many2many('is.domaine.environnement', 'is_eig_domaine_environnement_rel', 'eig_id', 'domaine_id', string="C-« Domaine de l'environnement familial et relationnel »")
+    related_vsb_domaine_environnement_ids = fields.Boolean('Champs related_vsb_domaine_environnement_ids - Visibilité')
+    related_rqr_domaine_environnement_ids = fields.Boolean('Champs related_rqr_domaine_environnement_ids - Obligation')
+
+    domaine_habitat_ids = fields.Many2many('is.domaine.sante', 'is_eig_domaine_habitat_rel', 'eig_id', 'domaine_id', string="D -« Domaine de l’habitat - Sécurité individuelle »")
+    related_vsb_domaine_habitat_ids = fields.Boolean('Champs related_vsb_domaine_habitat_ids - Visibilité')
+    related_rqr_domaine_habitat_ids = fields.Boolean('Champs related_rqr_domaine_habitat_ids - Obligation')
+
+    domaine_administratifs_ids = fields.Many2many('is.domaine.sante', 'is_eig_domaine_administratifs_rel', 'eig_id', 'domaine_id', string="E -« Domaine des aspects administratifs et/ou financiers »")
+    related_vsb_domaine_administratifs_ids = fields.Boolean('Champs related_vsb_domaine_administratifs_ids - Visibilité')
+    related_rqr_domaine_administratifs_ids = fields.Boolean('Champs related_rqr_domaine_administratifs_ids - Obligation')
+
+
+
+
+
 
     related_aut_vsb_identifie             = fields.Boolean(u'Champs related_aut_vsb_identifie - Visibilité')
     related_aut_rqr_identifie             = fields.Boolean(u'Champs related_aut_rqr_identifie - Obligation')
@@ -2502,8 +2640,13 @@ class is_eig(models.Model):
     related_pers_rqr_address              = fields.Boolean(u'Champs related_pers_rqr_address - Obligation')
     related_pers_vsb_departement_id       = fields.Boolean(u'Champs related_pers_vsb_departement_id - Visibilité')
     related_pers_rqr_departement_id       = fields.Boolean(u'Champs related_pers_rqr_departement_id - Obligation')
+
+    related_pers_vsb_scolarise                = fields.Boolean(u'Champs related_pers_vsb_scolarise - Visibilité')
+    related_pers_rqr_scolarise                = fields.Boolean(u'Champs related_pers_rqr_scolarise - Obligation')
+
     related_pers_vsb_ecole                = fields.Boolean(u'Champs related_pers_vsb_ecole - Visibilité')
     related_pers_rqr_ecole                = fields.Boolean(u'Champs related_pers_rqr_ecole - Obligation')
+
     related_pers_vsb_birthdate            = fields.Boolean(u'Champs related_pers_vsb_birthdate - Visibilité')
     related_pers_rqr_birthdate            = fields.Boolean(u'Champs related_pers_rqr_birthdate - Obligation')
     related_pers_vsb_qualite_id           = fields.Boolean(u'Champs related_pers_vsb_qualite_id - Visibilité')
@@ -2608,6 +2751,7 @@ class is_eig(models.Model):
     related_onglet_autres_personnes       = fields.Boolean(u"Champs related_onglet_autres_personnes - Onglet Autre(s) Personne(s) faisant l’objet de l’IP")
 
     related_onglet_mesures                = fields.Boolean(u'Champs related_onglet_mesures - Onglet Mesures')
+    related_onglet_facteur_vulnerabilite  = fields.Boolean(u'Champs related_onglet_facteur_vulnerabilite - Onglet Facteur de vulnérabilité')
     related_onglet_infos                  = fields.Boolean(u'Champs related_onglet_infos - Onglet Infos')
     related_onglet_element_complementaire = fields.Boolean(u'Champs related_onglet_element_complementaire - Onglet Eléments complémentaires')
     related_group_motif_retour            = fields.Boolean(u'Champs related_group_motif_retour - Tableau motif retour')
@@ -2767,6 +2911,45 @@ class is_default_type_event(models.Model):
             }))
         return lst
 
+
+    @api.multi
+    def get_fields_facteur_vulnerabilite(self):
+        field_obj = self.env['ir.model.fields']
+        field_ids = field_obj.search([
+            ('model', '=', 'is.eig'),
+            ('name', 'in', [
+                'domaine_sante_ids',
+                'domaine_autonomie_ids',
+                'domaine_environnement_ids',
+                'domaine_habitat_ids',
+                'domaine_administratifs_ids',
+            ])])
+        return field_ids
+
+
+    @api.multi
+    def get_fields_facteur_vulnerabilite_properties(self, visible=False):
+        field_ids = self.get_fields_facteur_vulnerabilite()
+        lst = []
+        sequence = {
+            'domaine_sante_ids': 1,
+            'domaine_autonomie_ids': 2,
+            'domaine_environnement_ids': 3,
+            'domaine_habitat_ids': 4,
+            'domaine_administratifs_ids': 5,
+        }
+        for field_id in field_ids:
+            seq = sequence.get(field_id.name, 999)
+            lst.append((0,0, {
+                'fields_id': field_id.id,
+                'field_visible': visible,
+                'field_required': False,
+                'is_eig_mesures': True,
+                'sequence': seq,
+            }))
+        return lst
+
+
     @api.multi
     def get_elements_fields(self):
         field_obj = self.env['ir.model.fields']
@@ -2806,6 +2989,9 @@ class is_default_type_event(models.Model):
                             'objet_signalement_justice',
                             'mesure_protection_enfance',
                             'garder_anonymat',
+                            'demande_professionnel',
+                            'demarche_engagee',
+                            'demande_exprimee',
                             'origine_nom',
                             'origine_prenom',
                             'origine_fonction',
@@ -2942,7 +3128,10 @@ class is_default_type_event(models.Model):
         field_ids = field_obj.search([
             ('model', '=', 'is.eig.personne'),
             ('name','in', (
-                'identifie','name','prenom','address','departement_id','ecole','birthdate','sexe_id',
+                'identifie','name','prenom','address','departement_id',
+                'ecole',
+                'scolarise',
+                'birthdate','sexe_id',
                 'qualite_id','disposition_id','consequence_id','nom_pere','prenom_pere',
                 'address_pere','autorite_parentale_pere','nom_mere','prenom_mere','address_mere','autorite_parentale_mere',
                 'auteur_victime', 
@@ -2982,6 +3171,7 @@ class is_default_type_event(models.Model):
             'address': 6,
             'departement_id': 6,
             'ecole': 7,
+            'scolarise': 7,
             'qualite_id': 8,
             'consequence_id': 9,
             'disposition_id': 10,
@@ -3285,7 +3475,17 @@ class is_default_type_event(models.Model):
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
             if field.name == 'mesure_protection_enfance':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
             if field.name == 'garder_anonymat':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'demande_professionnel':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'demarche_engagee':
+                group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
+
+            if field.name == 'demande_exprimee':
                 group_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_group': True}])
 
             if field.name == 'origine_nom':
@@ -3373,6 +3573,21 @@ class is_default_type_event(models.Model):
                 infos2_lst.append([0,False, {'fields_id': field.id, 'field_visible': True, 'field_required': True, 'is_eig_infos2': True}])
         autre_personne_lst = []
         default_autre_personne_lst = self.get_fields_autre_personne_properties(False)
+
+        facteur_vulnerabilite_lst = []
+        fields_facteur_vulnerabilite_ids = self.get_fields_facteur_vulnerabilite()
+        for field in fields_facteur_vulnerabilite_ids:
+            if field.name == 'domaine_sante_ids':
+                facteur_vulnerabilite_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'domaine_autonomie_ids':
+                facteur_vulnerabilite_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'domaine_environnement_ids':
+                facteur_vulnerabilite_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'domaine_habitat_ids':
+                facteur_vulnerabilite_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+            if field.name == 'domaine_administratifs_ids':
+                facteur_vulnerabilite_lst.append([0,False, {'fields_id': field.id, 'field_visible': False, 'field_required': False, 'is_eig_mesures': True}])
+
         for item in default_autre_personne_lst:
             item.update({'field_visible': True})
             autre_personne_lst.append([0,False, item])
@@ -3463,6 +3678,7 @@ class is_type_evenement(models.Model):
         res['fields_group_id']          = default_obj.get_fields_group_properties(True)
         res['fields_entete_id']         = default_obj.get_fields_entete_properties(True)
         res['fields_autre_personne_id'] = default_obj.get_fields_autre_personne_properties(True)
+        res['fields_facteur_vulnerabilite_id'] = default_obj.get_fields_facteur_vulnerabilite_properties(True)
         return res
 
     @api.model
@@ -3607,6 +3823,7 @@ class is_type_evenement(models.Model):
     onglet_personnes              = fields.Boolean(u'Afficher onglet Personnes', default=True)
     onglet_autres_personnes       = fields.Boolean(u'Afficher onglet Autres Personnes', default=True)
     onglet_mesures                = fields.Boolean(u'Afficher onglet Mesures', default=True)
+    onglet_facteur_vulnerabilite  = fields.Boolean(u'Afficher onglet Facteur de vulnerabilite', default=True)
     onglet_infos                  = fields.Boolean(u'Afficher onglet Infos', default=True)
     onglet_element_complementaire = fields.Boolean(u'Afficher onglet Eléments complémentaires', default=True)
     fields_entete_id              = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Entête', domain=[('is_eig_entete', '=', True)])
@@ -3621,6 +3838,11 @@ class is_type_evenement(models.Model):
     fields_elements_id            = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments complémentaires', domain=[('is_eig_elements', '=', True)])
     fields_group_id               = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Eléments Group', domain=[('is_eig_group', '=', True)])
     fields_autre_personne_id      = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs Autre(s) personne(s) concernée(s)', domain=[('is_eig_autre_personne', '=', True)])
+
+    fields_facteur_vulnerabilite_id = fields.One2many('is.manip.fields', 'type_event_id', u'Caractéristiques des champs facteur_vulnerabilite', domain=[('is_eig_facteur_vulnerabilite', '=', True)])
+
+
+
     is_nature_ids                 = fields.Many2many('is.nature.evenement', 'type_evenement_nature_rel', 'type_event_id', 'nature_id', u"Nature d'événement")
 
     _sql_constraints = [
