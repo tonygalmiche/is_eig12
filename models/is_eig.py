@@ -823,7 +823,6 @@ class is_eig(models.Model):
     def _btn_rediger_eig(self):
         for obj in self:
             r = False
-            #print(obj,self._uid,SUPERUSER_ID,self.env.user.has_group('is_eig12.group_is_traiteur'))
             if obj.state == "draft":
                 if self._uid == SUPERUSER_ID \
                     or self.env.user.has_group('is_eig12.group_is_traiteur') \
@@ -1635,9 +1634,7 @@ class is_eig(models.Model):
                         attachment_ids.append(attachment.id)
 
                     # Ajout des elements complémentaires ***********************
-                    print("Ajout des elements complémentaires")
                     for attachment in doc.attachment_ids:
-                        print(attachment)
                         attachment_ids.append(attachment.id)
 
 
@@ -1922,6 +1919,61 @@ class is_eig(models.Model):
                 r=1
             if autorite_parentale=='tuteur' and lig.tuteur_nom:
                 r=1
+        return r
+
+
+    @api.multi
+    def dA(self, code):
+        r="☐"
+        for lig in self.domaine_sante_ids:
+            if lig.code==code:
+                r="☑"
+        return r
+
+
+    @api.multi
+    def dB(self, code):
+        r="☐"
+        for lig in self.domaine_autonomie_ids:
+            if lig.code==code:
+                r="☑"
+        return r
+
+
+    @api.multi
+    def dC(self, code):
+        r="☐"
+        for lig in self.domaine_environnement_ids:
+            if lig.code==code:
+                r="☑"
+        return r
+
+
+    @api.multi
+    def dD(self, code):
+        r="☐"
+        for lig in self.domaine_habitat_ids:
+            if lig.code==code:
+                r="☑"
+        return r
+
+
+    @api.multi
+    def dE(self, code):
+        r="☐"
+        for lig in self.domaine_administratifs_ids:
+            if lig.code==code:
+                r="☑"
+        return r
+
+
+    @api.multi
+    def coche(self,val):
+        """Coche si c'est vrai"""
+        if val:
+            r="☑"
+        else:
+            r="☐"
         return r
 
 
@@ -2512,11 +2564,11 @@ class is_eig(models.Model):
     related_vsb_domaine_environnement_ids = fields.Boolean('Champs related_vsb_domaine_environnement_ids - Visibilité')
     related_rqr_domaine_environnement_ids = fields.Boolean('Champs related_rqr_domaine_environnement_ids - Obligation')
 
-    domaine_habitat_ids = fields.Many2many('is.domaine.sante', 'is_eig_domaine_habitat_rel', 'eig_id', 'domaine_id', string="D -« Domaine de l’habitat - Sécurité individuelle »")
+    domaine_habitat_ids = fields.Many2many('is.domaine.habitat', 'is_eig_domaine_habitat_rel', 'eig_id', 'domaine_id', string="D -« Domaine de l’habitat - Sécurité individuelle »")
     related_vsb_domaine_habitat_ids = fields.Boolean('Champs related_vsb_domaine_habitat_ids - Visibilité')
     related_rqr_domaine_habitat_ids = fields.Boolean('Champs related_rqr_domaine_habitat_ids - Obligation')
 
-    domaine_administratifs_ids = fields.Many2many('is.domaine.sante', 'is_eig_domaine_administratifs_rel', 'eig_id', 'domaine_id', string="E -« Domaine des aspects administratifs et/ou financiers »")
+    domaine_administratifs_ids = fields.Many2many('is.domaine.administratifs', 'is_eig_domaine_administratifs_rel', 'eig_id', 'domaine_id', string="E -« Domaine des aspects administratifs et/ou financiers »")
     related_vsb_domaine_administratifs_ids = fields.Boolean('Champs related_vsb_domaine_administratifs_ids - Visibilité')
     related_rqr_domaine_administratifs_ids = fields.Boolean('Champs related_rqr_domaine_administratifs_ids - Obligation')
 
@@ -3864,3 +3916,22 @@ class is_trame(models.Model):
     name = fields.Char(string='Nom de la trame', required=True)
     attachment_ids = fields.Many2many('ir.attachment', string=u"Modèle ODT", required=True)
 
+
+
+
+
+# py3o.r.nom_naissance
+# py3o.r.lieu_naissance
+# py3o.r.address
+# py3o.r.code_postal
+# py3o.r.ville
+# py3o.r.email
+
+# py3o.r.birthdate
+# py3o.r.age
+# py3o.r.sexe_id
+# py3o.r.age
+# py3o.r.age
+# scolarise
+# py3o.r.activite
+# py3o.r.statut_familial_id.name
