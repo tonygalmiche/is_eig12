@@ -382,9 +382,16 @@ class is_ei(models.Model):
 
 class is_nature_evenement_ei(models.Model):
     _name = 'is.nature.evenement.ei'
-    _description = u"Nature d'évènement"
+    _description = "Nature d'évènement"
+    _order = "ordre,name"
 
-    name = fields.Char(u"Nature d'évènement", required=True)
+    name   = fields.Char("Nature d'évènement", required=True)
+    ordre  = fields.Integer('Ordre',default=0)
+    active = fields.Boolean('Active',default=True)
+
+
+
+
 
 
 class is_qualite(models.Model):

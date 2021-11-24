@@ -274,6 +274,7 @@
             <field name="model">is.nature.evenement.ei</field>
             <field name="arch" type="xml">
                 <tree string="Nature Evènement">
+                    <field name="ordre"/>
                     <field name="name"/>
                 </tree>
             </field>
@@ -286,6 +287,8 @@
                     <sheet>
                         <group>
                             <field name="name"/>
+                            <field name="ordre"/>
+                            <field name="active"/>
                         </group>
                     </sheet>
                 </form>
