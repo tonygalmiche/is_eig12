@@ -1903,7 +1903,9 @@ class is_eig(models.Model):
     @api.multi
     def f9(self):
         r=0
-        if self.type_event_id.code=='SE' or self.signalement_autorites:
+        # Modification du 10/01/2022 à la demande de Sophie Cario => Ne plus prendre en compte code='SE'
+        #if self.type_event_id.code=='SE' or self.signalement_autorites:
+        if self.signalement_autorites:
             r=1
         return r
 
