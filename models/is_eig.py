@@ -72,6 +72,16 @@ class is_etablissement(models.Model):
     _description = u"Établissement"
     _order = "name"
 
+
+    @api.depends('autorite_controle')
+    def _compute_autorite_controle_libelle(self):
+        for obj in self:
+            val=""
+            for l in AutoriteControle:
+                if obj.autorite_controle==l[0]:
+                    val=l[1]
+            obj.autorite_controle_libelle = val
+
     name              = fields.Char(string='Nom', required=True)
     identifiant       = fields.Char(string='Identifiant', required=True)
     departement_id    = fields.Many2one('is.departement', string='Département', required=True)
@@ -80,7 +90,10 @@ class is_etablissement(models.Model):
     responsable_ids   = fields.Many2many('res.users', 'is_etablissement_responsables_rel', 'etablissement_id', 'user_id', string='Autres responsables')
     traiteur_ids      = fields.Many2many('res.users', 'is_etablissement_users_rel', 'user_id', 'etablissement_id', string='Traiteurs')
     membre_ids        = fields.Many2many('res.users', 'is_etablissement_membres_rel', 'etablissement_id', 'user_id', string='Membres')
-    autorite_controle = fields.Selection(AutoriteControle, string='Autorité de Contrôle')
+ 
+    autorite_controle         = fields.Selection(AutoriteControle, string='Autorité de Contrôle')
+    autorite_controle_libelle = fields.Char(string='Autorité de Contrôle libelle', compute='_compute_autorite_controle_libelle', readonly=True, store=False)
+
     adresse1          = fields.Char(string='Adresse', required=False)
     adresse2          = fields.Char(string='Adresse (suite)', required=False)
     cp                = fields.Char(string='CP', required=False)
@@ -1925,6 +1938,15 @@ class is_eig(models.Model):
 
 
     @api.multi
+    def f11(self):
+        r=0
+        for lig in self.infos_ids:
+            if lig.user_id.name=='Media':
+                r=1
+        return r
+
+
+    @api.multi
     def dA(self, code):
         r="☐"
         for lig in self.domaine_sante_ids:
@@ -2198,7 +2220,6 @@ class is_eig(models.Model):
         return True
 
 
-
     @api.depends('nature_event_id')
     def _compute_nature_event_libelle(self):
         for obj in self:
@@ -2206,6 +2227,32 @@ class is_eig(models.Model):
             for line in obj.nature_event_id:
                 libelle.append(line.name)
             obj.nature_event_libelle=', '.join(libelle)
+
+
+    @api.depends('victim_ids')
+    def _compute_nb_victimes(self):
+        for obj in self:
+            obj.nb_victimes = len(obj.victim_ids)
+
+
+    @api.depends('temoin_ids')
+    def _compute_nb_temoins(self):
+        for obj in self:
+            obj.nb_temoins = len(obj.temoin_ids)
+
+
+    @api.depends('demande_intervention_secours_ids')
+    def _compute_demande_intervention_secours_libelle(self):
+        for obj in self:
+            v=[]
+            for x in obj.demande_intervention_secours_ids:
+                v.append(x.name)
+            obj.demande_intervention_secours_libelle = ", ".join(v)
+
+
+    nb_victimes = fields.Integer('Nb victimes', compute='_compute_nb_victimes', readonly=True, store=False)
+    nb_temoins  = fields.Integer('Nb témoins' , compute='_compute_nb_temoins' , readonly=True, store=False)
+    demande_intervention_secours_libelle = fields.Char('Demande d’intervention des secours Libellé' , compute='_compute_demande_intervention_secours_libelle' , readonly=True, store=False)
 
 
     btn_rediger_eig                       = fields.Boolean('Rediger EIG', compute='_btn_rediger_eig')
